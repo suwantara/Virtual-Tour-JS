@@ -1,0 +1,48 @@
+# Version control
+.git
+.gitignore
+.gitattributes
+
+# Docker files (not needed inside image)
+docker-compose*.yml
+Dockerfile
+.dockerignore
+
+# Dev environment
+.env
+.env.*
+!.env.example
+
+# Node
+node_modules
+
+# Laravel caches (generated at runtime)
+bootstrap/cache/*.php
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/logs/*
+
+# Tests
+tests
+phpunit.xml
+.phpunit.result.cache
+.phpunit.cache
+
+# Dev tools
+.pint.json
+.editorconfig
+.styleci.yml
+CHANGELOG.md
+README.md
+*.md
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
