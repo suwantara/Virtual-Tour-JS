@@ -76,7 +76,7 @@ COPY . .
 RUN composer dump-autoload --optimize --no-dev \
     && npm run build
 
-# ─── Production image (VPS / Docker Compose) ──────────────────────────────────
+# ─── Production image ─────────────────────────────────────────────────────────
 FROM base AS production
 
 COPY --from=builder --chown=laravel:laravel /var/www/html /var/www/html
@@ -91,24 +91,3 @@ EXPOSE 9000
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["php-fpm"]
-
-# ─── Railway image (single container: nginx + php-fpm via supervisor) ──────────
-FROM production AS railway
-
-USER root
-
-# Nginx config for single-container (fastcgi → 127.0.0.1:9000)
-COPY docker/nginx/railway.conf /etc/nginx/http.d/default.conf
-
-# Supervisor config
-COPY docker/supervisor/supervisord.conf /etc/supervisord.conf
-
-# Nginx needs access to public dir
-RUN chown -R laravel:laravel /var/run \
-    && mkdir -p /run/nginx \
-    && chown -R laravel:laravel /run/nginx
-
-EXPOSE 80
-
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["supervisord", "-c", "/etc/supervisord.conf"]
