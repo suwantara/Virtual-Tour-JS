@@ -12,6 +12,13 @@ fi
 # Run bootstrapping when starting the main app process (php-fpm or supervisor)
 FIRST_ARG="${1:-}"
 if [[ "$FIRST_ARG" = "php-fpm" || "$FIRST_ARG" = "supervisord" ]]; then
+    echo "  → Waiting for database..."
+    until php artisan db:show --no-interaction > /dev/null 2>&1; do
+        echo "     database not ready, retrying in 3s..."
+        sleep 3
+    done
+    echo "  → Database ready."
+
     echo "  → Running migrations..."
     php artisan migrate --force --no-interaction
 
