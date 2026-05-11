@@ -13,6 +13,7 @@ RUN apk add --no-cache \
     libjpeg-turbo-dev \
     libpng-dev \
     libwebp-dev \
+    libxml2-dev \
     libzip-dev \
     nginx \
     nodejs \
