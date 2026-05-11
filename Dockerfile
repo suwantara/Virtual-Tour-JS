@@ -24,8 +24,9 @@ RUN apk add --no-cache \
     supervisor \
     unzip
 
-# PHP extensions
-RUN docker-php-ext-configure gd \
+# PHP extensions + Redis (share build deps to avoid autoconf purge between steps)
+RUN apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS \
+    && docker-php-ext-configure gd \
         --with-freetype \
         --with-jpeg \
         --with-webp \
@@ -40,11 +41,10 @@ RUN docker-php-ext-configure gd \
         pdo_pgsql \
         pcntl \
         xml \
-        zip
-
-# Redis extension (phpredis)
-RUN pecl install redis \
-    && docker-php-ext-enable redis
+        zip \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && apk del .phpize-deps
 
 # Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
