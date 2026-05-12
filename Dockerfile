@@ -109,7 +109,7 @@ RUN chown -R laravel:laravel /var/run \
     && mkdir -p /run/nginx \
     && chown -R laravel:laravel /run/nginx
 
-EXPOSE 80
+EXPOSE 8080
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["supervisord", "-c", "/etc/supervisord.conf"]

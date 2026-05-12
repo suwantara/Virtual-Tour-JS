@@ -35,10 +35,11 @@ if [[ "$FIRST_ARG" = "php-fpm" || "$FIRST_ARG" = "supervisord" ]]; then
     php artisan cache:clear
 fi
 
-# Railway injects $PORT dynamically — patch nginx to listen on it
-if [ -n "${PORT:-}" ] && [ -f /etc/nginx/http.d/default.conf ]; then
-    echo "  → Setting nginx port to ${PORT}..."
-    sed -i "s/listen [0-9]*;/listen ${PORT};/" /etc/nginx/http.d/default.conf
+# Sync nginx listen port with Railway's $PORT (default 8080)
+NGINX_PORT="${PORT:-8080}"
+if [ -f /etc/nginx/http.d/default.conf ]; then
+    echo "  → Setting nginx port to ${NGINX_PORT}..."
+    sed -i "s/listen [0-9]*;/listen ${NGINX_PORT};/" /etc/nginx/http.d/default.conf
 fi
 
 echo "  → Starting: $*"
