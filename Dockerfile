@@ -104,6 +104,9 @@ COPY docker/nginx/railway.conf /etc/nginx/http.d/default.conf
 # Supervisor config
 COPY docker/supervisor/supervisord.conf /etc/supervisord.conf
 
+# Override php-fpm pool user to root so workers can write to storage/framework/views
+COPY docker/php/zz-railway.conf /usr/local/etc/php-fpm.d/zz-railway.conf
+
 # Nginx needs access to public dir
 RUN chown -R laravel:laravel /var/run \
     && mkdir -p /run/nginx \
