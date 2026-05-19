@@ -217,7 +217,6 @@
                         yaw: scene.initial_yaw ?? 0,
                         pitch: scene.initial_pitch ?? 0,
                         hotSpots: this.buildHotspots(scene.hotspots || []),
-                        title: scene.name,
                     };
                 });
 
