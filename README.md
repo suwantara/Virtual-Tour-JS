@@ -12,6 +12,7 @@ Aplikasi virtual tour berbasis web untuk menjelajahi venue/lokasi bersejarah sec
 - **Coordinate helper** — Alat bantu admin untuk menentukan posisi hotspot secara presisi
 - **Branding per venue** — Warna utama dan logo custom untuk setiap lokasi
 - **Admin panel** — CRUD lengkap via Filament: venue, scene, hotspot, dan user management
+- **Role-based access** — Tiga role: Admin (full access), Editor (konten), Viewer (public)
 - **Cloudflare R2** — Penyimpanan foto 360° dengan zero egress cost
 
 ## Tech Stack
@@ -26,7 +27,155 @@ Aplikasi virtual tour berbasis web untuk menjelajahi venue/lokasi bersejarah sec
 | Auth | Laravel Fortify |
 | Object storage | Cloudflare R2 (S3-compatible) |
 | Database | PostgreSQL (production) / SQLite (development) |
-| Containerisasi | Docker Compose |
+| Containerisasi | Docker + Supervisor (nginx + php-fpm) |
+
+---
+
+## Arsitektur
+
+Aplikasi mengikuti pola **Modular Monolith** dengan tiga layer utama: Presentation, Application (Service), dan Infrastructure (Repository). Detail lengkap ada di [`ARCHITECTURE.md`](./ARCHITECTURE.md).
+
+### Diagram Layer
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                      PRESENTATION LAYER                          │
+│   Livewire (TourViewer) · Filament Resources · Blade Views       │
+└────────────────────────────┬────────────────────────────────────┘
+                             │ memanggil
+┌────────────────────────────▼────────────────────────────────────┐
+│                      APPLICATION LAYER                           │
+│          VenueService · SceneService · StorageService            │
+└──────────────┬──────────────────────────────┬───────────────────┘
+               │ menggunakan                  │ menggunakan
+┌──────────────▼──────────┐   ┌──────────────▼──────────────────┐
+│      DOMAIN LAYER        │   │       INFRASTRUCTURE LAYER       │
+│  Venue · Scene · Hotspot │   │  VenueRepository · SceneRepo    │
+│  User · UserRole (Enum)  │   │  HotspotRepository              │
+│  (Eloquent Models)       │   │  StorageService ──► Cloudflare  │
+└──────────────────────────┘   └─────────────────────────────────┘
+```
+
+### Diagram Struktur Direktori
+
+```
+app/
+├── Enums/
+│   └── UserRole.php                  # Admin · Editor · Viewer
+│
+├── Filament/
+│   └── Resources/
+│       ├── Users/                    # User management (Admin only)
+│       │   ├── UserResource.php
+│       │   ├── Pages/
+│       │   ├── Schemas/
+│       │   └── Tables/
+│       ├── Venues/                   # Kelola venue & branding
+│       │   ├── VenueResource.php
+│       │   ├── Pages/
+│       │   ├── Schemas/
+│       │   └── Tables/
+│       ├── Scenes/                   # Kelola scene & foto 360°
+│       │   ├── SceneResource.php
+│       │   ├── Pages/
+│       │   ├── Schemas/
+│       │   └── Tables/
+│       └── Hotspots/                 # Kelola hotspot interaktif
+│           ├── HotspotResource.php
+│           ├── Pages/
+│           └── Schemas/
+│
+├── Livewire/
+│   └── TourViewer.php                # Komponen viewer publik 360°
+│
+├── Models/
+│   ├── User.php                      # fillable, casts, relationships
+│   ├── Venue.php
+│   ├── Scene.php
+│   └── Hotspot.php
+│
+├── Repositories/
+│   ├── Contracts/
+│   │   ├── VenueRepositoryInterface.php
+│   │   └── SceneRepositoryInterface.php
+│   ├── VenueRepository.php           # Semua query Venue
+│   ├── SceneRepository.php           # Semua query Scene
+│   └── HotspotRepository.php        # Semua query Hotspot
+│
+└── Services/
+    ├── StorageService.php            # Satu-satunya akses ke R2
+    ├── VenueService.php              # Logika bisnis Venue
+    └── SceneService.php             # Build data untuk Pannellum
+
+resources/
+├── css/app.css                       # Tailwind CSS v4
+├── js/app.js                         # Alpine.js + Livewire
+└── views/
+    ├── livewire/
+    │   └── tour-viewer.blade.php    # UI viewer + Pannellum init
+    └── welcome.blade.php            # Halaman daftar venue
+
+database/
+├── migrations/                       # Schema evolution
+└── seeders/
+    └── DatabaseSeeder.php           # Seed admin user default
+
+docker/
+├── nginx/railway.conf               # Nginx config (Railway)
+├── php/
+│   ├── php-production.ini
+│   └── zz-railway.conf              # php-fpm pool override
+├── supervisor/supervisord.conf      # nginx + php-fpm (single container)
+└── entrypoint.sh                    # Bootstrap: migrate, seed, cache
+```
+
+### Alur Request: Visitor Akses Tour
+
+```
+Browser GET /tour/{slug}
+        │
+        ▼
+routes/web.php ──► TourViewer (Livewire)
+        │
+        ▼
+TourViewer::mount()
+        │  abort_unless(is_published, 404)
+        ▼
+TourViewer::render()
+        │
+        ├──► VenueService::findBySlug()
+        │         └──► VenueRepository::findBySlug()
+        │
+        └──► SceneService::getScenesForViewer()
+                  ├──► SceneRepository::getByVenue()
+                  └──► StorageService::getUrl()
+                            ├── [local]      /r2/{path} (proxy)
+                            └── [production] R2 public URL
+
+        Alpine.js `tourViewer()` ──► Pannellum.viewer()
+```
+
+### Alur Request: Admin Panel
+
+```
+Browser GET /admin
+        │
+        ▼
+Filament Panel
+        │  canAccessPanel(): role ∈ {Admin, Editor}
+        ▼
+┌──────────────────────────────┐
+│  Pengaturan (Admin only)     │
+│    └── Users (CRUD + role)   │
+├──────────────────────────────┤
+│  Konten (Admin + Editor)     │
+│    ├── Venues                │
+│    ├── Scenes                │
+│    └── Hotspots              │
+└──────────────────────────────┘
+```
+
+---
 
 ## Struktur Hotspot
 
@@ -37,14 +186,24 @@ Aplikasi virtual tour berbasis web untuk menjelajahi venue/lokasi bersejarah sec
 | `url` | Buka link eksternal di tab baru |
 | `media` | Tampilkan video, audio, atau gambar dalam modal |
 
+## Role & Akses
+
+| Role | Akses Panel | Kelola Konten | Kelola User |
+|---|---|---|---|
+| `admin` | ✅ | ✅ | ✅ |
+| `editor` | ✅ | ✅ | ❌ |
+| `viewer` | ❌ | ❌ | ❌ |
+
+---
+
 ## Instalasi
 
 ### Persyaratan
 
-- PHP 8.3+
+- PHP 8.4+
 - Composer
 - Node.js & NPM
-- SQLite / PostgreSQL
+- PostgreSQL (production) atau SQLite (development)
 
 ### Langkah
 
@@ -61,8 +220,8 @@ npm install
 cp .env.example .env
 php artisan key:generate
 
-# Jalankan migrasi
-php artisan migrate
+# Jalankan migrasi & seeder
+php artisan migrate --seed
 
 # Build assets
 npm run build
@@ -76,6 +235,7 @@ php artisan serve
 Tambahkan ke `.env`:
 
 ```env
+FILESYSTEM_DISK=r2
 CLOUDFLARE_R2_KEY=your_access_key
 CLOUDFLARE_R2_SECRET=your_secret_key
 CLOUDFLARE_R2_BUCKET=your_bucket_name
@@ -83,7 +243,19 @@ CLOUDFLARE_R2_ENDPOINT=https://<account-id>.r2.cloudflarestorage.com
 CLOUDFLARE_R2_URL=https://your-custom-domain.com
 ```
 
+> Di development lokal, gambar otomatis diproxy melalui `/r2/{path}` — tidak perlu R2 aktif.
+
 ### Buat Admin Pertama
+
+Seeder otomatis membuat user admin default saat `migrate --seed`:
+
+| Field | Value |
+|---|---|
+| Email | `admin@virtual-tour.test` |
+| Password | `password` |
+| Role | `admin` |
+
+Atau buat manual via Filament:
 
 ```bash
 php artisan make:filament-user
@@ -91,15 +263,26 @@ php artisan make:filament-user
 
 Akses admin panel di `/admin`.
 
-## Docker
+---
+
+## Docker (Development)
 
 ```bash
-# Development
 docker compose up -d
-
-# Production (dengan env production)
-docker compose -f docker-compose.yml up -d
 ```
+
+## Deployment (Railway)
+
+Branch `deploy/railway` dikonfigurasi untuk Railway. Build menggunakan Docker multi-stage:
+
+```
+base ──► builder (composer + npm build) ──► production ──► railway
+                                                            (nginx + php-fpm via supervisor)
+```
+
+Entrypoint otomatis menjalankan: `migrate → seed → cache → storage:link → nginx`.
+
+---
 
 ## Routes
 
@@ -108,11 +291,10 @@ docker compose -f docker-compose.yml up -d
 | `GET` | `/` | Daftar venue publik |
 | `GET` | `/tour/{slug}` | Viewer tour per venue |
 | `GET` | `/admin` | Filament admin panel |
-| `GET` | `/r2/{path}` | Proxy R2 untuk development lokal |
+| `GET` | `/admin/login` | Login admin |
+| `GET` | `/r2/{path}` | Proxy R2 (development only) |
 
-## Screenshot
-
-> _Tambahkan screenshot viewer dan admin panel di sini._
+---
 
 ## Lisensi
 
