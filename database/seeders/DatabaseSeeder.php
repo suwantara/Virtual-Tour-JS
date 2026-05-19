@@ -19,9 +19,8 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Admin',
                 'password' => bcrypt('password'),
-                'role' => UserRole::Admin,
                 'email_verified_at' => now(),
             ]
-        );
+        )->update(['role' => UserRole::Admin]);
     }
 }
