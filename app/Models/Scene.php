@@ -4,12 +4,10 @@ namespace App\Models;
 
 use Database\Factories\SceneFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\Storage;
 
 #[Fillable(['venue_id', 'name', 'description', 'image_path', 'initial_yaw', 'initial_pitch', 'order', 'is_published'])]
 class Scene extends Model
@@ -25,14 +23,6 @@ class Scene extends Model
             'order' => 'integer',
             'is_published' => 'boolean',
         ];
-    }
-
-    public function imageUrl(): Attribute
-    {
-        return Attribute::get(fn () => $this->image_path
-            ? Storage::disk('r2')->url($this->image_path)
-            : null
-        );
     }
 
     /** @return BelongsTo<Venue, $this> */
