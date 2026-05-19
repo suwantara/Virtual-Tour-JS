@@ -89,7 +89,7 @@
                         class="tour-badge"
                     >
                         @if ($scene['image_path'])
-                            <img src="{{ $scene['image_path'] }}" alt="" class="tour-badge__thumb">
+                            <img src="{{ $scene['image_path'] }}" alt="" class="tour-badge__thumb" crossorigin="anonymous">
                         @else
                             <div class="tour-badge__thumb--empty">
                                 <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
