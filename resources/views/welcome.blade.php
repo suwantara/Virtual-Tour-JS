@@ -6,223 +6,211 @@
     <meta name="description" content="Virtual Tour 360° Pura Desa Adat Tambawu, Denpasar — Jelajahi warisan budaya Tri Kahyangan secara digital melalui platform Nandika.">
     <title>Virtual Tour — Pura Desa Adat Tambawu</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+    @fonts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-    <style>
-        :root {
-            --navy:  #202940;
-            --brown: #4B4038;
-            --taupe: #9A8678;
-            --sand:  #CAAA98;
-        }
-        body        { font-family: 'Inter', sans-serif; background-color: var(--navy); color: #fff; }
-        .serif      { font-family: 'Playfair Display', serif; }
-        .bg-navy    { background-color: var(--navy); }
-        .bg-brown   { background-color: var(--brown); }
-        .bg-sand    { background-color: var(--sand); }
-        .text-taupe { color: var(--taupe); }
-        .text-sand  { color: var(--sand); }
-        .text-navy  { color: var(--navy); }
-        .text-brown { color: var(--brown); }
-        .border-taupe { border-color: var(--taupe); }
-        .border-sand  { border-color: var(--sand); }
 
-        /* Ornamental divider */
-        .ornament {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: var(--taupe);
-        }
-        .ornament::before, .ornament::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--taupe);
-            opacity: 0.4;
-        }
-
-        /* Smooth scroll */
-        html { scroll-behavior: smooth; }
-
-        /* Hero gradient overlay */
-        .hero-gradient {
-            background: linear-gradient(
-                to bottom,
-                rgba(32,41,64,0.3) 0%,
-                rgba(32,41,64,0.7) 60%,
-                rgba(32,41,64,1) 100%
-            );
-        }
-
-        /* Card hover lift */
-        .card-lift { transition: transform 0.25s ease, box-shadow 0.25s ease; }
-        .card-lift:hover { transform: translateY(-4px); }
-
-        /* Nav link underline animation */
-        .nav-link {
-            position: relative;
-            padding-bottom: 2px;
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 0; height: 1px;
-            background: var(--sand);
-            transition: width 0.25s ease;
-        }
-        .nav-link:hover::after { width: 100%; }
-
-        /* Pelinggih card pattern */
-        .pelinggih-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(154,134,120,0.2);
-            transition: background 0.25s, border-color 0.25s;
-        }
-        .pelinggih-card:hover {
-            background: rgba(202,170,152,0.1);
-            border-color: rgba(202,170,152,0.5);
-        }
-    </style>
 </head>
-<body>
+<body class="bg-stone-950 text-stone-100">
 
 {{-- ═══════════════════════════════ NAVBAR ═══════════════════════════════ --}}
-<nav
+<header
     x-data="{ open: false, scrolled: false }"
-    x-init="window.addEventListener('scroll', () => scrolled = window.scrollY > 40)"
-    :class="scrolled ? 'bg-[#202940]/95 backdrop-blur-md shadow-lg shadow-black/30' : 'bg-transparent'"
+    x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 40; })"
+    :class="scrolled ? 'bg-stone-950/95 backdrop-blur-md shadow-lg shadow-black/30' : 'bg-transparent'"
     class="fixed top-0 inset-x-0 z-50 transition-all duration-300"
 >
-    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
 
         {{-- Logo --}}
-        <a href="#hero" class="flex items-center gap-3 group">
-            <div class="w-8 h-8 rounded-full border border-[#9A8678] flex items-center justify-center">
-                <svg class="w-4 h-4 text-[#CAAA98]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <a href="#hero" class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full border border-stone-600 flex items-center justify-center">
+                <svg class="w-4 h-4 text-stone-300" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582" />
                 </svg>
             </div>
             <div class="leading-tight">
-                <div class="text-xs text-[#CAAA98]/80 font-light tracking-widest uppercase">Pura Desa</div>
-                <div class="text-sm font-semibold text-[#CAAA98] serif tracking-wide">Tambawu</div>
+                <div class="text-xs text-stone-500 font-light tracking-widest uppercase">Pura Desa</div>
+                <div class="text-sm font-semibold text-stone-200 serif tracking-wide">Tambawu</div>
             </div>
         </a>
 
-        {{-- Desktop Menu --}}
+        {{-- Desktop links --}}
         <div class="hidden md:flex items-center gap-8">
             @foreach([
                 ['#hero',         'Beranda'],
                 ['#tentang-pura', 'Tentang Pura'],
                 ['#virtual-tour', 'Virtual Tour'],
                 ['#pelinggih',    'Pelinggih'],
+                ['#tim',          'Tim'],
                 ['#kontak',       'Kontak'],
             ] as [$href, $label])
-                <a href="{{ $href }}" class="nav-link text-sm text-[#CAAA98]/80 hover:text-[#CAAA98] transition-colors">
+                <a href="{{ $href }}" class="nav-link text-sm text-stone-400 hover:text-stone-200 transition-colors">
                     {{ $label }}
                 </a>
             @endforeach
         </div>
 
-        {{-- CTA + Hamburger --}}
-        <div class="flex items-center gap-4">
-            @if($venues->isNotEmpty())
-                <a href="{{ route('tour', $venues->first()) }}"
-                   class="hidden md:inline-flex items-center gap-2 bg-[#4B4038] hover:bg-[#9A8678] text-[#CAAA98] hover:text-white text-sm font-medium px-4 py-2 rounded-full transition-all duration-200 border border-[#9A8678]/40">
-                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 010 1.972l-11.54 6.347a1.125 1.125 0 01-1.667-.986V5.653z"/>
-                    </svg>
-                    Mulai Tour
-                </a>
-            @endif
-
-            <button @click="open = !open" class="md:hidden text-[#CAAA98] p-1">
-                <svg x-show="!open" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
-                </svg>
-                <svg x-show="open" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-            </button>
-        </div>
-    </div>
-
-    {{-- Mobile Menu --}}
-    <div x-show="open" x-transition class="md:hidden bg-[#202940]/98 backdrop-blur-md border-t border-[#4B4038] px-6 py-4 space-y-3">
-        @foreach([
-            ['#hero',         'Beranda'],
-            ['#tentang-pura', 'Tentang Pura'],
-            ['#virtual-tour', 'Virtual Tour'],
-            ['#pelinggih',    'Pelinggih'],
-            ['#kontak',       'Kontak'],
-        ] as [$href, $label])
-            <a href="{{ $href }}" @click="open = false" class="block text-[#CAAA98]/80 hover:text-[#CAAA98] py-1.5 text-sm">
-                {{ $label }}
-            </a>
-        @endforeach
+        {{-- Desktop CTA --}}
         @if($venues->isNotEmpty())
             <a href="{{ route('tour', $venues->first()) }}"
-               class="block mt-3 text-center bg-[#4B4038] text-[#CAAA98] text-sm font-medium px-4 py-2.5 rounded-full border border-[#9A8678]/40">
-                Mulai Virtual Tour
+               class="hidden md:inline-flex items-center gap-2 bg-rose-900 hover:bg-rose-800 text-white text-sm font-medium px-4 py-2 rounded-full transition-all duration-200">
+                <i class="fa-solid fa-play text-xs"></i>
+                Mulai Tour
             </a>
+        @else
+            <div class="hidden md:block"></div>
         @endif
+
+        {{-- Mobile hamburger --}}
+        <button
+            type="button"
+            @click="open = true"
+            aria-label="Open menu"
+            class="md:hidden -m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-stone-300"
+        >
+            <i class="fa-solid fa-bars text-lg"></i>
+        </button>
+    </nav>
+
+    {{-- ── Mobile drawer ── --}}
+    <div x-show="open" class="md:hidden" role="dialog" aria-modal="true" style="display: none;">
+
+        {{-- Backdrop --}}
+        <div
+            x-show="open"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            @click="open = false"
+            class="fixed inset-0 z-50 bg-stone-950/60 backdrop-blur-sm"
+        ></div>
+
+        {{-- Slide-in panel --}}
+        <div
+            x-show="open"
+            x-transition:enter="transform transition ease-in-out duration-300"
+            x-transition:enter-start="translate-x-full"
+            x-transition:enter-end="translate-x-0"
+            x-transition:leave="transform transition ease-in-out duration-200"
+            x-transition:leave-start="translate-x-0"
+            x-transition:leave-end="translate-x-full"
+            class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-stone-950 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-stone-700/30"
+        >
+            {{-- Panel header --}}
+            <div class="flex items-center justify-between">
+                <a href="#hero" @click="open = false" class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full border border-stone-600 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-stone-300" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582" />
+                        </svg>
+                    </div>
+                    <div class="leading-tight">
+                        <div class="text-xs text-stone-500 font-light tracking-widest uppercase">Pura Desa</div>
+                        <div class="text-sm font-semibold text-stone-200 serif tracking-wide">Tambawu</div>
+                    </div>
+                </a>
+                <button
+                    type="button"
+                    @click="open = false"
+                    aria-label="Close menu"
+                    class="-m-2.5 rounded-md p-2.5 text-stone-300"
+                >
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            {{-- Panel links --}}
+            <div class="mt-6 flow-root">
+                <div class="-my-6 divide-y divide-stone-800">
+                    <div class="space-y-1 py-6">
+                        @foreach([
+                            ['#hero',         'Beranda'],
+                            ['#tentang-pura', 'Tentang Pura'],
+                            ['#virtual-tour', 'Virtual Tour'],
+                            ['#pelinggih',    'Pelinggih'],
+                            ['#tim',          'Tim'],
+                            ['#kontak',       'Kontak'],
+                        ] as [$href, $label])
+                            <a
+                                href="{{ $href }}"
+                                @click="open = false"
+                                class="-mx-3 block rounded-lg px-3 py-3 text-base font-semibold text-stone-300 hover:bg-stone-800 hover:text-stone-100 transition-colors"
+                            >
+                                {{ $label }}
+                            </a>
+                        @endforeach
+                    </div>
+                    @if($venues->isNotEmpty())
+                        <div class="py-6">
+                            <a
+                                href="{{ route('tour', $venues->first()) }}"
+                                @click="open = false"
+                                class="-mx-3 flex items-center justify-center gap-2 rounded-lg px-3 py-3 text-base font-semibold text-white bg-rose-900 hover:bg-rose-800 transition-colors"
+                            >
+                                <i class="fa-solid fa-play text-sm"></i>
+                                Mulai Virtual Tour
+                            </a>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
     </div>
-</nav>
+</header>
 
 {{-- ═══════════════════════════════ HERO ═══════════════════════════════ --}}
 <section id="hero" class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
 
-    {{-- Background: solid navy with subtle noise texture --}}
-    <div class="absolute inset-0 bg-[#202940]">
-        {{-- Decorative radial glow --}}
+    {{-- Background --}}
+    <div class="absolute inset-0 bg-stone-950">
         <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full"
-             style="background: radial-gradient(circle, rgba(75,64,56,0.4) 0%, transparent 70%);"></div>
-        {{-- Corner ornament lines --}}
-        <div class="absolute top-20 left-8 w-16 h-16 border-t border-l border-[#9A8678]/30"></div>
-        <div class="absolute top-20 right-8 w-16 h-16 border-t border-r border-[#9A8678]/30"></div>
-        <div class="absolute bottom-20 left-8 w-16 h-16 border-b border-l border-[#9A8678]/30"></div>
-        <div class="absolute bottom-20 right-8 w-16 h-16 border-b border-r border-[#9A8678]/30"></div>
+             style="background: radial-gradient(circle, rgba(68,64,60,0.35) 0%, transparent 70%);"></div>
+        <div class="absolute top-20 left-8 w-16 h-16 border-t border-l border-stone-700/30"></div>
+        <div class="absolute top-20 right-8 w-16 h-16 border-t border-r border-stone-700/30"></div>
+        <div class="absolute bottom-20 left-8 w-16 h-16 border-b border-l border-stone-700/30"></div>
+        <div class="absolute bottom-20 right-8 w-16 h-16 border-b border-r border-stone-700/30"></div>
     </div>
 
-    <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+    <div class="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto w-full">
 
-        {{-- Badge Nandika --}}
-        <div class="inline-flex items-center gap-2 bg-[#4B4038]/60 border border-[#9A8678]/40 text-[#CAAA98] text-xs font-medium px-4 py-1.5 rounded-full mb-8 tracking-widest uppercase">
-            <span class="w-1.5 h-1.5 rounded-full bg-[#CAAA98] animate-pulse"></span>
-            Nandika · Nusantara Digital Archive · PBL 2025
+        {{-- Badge --}}
+        <div class="inline-flex items-center gap-2 bg-stone-800/60 border border-amber-700/30 text-amber-300 font-medium px-3 sm:px-4 py-1.5 rounded-full mb-8 uppercase" style="font-size: clamp(9px, 2vw, 12px); letter-spacing: 0.08em;">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse flex-shrink-0"></span>
+            <span class="hidden sm:inline">Nandika · Nusantara Digital Archive · PBL 2025</span>
+            <span class="sm:hidden">Nandika · PBL 2025</span>
         </div>
 
-        {{-- Kaligrafi ornamen --}}
-        <div class="text-white/25 text-sm tracking-[0.5em] uppercase mb-3 font-light" aria-hidden="true">
+        {{-- Kaligrafi --}}
+        <div class="text-stone-600 text-sm tracking-[0.5em] uppercase mb-3 font-light" aria-hidden="true">
             Tri Kahyangan · Desa Adat Tambawu
         </div>
 
         {{-- Title --}}
-        <h1 class="serif text-5xl md:text-7xl font-bold text-white mb-2 leading-tight">
+        <h1 class="serif text-4xl sm:text-5xl md:text-7xl font-bold text-stone-50 mb-2 leading-tight">
             Pura Desa
         </h1>
-        <h2 class="serif text-3xl md:text-5xl font-light text-[#CAAA98] mb-6 italic">
+        <h2 class="serif text-2xl sm:text-3xl md:text-5xl font-light text-amber-400 mb-6 italic">
             Adat Tambawu
         </h2>
 
         {{-- Garis ornamen --}}
         <div class="flex items-center justify-center gap-3 mb-6">
-            <div class="w-16 h-px bg-[#9A8678]/50"></div>
-            <svg class="w-4 h-4 text-[#9A8678]" viewBox="0 0 16 16" fill="currentColor">
+            <div class="w-16 h-px bg-stone-600/50"></div>
+            <svg class="w-4 h-4 text-stone-600" viewBox="0 0 16 16" fill="currentColor">
                 <path d="M8 0l1.5 6.5L16 8l-6.5 1.5L8 16l-1.5-6.5L0 8l6.5-1.5z"/>
             </svg>
-            <div class="w-16 h-px bg-[#9A8678]/50"></div>
+            <div class="w-16 h-px bg-stone-600/50"></div>
         </div>
 
         {{-- Subtitle --}}
-        <p class="text-[#CAAA98]/80 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-10 font-light">
+        <p class="text-stone-400 text-base sm:text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-10 font-light">
             Jelajahi warisan budaya Desa Adat Tambawu, Denpasar melalui
-            <span class="text-[#CAAA98] font-medium">Virtual Tour 360°</span>
+            <span class="text-stone-200 font-medium">Virtual Tour 360°</span>
             interaktif. Setiap sudut pura tersimpan dalam arsip digital yang awet dan berkelanjutan.
         </p>
 
@@ -230,7 +218,7 @@
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
             @if($venues->isNotEmpty())
                 <a href="{{ route('tour', $venues->first()) }}"
-                   class="inline-flex items-center justify-center gap-3 bg-[#CAAA98] hover:bg-[#9A8678] text-[#202940] hover:text-white font-semibold px-8 py-3.5 rounded-full transition-all duration-200 group">
+                   class="inline-flex items-center justify-center gap-3 bg-rose-900 hover:bg-rose-800 text-white font-semibold px-8 py-3.5 rounded-full transition-all duration-200 group">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 010 1.972l-11.54 6.347a1.125 1.125 0 01-1.667-.986V5.653z"/>
                     </svg>
@@ -241,13 +229,13 @@
                 </a>
             @endif
             <a href="#tentang-pura"
-               class="inline-flex items-center justify-center gap-2 border border-[#9A8678]/60 text-[#CAAA98] hover:bg-[#4B4038] font-medium px-8 py-3.5 rounded-full transition-all duration-200">
+               class="inline-flex items-center justify-center gap-2 border border-stone-600/60 text-stone-300 hover:bg-stone-800 font-medium px-8 py-3.5 rounded-full transition-all duration-200">
                 Pelajari Lebih Lanjut
             </a>
         </div>
 
         {{-- Scroll hint --}}
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30 text-xs animate-bounce" aria-hidden="true">
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-stone-600 text-xs animate-bounce" aria-hidden="true">
             <span class="tracking-widest uppercase text-[10px]">Gulir</span>
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
@@ -257,14 +245,14 @@
 </section>
 
 {{-- ════════════════════════════ TENTANG PURA ════════════════════════════ --}}
-<section id="tentang-pura" class="bg-[#CAAA98] text-[#202940] py-20 md:py-28">
-    <div class="max-w-7xl mx-auto px-6">
+<section id="tentang-pura" class="bg-stone-100 text-stone-900 py-16 md:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
 
         {{-- Section header --}}
         <div class="text-center mb-16">
-            <p class="text-[#4B4038] text-xs tracking-widest uppercase font-medium mb-3">Warisan Budaya</p>
-            <h2 class="serif text-4xl md:text-5xl font-bold text-[#202940] mb-4">Tentang Pura</h2>
-            <div class="ornament text-[#4B4038] max-w-xs mx-auto">
+            <p class="text-stone-600 text-xs tracking-widest uppercase font-medium mb-3">Warisan Budaya</p>
+            <h2 class="serif text-3xl sm:text-4xl md:text-5xl font-bold text-stone-900 mb-4">Tentang Pura</h2>
+            <div class="ornament text-stone-600 max-w-xs mx-auto">
                 <span class="text-sm font-light">Tri Kahyangan · Dewa Brahma</span>
             </div>
         </div>
@@ -273,30 +261,30 @@
 
             {{-- Sejarah --}}
             <div>
-                <h3 class="serif text-2xl font-semibold text-[#202940] mb-4">Sejarah & Latar Belakang</h3>
-                <div class="w-10 h-0.5 bg-[#4B4038] mb-6"></div>
+                <h3 class="serif text-2xl font-semibold text-stone-900 mb-4">Sejarah & Latar Belakang</h3>
+                <div class="w-10 h-0.5 bg-stone-700 mb-6"></div>
 
-                <div class="space-y-4 text-[#4B4038] leading-relaxed">
+                <div class="space-y-4 text-stone-700 leading-relaxed">
                     <p>
                         Pura Desa Adat Tambawu merupakan salah satu elemen penting dalam sistem
-                        <strong class="text-[#202940]">Tri Kahyangan</strong> yang menjadi landasan kehidupan spiritual
+                        <strong class="text-stone-900">Tri Kahyangan</strong> yang menjadi landasan kehidupan spiritual
                         masyarakat Desa Adat Tambawu, Kota Denpasar. Sebagai tempat pemujaan
-                        <strong class="text-[#202940]">Dewa Brahma</strong>, pura ini berperan sebagai pusat
+                        <strong class="text-stone-900">Dewa Brahma</strong>, pura ini berperan sebagai pusat
                         pelaksanaan ritual bersama dan perekat identitas budaya komunitas adat setempat.
                     </p>
                     <p>
                         Berdasarkan penuturan Jro Mangku Desa, berdirinya Pura Desa Adat Tambawu tidak diketahui
-                        secara pasti. Desa Adat Tambawu termasuk dalam <strong class="text-[#202940]">desa tua</strong>
+                        secara pasti. Desa Adat Tambawu termasuk dalam <strong class="text-stone-900">desa tua</strong>
                         yang merupakan gabungan antardesa di kawasan Penatih, sehingga disebut Penatih Kidul (Selatan).
                     </p>
                     <p>
                         Catatan kecil yang tersimpan menyebutkan adanya penataan pelinggih pada
-                        <strong class="text-[#202940]">dekade 1940-an</strong> atas perintah raja, ketika struktur
+                        <strong class="text-stone-900">dekade 1940-an</strong> atas perintah raja, ketika struktur
                         pura mulai berkembang dari satu pelinggih menjadi tatanan yang lebih lengkap seperti saat ini.
                     </p>
                     <p>
-                        Piodalan utama atau <strong class="text-[#202940]">Pujawali</strong> dilaksanakan pada
-                        <strong class="text-[#202940]">Saniscara Kliwon Kuningan</strong> (Hari Raya Kuningan).
+                        Piodalan utama atau <strong class="text-stone-900">Pujawali</strong> dilaksanakan pada
+                        <strong class="text-stone-900">Saniscara Kliwon Kuningan</strong> (Hari Raya Kuningan).
                     </p>
                 </div>
             </div>
@@ -333,18 +321,18 @@
                 @endphp
 
                 @foreach($stats as $stat)
-                    <div class="flex items-start gap-4 bg-white/30 backdrop-blur-sm border border-[#9A8678]/30 rounded-2xl p-5 card-lift">
-                        <div class="w-10 h-10 rounded-xl bg-[#4B4038] flex items-center justify-center flex-shrink-0">
-                            <svg class="w-5 h-5 text-[#CAAA98]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <div class="flex items-start gap-4 bg-white/60 border border-stone-200 rounded-2xl p-5 card-lift">
+                        <div class="w-10 h-10 rounded-xl bg-rose-900 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 {!! $stat['icon'] !!}
                             </svg>
                         </div>
                         <div>
                             <div class="flex items-baseline gap-2">
-                                <span class="serif text-xl font-bold text-[#202940]">{{ $stat['value'] }}</span>
-                                <span class="text-sm font-semibold text-[#4B4038]">{{ $stat['label'] }}</span>
+                                <span class="serif text-xl font-bold text-stone-900">{{ $stat['value'] }}</span>
+                                <span class="text-sm font-semibold text-stone-700">{{ $stat['label'] }}</span>
                             </div>
-                            <p class="text-xs text-[#4B4038] mt-0.5">{{ $stat['desc'] }}</p>
+                            <p class="text-xs text-stone-600 mt-0.5">{{ $stat['desc'] }}</p>
                         </div>
                     </div>
                 @endforeach
@@ -354,23 +342,22 @@
 </section>
 
 {{-- ════════════════════════════ VIRTUAL TOUR CTA ════════════════════════ --}}
-<section id="virtual-tour" class="bg-[#4B4038] py-20 md:py-28 relative overflow-hidden">
+<section id="virtual-tour" class="bg-stone-900 py-16 md:py-28 relative overflow-hidden">
 
-    {{-- Background decoration --}}
-    <div class="absolute right-0 top-1/2 -translate-y-1/2 w-80 h-80 rounded-full border border-[#9A8678]/20 opacity-30"></div>
-    <div class="absolute right-16 top-1/2 -translate-y-1/2 w-52 h-52 rounded-full border border-[#9A8678]/20 opacity-30"></div>
+    <div class="absolute right-0 top-1/2 -translate-y-1/2 w-80 h-80 rounded-full border border-stone-700/20 opacity-30 hidden sm:block"></div>
+    <div class="absolute right-16 top-1/2 -translate-y-1/2 w-52 h-52 rounded-full border border-stone-700/20 opacity-30 hidden sm:block"></div>
 
-    <div class="max-w-7xl mx-auto px-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
         <div class="grid md:grid-cols-2 gap-12 items-center">
 
             {{-- Teks --}}
             <div>
-                <p class="text-[#CAAA98] text-xs tracking-widest uppercase font-medium mb-4">Eksplorasi Digital</p>
-                <h2 class="serif text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                <p class="text-amber-400 text-xs tracking-widest uppercase font-medium mb-4">Eksplorasi Digital</p>
+                <h2 class="serif text-3xl sm:text-4xl md:text-5xl font-bold text-stone-50 mb-6 leading-tight">
                     Jelajahi Pura<br>
-                    <span class="text-[#CAAA98] italic">dalam 360°</span>
+                    <span class="text-amber-400 italic">dalam 360°</span>
                 </h2>
-                <p class="text-[#CAAA98] leading-relaxed mb-8">
+                <p class="text-stone-400 leading-relaxed mb-8">
                     Memanfaatkan teknologi fotografi panorama sferis, setiap sudut Pura Desa Adat Tambawu
                     kini dapat dijelajahi secara interaktif. Pindah antar bangunan, klik hotspot untuk
                     membaca keterangan, dan rasakan keagungan pura dari mana saja.
@@ -378,8 +365,8 @@
 
                 <div class="flex flex-wrap gap-3 mb-8">
                     @foreach(['Foto 360° Spherical', '13 Titik Hotspot', 'Legenda Pelinggih', 'Akses Publik'] as $feat)
-                        <span class="flex items-center gap-1.5 bg-[#202940]/40 border border-[#9A8678]/30 text-[#CAAA98] text-xs px-3 py-1.5 rounded-full">
-                            <svg class="w-3 h-3 text-[#CAAA98]" fill="currentColor" viewBox="0 0 16 16">
+                        <span class="flex items-center gap-1.5 bg-stone-950/40 border border-stone-700/30 text-stone-300 text-xs px-3 py-1.5 rounded-full">
+                            <svg class="w-3 h-3 text-amber-500" fill="currentColor" viewBox="0 0 16 16">
                                 <path d="M8 0l1.5 6.5L16 8l-6.5 1.5L8 16l-1.5-6.5L0 8l6.5-1.5z"/>
                             </svg>
                             {{ $feat }}
@@ -389,36 +376,32 @@
 
                 @if($venues->isNotEmpty())
                     <a href="{{ route('tour', $venues->first()) }}"
-                       class="inline-flex items-center gap-3 bg-[#CAAA98] hover:bg-white text-[#202940] font-semibold px-8 py-3.5 rounded-full transition-all duration-200 group">
+                       class="inline-flex items-center gap-3 bg-rose-900 hover:bg-rose-800 text-white font-semibold px-8 py-3.5 rounded-full transition-all duration-200 group">
                         Buka Virtual Tour
                         <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
                         </svg>
                     </a>
                 @else
-                    <span class="inline-flex items-center gap-2 bg-[#9A8678]/30 text-[#CAAA98]/60 text-sm px-8 py-3.5 rounded-full cursor-not-allowed">
+                    <span class="inline-flex items-center gap-2 bg-stone-700/30 text-stone-500 text-sm px-8 py-3.5 rounded-full cursor-not-allowed">
                         Segera Hadir
                     </span>
                 @endif
             </div>
 
-            {{-- Visual dekoratif 360° --}}
+            {{-- Visual 360° --}}
             <div class="flex justify-center md:justify-end">
-                <div class="relative w-64 h-64">
-                    {{-- Lingkaran luar --}}
-                    <div class="absolute inset-0 rounded-full border-2 border-dashed border-[#9A8678]/40 animate-spin" style="animation-duration: 20s;"></div>
-                    {{-- Lingkaran tengah --}}
-                    <div class="absolute inset-6 rounded-full border border-[#9A8678]/30"></div>
-                    {{-- Pusat --}}
+                <div class="relative w-48 h-48 sm:w-64 sm:h-64">
+                    <div class="absolute inset-0 rounded-full border-2 border-dashed border-stone-600/40 animate-spin" style="animation-duration: 20s;"></div>
+                    <div class="absolute inset-6 rounded-full border border-stone-700/30"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
                         <div class="text-center">
-                            <div class="serif text-5xl font-bold text-[#CAAA98]">360</div>
-                            <div class="text-[#9A8678] text-xs tracking-widest mt-1">DERAJAT</div>
+                            <div class="serif text-5xl font-bold text-amber-400">360</div>
+                            <div class="text-stone-500 text-xs tracking-widest mt-1">DERAJAT</div>
                         </div>
                     </div>
-                    {{-- Titik di lingkaran --}}
                     @foreach([0, 60, 120, 180, 240, 300] as $deg)
-                        <div class="absolute w-2 h-2 rounded-full bg-[#9A8678]/60"
+                        <div class="absolute w-2 h-2 rounded-full bg-stone-600/60"
                              style="
                                 top: calc(50% - 4px + {{ round(sin(deg2rad($deg)) * 120, 2) }}px);
                                 left: calc(50% - 4px + {{ round(cos(deg2rad($deg)) * 120, 2) }}px);
@@ -431,14 +414,13 @@
 </section>
 
 {{-- ════════════════════════════ PELINGGIH HIGHLIGHT ════════════════════ --}}
-<section id="pelinggih" class="bg-[#202940] py-20 md:py-28">
-    <div class="max-w-7xl mx-auto px-6">
+<section id="pelinggih" class="bg-stone-950 py-16 md:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
 
-        {{-- Section header --}}
         <div class="text-center mb-16">
-            <p class="text-[#CAAA98] text-xs tracking-widest uppercase font-medium mb-3">Katalog Digital</p>
-            <h2 class="serif text-4xl md:text-5xl font-bold text-white mb-4">Pelinggih Pura</h2>
-            <p class="text-[#CAAA98]/80 max-w-xl mx-auto text-sm leading-relaxed">
+            <p class="text-stone-500 text-xs tracking-widest uppercase font-medium mb-3">Katalog Digital</p>
+            <h2 class="serif text-3xl sm:text-4xl md:text-5xl font-bold text-stone-100 mb-4">Pelinggih Pura</h2>
+            <p class="text-stone-400 max-w-xl mx-auto text-sm leading-relaxed">
                 Setiap bangunan suci memiliki fungsi dan makna spiritual tersendiri. Berikut pelinggih-pelinggih
                 utama yang dapat dijelajahi dalam virtual tour.
             </p>
@@ -482,20 +464,20 @@
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             @foreach($pelinggih as $p)
                 <div class="pelinggih-card rounded-2xl p-6 card-lift">
-                    <div class="w-10 h-10 rounded-xl bg-[#4B4038] flex items-center justify-center mb-4">
-                        <svg class="w-5 h-5 text-[#CAAA98]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <div class="w-10 h-10 rounded-xl bg-stone-800 flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5 text-stone-300" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="{{ $p['icon'] }}"/>
                         </svg>
                     </div>
-                    <h3 class="serif text-lg font-semibold text-white mb-2">{{ $p['nama'] }}</h3>
-                    <p class="text-[#CAAA98]/80 text-sm leading-relaxed">{{ $p['fungsi'] }}</p>
+                    <h3 class="serif text-lg font-semibold text-stone-100 mb-2">{{ $p['nama'] }}</h3>
+                    <p class="text-stone-400 text-sm leading-relaxed">{{ $p['fungsi'] }}</p>
                 </div>
             @endforeach
         </div>
 
         <div class="text-center mt-10">
             <a href="#virtual-tour"
-               class="inline-flex items-center gap-2 border border-[#9A8678]/40 text-[#CAAA98]/80 hover:text-[#CAAA98] hover:border-[#CAAA98]/60 text-sm px-6 py-2.5 rounded-full transition-all duration-200">
+               class="inline-flex items-center gap-2 border border-stone-700/40 text-stone-500 hover:text-stone-300 hover:border-stone-600/60 text-sm px-6 py-2.5 rounded-full transition-all duration-200">
                 Lihat semua dalam Virtual Tour
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
@@ -506,19 +488,19 @@
 </section>
 
 {{-- ════════════════════════════ PROFIL MANGKU ══════════════════════════ --}}
-<section class="bg-[#CAAA98] py-20 md:py-24">
-    <div class="max-w-7xl mx-auto px-6">
+<section class="bg-stone-100 py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
         <div class="grid md:grid-cols-2 gap-12 items-center">
 
-            {{-- Avatar placeholder --}}
+            {{-- Avatar --}}
             <div class="flex justify-center">
                 <div class="relative">
-                    <div class="w-56 h-56 rounded-full bg-[#4B4038] border-4 border-[#9A8678]/50 flex items-center justify-center">
-                        <svg class="w-20 h-20 text-[#9A8678]" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
+                    <div class="w-44 h-44 sm:w-56 sm:h-56 rounded-full bg-stone-700 border-4 border-stone-400/50 flex items-center justify-center">
+                        <svg class="w-20 h-20 text-stone-500" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
                         </svg>
                     </div>
-                    <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-[#202940] text-[#CAAA98] text-xs font-medium px-4 py-1 rounded-full whitespace-nowrap">
+                    <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-stone-900 text-stone-200 text-xs font-medium px-4 py-1 rounded-full whitespace-nowrap">
                         Jro Mangku Desa
                     </div>
                 </div>
@@ -526,18 +508,18 @@
 
             {{-- Bio --}}
             <div>
-                <p class="text-[#4B4038] text-xs tracking-widest uppercase font-medium mb-3">Pengempon Pura</p>
-                <h2 class="serif text-3xl md:text-4xl font-bold text-[#202940] mb-1">Jro Made Rena Atmaja</h2>
-                <p class="text-[#4B4038] text-sm mb-6">Lahir 1951 · Mangku Desa sejak 1993</p>
+                <p class="text-stone-600 text-xs tracking-widest uppercase font-medium mb-3">Pengempon Pura</p>
+                <h2 class="serif text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 mb-1">Jro Made Rena Atmaja</h2>
+                <p class="text-stone-600 text-sm mb-6">Lahir 1951 · Mangku Desa sejak 1993</p>
 
-                <div class="w-10 h-0.5 bg-[#4B4038] mb-6"></div>
+                <div class="w-10 h-0.5 bg-stone-600 mb-6"></div>
 
-                <blockquote class="text-[#4B4038] italic leading-relaxed mb-6 text-lg font-light serif">
+                <blockquote class="text-stone-700 italic leading-relaxed mb-6 text-lg font-light serif">
                     "Menjadi Mangku itu tidak mengenal istilah pensiun. Jika seseorang sudah terpilih menjadi
                     Mangku di Khayangan Tiga, ia melakukan kewajibannya dengan tulus ikhlas hingga akhir hayat."
                 </blockquote>
 
-                <p class="text-[#4B4038] text-sm leading-relaxed">
+                <p class="text-stone-700 text-sm leading-relaxed">
                     Beliau telah mengabdi sebagai Jro Mangku Desa selama lebih dari tiga dekade, bahkan
                     sejak masih aktif berdinas di pemerintahan. Peran Mangku Desa bersifat permanen
                     dan hanya dapat diwakilkan oleh Mangku pembantu (<em>pengayah</em>) dalam kondisi tertentu.
@@ -548,30 +530,30 @@
 </section>
 
 {{-- ════════════════════════════ TENTANG NANDIKA ════════════════════════ --}}
-<section class="bg-[#202940] py-20 md:py-24 border-t border-[#4B4038]/60">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-        <p class="text-[#CAAA98] text-xs tracking-widest uppercase font-medium mb-4">Project Akademik</p>
-        <h2 class="serif text-3xl md:text-4xl font-bold text-white mb-4">
+<section class="bg-stone-950 py-16 md:py-24 border-t border-stone-800/60">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+        <p class="text-stone-500 text-xs tracking-widest uppercase font-medium mb-4">Project Akademik</p>
+        <h2 class="serif text-2xl sm:text-3xl md:text-4xl font-bold text-stone-100 mb-4">
             Nandika —
-            <span class="text-[#CAAA98] italic">Nusantara Digital Archive</span>
+            <span class="text-amber-400 italic">Nusantara Digital Archive</span>
         </h2>
         <div class="flex items-center justify-center gap-3 mb-8">
-            <div class="w-12 h-px bg-[#9A8678]/40"></div>
-            <svg class="w-3 h-3 text-[#9A8678]/60" viewBox="0 0 16 16" fill="currentColor">
+            <div class="w-12 h-px bg-stone-700/40"></div>
+            <svg class="w-3 h-3 text-stone-700/60" viewBox="0 0 16 16" fill="currentColor">
                 <path d="M8 0l1.5 6.5L16 8l-6.5 1.5L8 16l-1.5-6.5L0 8l6.5-1.5z"/>
             </svg>
-            <div class="w-12 h-px bg-[#9A8678]/40"></div>
+            <div class="w-12 h-px bg-stone-700/40"></div>
         </div>
-        <p class="text-[#CAAA98]/80 leading-relaxed max-w-2xl mx-auto mb-8">
+        <p class="text-stone-400 leading-relaxed max-w-2xl mx-auto mb-8">
             Website ini merupakan luaran dari mata kuliah
-            <strong class="text-[#CAAA98]">Project Based Learning (PBL)</strong> program studi
+            <strong class="text-stone-200">Project Based Learning (PBL)</strong> program studi
             Rekam Medis & Informasi Kesehatan — Kelompok 2. Proyek Nandika berfokus pada
             pengalih-mediaan warisan budaya lokal ke dalam arsip digital yang awet dan berkelanjutan,
             dengan menyerahkan seluruh aset digital kepada pihak Desa Adat Tambawu.
         </p>
         <div class="flex flex-wrap justify-center gap-3">
             @foreach(['Virtual Tour 360°', 'Metadata Dublin Core', 'Arsip Digital', 'Kontribusi Sosial'] as $tag)
-                <span class="bg-[#4B4038]/60 border border-[#9A8678]/30 text-[#CAAA98]/80 text-xs px-4 py-1.5 rounded-full">
+                <span class="bg-stone-800/60 border border-stone-700/30 text-stone-500 text-xs px-4 py-1.5 rounded-full">
                     {{ $tag }}
                 </span>
             @endforeach
@@ -579,12 +561,76 @@
     </div>
 </section>
 
-{{-- ════════════════════════════════ KONTAK ═══════════════════════════════ --}}
-<section id="kontak" class="bg-[#4B4038] py-20 md:py-24">
-    <div class="max-w-7xl mx-auto px-6">
+{{-- ═══════════════════════════════ TIM ═══════════════════════════════════ --}}
+<section id="tim" class="bg-stone-950 py-16 md:py-24 border-t border-stone-800/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
         <div class="text-center mb-12">
-            <p class="text-[#CAAA98] text-xs tracking-widest uppercase font-medium mb-3">Hubungi Kami</p>
-            <h2 class="serif text-4xl font-bold text-white">Kontak</h2>
+            <p class="text-stone-500 text-xs tracking-widest uppercase font-medium mb-3">Kelompok 2 · PBL 2025</p>
+            <h2 class="serif text-3xl sm:text-4xl md:text-5xl font-bold text-stone-100 mb-4">Tim Nandika</h2>
+            <p class="text-stone-400 max-w-xl mx-auto text-sm leading-relaxed">
+                Mahasiswa Program Studi Rekam Medis &amp; Informasi Kesehatan yang mengerjakan proyek
+                digitalisasi warisan budaya Pura Desa Adat Tambawu.
+            </p>
+        </div>
+
+        @php
+            $team = [
+                ['nama' => 'Dewa Gede Kertayoga',          'nim' => '2403020101', 'peran' => 'Project Manager',     'inisial' => 'DGK', 'bg' => 'bg-rose-900',  'dosen' => false],
+                ['nama' => 'I Gusti Ayu Linda Intan Dewi', 'nim' => '2403020103', 'peran' => 'Data Acquisition',    'inisial' => 'LI',  'bg' => 'bg-amber-800', 'dosen' => false],
+                ['nama' => 'I Made Rai Gangga Putra',      'nim' => '2403020105', 'peran' => 'Metadata Specialist', 'inisial' => 'RG',  'bg' => 'bg-stone-600', 'dosen' => false],
+                ['nama' => 'I Wayan Suwantara Putra',      'nim' => '2403020111', 'peran' => 'Digital Curator',     'inisial' => 'SW',  'bg' => 'bg-rose-800',  'dosen' => false],
+                ['nama' => 'I Made Bagus Weda Semara',     'nim' => '2403020114', 'peran' => 'Public Relations',    'inisial' => 'BW',  'bg' => 'bg-amber-900', 'dosen' => false],
+                ['nama' => null,                           'nim' => null,         'peran' => 'Dosen Pembimbing',    'inisial' => null,  'bg' => null,           'dosen' => true],
+            ];
+        @endphp
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            @foreach($team as $anggota)
+                @if($anggota['dosen'])
+                    {{-- Kartu dosen — isi nama & NIP secara manual --}}
+                    <div class="rounded-2xl p-5 card-lift flex items-start gap-4"
+                         style="background: rgba(120,53,15,0.06); border: 1px solid rgba(180,83,9,0.2);">
+                        <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                             style="background: rgba(120,53,15,0.3); border: 1px solid rgba(180,83,9,0.25);">
+                            <svg class="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/>
+                            </svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-amber-600 text-xs tracking-widest uppercase font-medium mb-1.5">Dosen Pembimbing</p>
+                            {{-- TODO: ganti teks berikut dengan nama dan NIP dosen --}}
+                            <h3 class="serif text-sm font-semibold text-stone-400 leading-snug italic mb-1">Nama Dosen</h3>
+                            <p class="text-stone-600 text-xs">NIP · —</p>
+                        </div>
+                    </div>
+                @else
+                    <div class="pelinggih-card rounded-2xl p-5 card-lift flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl {{ $anggota['bg'] }} flex items-center justify-center flex-shrink-0">
+                            <span class="text-white font-bold text-sm">{{ $anggota['inisial'] }}</span>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <h3 class="serif text-sm font-semibold text-stone-100 leading-snug mb-1">{{ $anggota['nama'] }}</h3>
+                            <p class="text-stone-600 text-xs font-mono mb-2.5">{{ $anggota['nim'] }}</p>
+                            <span class="inline-flex items-center gap-1.5 bg-stone-950/50 border border-stone-700/20 text-stone-400 text-xs px-2.5 py-1 rounded-full">
+                                <span class="w-1 h-1 rounded-full bg-amber-500/60 flex-shrink-0"></span>
+                                {{ $anggota['peran'] }}
+                            </span>
+                        </div>
+                    </div>
+                @endif
+            @endforeach
+        </div>
+
+    </div>
+</section>
+
+{{-- ════════════════════════════════ KONTAK ═══════════════════════════════ --}}
+<section id="kontak" class="bg-stone-900 py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-12">
+            <p class="text-stone-400 text-xs tracking-widest uppercase font-medium mb-3">Hubungi Kami</p>
+            <h2 class="serif text-4xl font-bold text-stone-100">Kontak</h2>
         </div>
 
         <div class="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
@@ -598,14 +644,14 @@
             ]; @endphp
 
             @foreach($contacts as $c)
-                <div class="text-center p-6 rounded-2xl bg-[#202940]/40 border border-[#9A8678]/20">
-                    <div class="w-10 h-10 rounded-full bg-[#9A8678]/20 flex items-center justify-center mx-auto mb-3">
-                        <svg class="w-5 h-5 text-[#CAAA98]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <div class="text-center p-6 rounded-2xl bg-stone-950/40 border border-stone-700/20">
+                    <div class="w-10 h-10 rounded-full bg-stone-700/20 flex items-center justify-center mx-auto mb-3">
+                        <svg class="w-5 h-5 text-stone-300" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="{{ $c['icon'] }}"/>
                         </svg>
                     </div>
-                    <div class="text-[#CAAA98] text-xs uppercase tracking-widest mb-2">{{ $c['label'] }}</div>
-                    <p class="text-[#CAAA98] text-sm leading-relaxed">{{ $c['value'] }}</p>
+                    <div class="text-stone-500 text-xs uppercase tracking-widest mb-2">{{ $c['label'] }}</div>
+                    <p class="text-stone-300 text-sm leading-relaxed">{{ $c['value'] }}</p>
                 </div>
             @endforeach
         </div>
@@ -613,10 +659,10 @@
 </section>
 
 {{-- ════════════════════════════════ FOOTER ════════════════════════════════ --}}
-<footer class="bg-[#202940] border-t border-[#4B4038] py-8">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#CAAA98]/80">
+<footer class="bg-stone-950 border-t border-stone-800 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-stone-500">
         <div class="flex items-center gap-2">
-            <div class="w-5 h-5 rounded-full border border-[#9A8678]/40 flex items-center justify-center">
+            <div class="w-5 h-5 rounded-full border border-stone-700/40 flex items-center justify-center">
                 <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3"/>
                 </svg>
@@ -625,12 +671,13 @@
         </div>
         <div>Nandika PBL 2025 · Kelompok 2 · Hak Cipta Dilindungi</div>
         @auth
-            <a href="{{ route('dashboard') }}" class="hover:text-[#CAAA98] transition-colors">Admin ↗</a>
+            <a href="{{ route('dashboard') }}" class="hover:text-stone-300 transition-colors">Admin ↗</a>
         @else
-            <a href="{{ route('login') }}" class="hover:text-[#CAAA98] transition-colors">Admin ↗</a>
+            <a href="{{ route('login') }}" class="hover:text-stone-300 transition-colors">Admin ↗</a>
         @endauth
     </div>
 </footer>
 
+@livewireScripts
 </body>
 </html>
