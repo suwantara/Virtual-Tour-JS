@@ -4,11 +4,11 @@
     class="tour-root"
     style="--brand: {{ $primaryColor }};"
 >
-    {{-- Sidebar --}}
-    <aside class="tour-sidebar" :class="sidebarOpen ? 'tour-sidebar--open' : ''">
+    {{-- Panorama (fills remaining height) --}}
+    <div class="tour-viewer">
 
-        {{-- Header --}}
-        <div class="tour-sidebar__header">
+        {{-- Topbar overlay --}}
+        <div class="tour-topbar">
             <a href="{{ route('home') }}" class="tour-back-link">
                 @if ($logoUrl)
                     <img src="{{ $logoUrl }}" alt="{{ $venue->name }}" class="tour-logo">
@@ -16,77 +16,12 @@
                     <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
                     </svg>
-                    <span>Kembali</span>
+                    <span class="hidden sm:inline">Kembali</span>
                 @endif
             </a>
-            <button @click="sidebarOpen = false" class="tour-close-btn lg:hidden">
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-            </button>
-        </div>
 
-        {{-- Venue info --}}
-        <div class="tour-sidebar__venue">
-            <h1 class="tour-venue-name">{{ $venue->name }}</h1>
-            @if ($venue->description)
-                <p class="tour-venue-desc">{{ $venue->description }}</p>
-            @endif
-        </div>
+            <span class="tour-topbar__title">{{ $venue->name }}</span>
 
-        {{-- Scene list --}}
-        <nav class="tour-scene-list">
-            @if ($scenes->isEmpty())
-                <p class="tour-empty">Belum ada scene.</p>
-            @else
-                @foreach ($scenes as $scene)
-                    <button
-                        @click="switchScene('scene-{{ $scene['id'] }}')"
-                        :class="currentSceneId === 'scene-{{ $scene['id'] }}' ? 'tour-scene-btn--active' : ''"
-                        class="tour-scene-btn"
-                    >
-                        <div class="tour-scene-thumb">
-                            @if ($scene['image_path'])
-                                <img src="{{ $scene['image_path'] }}" alt="{{ $scene['name'] }}" class="w-full h-full object-cover">
-                            @else
-                                <svg class="w-4 h-4 tour-scene-thumb__icon" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159"/>
-                                </svg>
-                            @endif
-                        </div>
-                        <span class="truncate">{{ $scene['name'] }}</span>
-                    </button>
-                @endforeach
-            @endif
-        </nav>
-    </aside>
-
-    {{-- Mobile backdrop --}}
-    <div
-        x-show="sidebarOpen"
-        @click="sidebarOpen = false"
-        x-transition:enter="transition-opacity duration-300"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition-opacity duration-300"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-        class="tour-backdrop lg:hidden"
-    ></div>
-
-    {{-- Viewer --}}
-    <div class="tour-viewer">
-
-        {{-- Top bar --}}
-        <div class="tour-topbar">
-            <button @click="sidebarOpen = true" class="tour-menu-btn lg:hidden">
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
-                </svg>
-            </button>
-            <span x-text="currentSceneName" class="tour-scene-label"></span>
-
-            {{-- Coordinate helper toggle --}}
             <button
                 @click="toggleCoordHelper()"
                 :class="coordHelper ? 'tour-coord-btn--active' : ''"
@@ -96,21 +31,17 @@
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0zM19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
                 </svg>
-                <span class="text-xs">Koordinat</span>
+                <span class="text-xs hidden sm:inline">Koordinat</span>
             </button>
         </div>
 
         {{-- Coordinate overlay --}}
         <div x-show="coordHelper" class="tour-coord-overlay" x-transition>
-
-            {{-- Crosshair --}}
             <div class="tour-crosshair" aria-hidden="true">
                 <div class="tour-crosshair__h"></div>
                 <div class="tour-crosshair__v"></div>
                 <div class="tour-crosshair__dot"></div>
             </div>
-
-            {{-- Coordinate card --}}
             <div class="tour-coord-card">
                 <div class="tour-coord-card__label">Posisi Tengah Kamera</div>
                 <div class="tour-coord-card__values">
@@ -130,7 +61,7 @@
             </div>
         </div>
 
-        {{-- Pannellum --}}
+        {{-- Pannellum container --}}
         <div id="panorama" class="w-full h-full">
             @if ($scenes->isEmpty())
                 <div class="tour-no-scene">
@@ -143,7 +74,37 @@
         </div>
     </div>
 
-    {{-- Hotspot Modal --}}
+    {{-- Scene navigation strip --}}
+    @if ($scenes->isNotEmpty())
+        <div class="tour-scene-strip">
+            <div class="tour-scene-strip__meta">
+                <span class="tour-scene-strip__label">Lokasi</span>
+                <span class="tour-scene-strip__current" x-text="currentSceneName"></span>
+            </div>
+            <div class="tour-scene-strip__track">
+                @foreach ($scenes as $scene)
+                    <button
+                        @click="switchScene('scene-{{ $scene['id'] }}')"
+                        :class="currentSceneId === 'scene-{{ $scene['id'] }}' ? 'tour-badge--active' : ''"
+                        class="tour-badge"
+                    >
+                        @if ($scene['image_path'])
+                            <img src="{{ $scene['image_path'] }}" alt="" class="tour-badge__thumb">
+                        @else
+                            <div class="tour-badge__thumb--empty">
+                                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159"/>
+                                </svg>
+                            </div>
+                        @endif
+                        <span>{{ $scene['name'] }}</span>
+                    </button>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
+    {{-- Hotspot modal --}}
     <div
         x-show="modal.open"
         x-transition:enter="transition ease-out duration-200"
@@ -158,11 +119,12 @@
     >
         <div class="tour-modal-backdrop"></div>
 
-        <div class="tour-modal"
-             x-transition:enter="transition ease-out duration-200"
-             x-transition:enter-start="opacity-0 scale-95"
-             x-transition:enter-end="opacity-100 scale-100">
-
+        <div
+            class="tour-modal"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 scale-95"
+            x-transition:enter-end="opacity-100 scale-100"
+        >
             <div class="tour-modal__header">
                 <h3 x-text="modal.label" class="tour-modal__title"></h3>
                 <button @click="modal.open = false" class="tour-modal__close">
@@ -221,7 +183,6 @@
             viewer: null,
             currentSceneId: null,
             currentSceneName: '',
-            sidebarOpen: false,
 
             modal: {
                 open: false, type: null, label: '',
@@ -393,7 +354,6 @@
             switchScene(sceneId) {
                 if (this.viewer) this.viewer.loadScene(sceneId);
                 this.currentSceneId = sceneId;
-                this.sidebarOpen = false;
             },
         };
     }
