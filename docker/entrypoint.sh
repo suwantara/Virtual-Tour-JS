@@ -23,6 +23,9 @@ if [[ "$FIRST_ARG" = "php-fpm" || "$FIRST_ARG" = "supervisord" ]]; then
     echo "  → Running migrations..."
     php artisan migrate --force --no-interaction
 
+    echo "  → Seeding database..."
+    php artisan db:seed --force --no-interaction
+
     echo "  → Caching config, routes, views..."
     php artisan config:cache
     php artisan route:cache
