@@ -77,7 +77,7 @@ COPY . .
 RUN composer dump-autoload --optimize --no-dev \
     && npm run build
 
-# ─── Production image (VPS / Docker Compose) ──────────────────────────────────
+# ─── Production image ─────────────────────────────────────────────────────────
 FROM base AS production
 
 COPY --from=builder --chown=laravel:laravel /var/www/html /var/www/html

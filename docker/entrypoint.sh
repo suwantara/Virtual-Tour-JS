@@ -3,7 +3,7 @@ set -euo pipefail
 
 echo "▶ Virtual Tour — entrypoint.sh"
 
-# Fail fast if APP_KEY is not set
+# Fail fast if APP_KEY is not set — running without it is insecure
 if [ -z "${APP_KEY:-}" ]; then
     echo "ERROR: APP_KEY is not set. Generate one with: php artisan key:generate --show" >&2
     exit 1
@@ -18,6 +18,7 @@ if [[ "$FIRST_ARG" = "php-fpm" || "$FIRST_ARG" = "supervisord" ]]; then
         sleep 3
     done
     echo "  → Database ready."
+
 
     echo "  → Running migrations..."
     php artisan migrate --force --no-interaction
