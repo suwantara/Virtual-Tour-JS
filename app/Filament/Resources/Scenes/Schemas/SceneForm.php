@@ -8,7 +8,6 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 
 class SceneForm
@@ -45,10 +44,8 @@ class SceneForm
                             ->directory('scenes')
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                             ->maxSize(51200)
-                            ->helperText('Format JPG/PNG/WebP equirectangular. Maks. 50MB. Otomatis mengisi Path R2 di bawah.')
-                            ->dehydrated(false)
-                            ->live()
-                            ->afterStateUpdated(fn (Set $set, ?string $state) => $state ? $set('image_path', $state) : null),
+                            ->helperText('Format JPG/PNG/WebP equirectangular. Maks. 50MB. Otomatis mengisi Path R2 di bawah setelah disimpan.')
+                            ->dehydrated(true),
 
                         TextInput::make('image_path')
                             ->label('Path R2')

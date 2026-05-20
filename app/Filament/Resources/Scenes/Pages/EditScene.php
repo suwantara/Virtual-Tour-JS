@@ -16,4 +16,14 @@ class EditScene extends EditRecord
             DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        if (! empty($data['image_upload'])) {
+            $data['image_path'] = $data['image_upload'];
+        }
+        unset($data['image_upload']);
+
+        return $data;
+    }
 }
