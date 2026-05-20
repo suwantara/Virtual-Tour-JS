@@ -41,4 +41,24 @@ class SceneService
                 ])->values()->all(),
             ]);
     }
+
+    public function totalCount(): int
+    {
+        return $this->scenes->totalCount();
+    }
+
+    public function publishedCount(): int
+    {
+        return $this->scenes->publishedCount();
+    }
+
+    public function getVenueIdByScene(int $sceneId): ?int
+    {
+        return $this->scenes->getVenueIdByScene($sceneId);
+    }
+
+    public function getScenesForVenueSelect(int $venueId, int $excludeSceneId): Collection
+    {
+        return $this->scenes->getOptionsForVenue($venueId, $excludeSceneId);
+    }
 }

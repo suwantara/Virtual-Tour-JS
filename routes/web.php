@@ -25,7 +25,18 @@ Route::get('/r2/{path}', function (string $path) {
     abort_unless($disk->exists($path), 404);
 
     $mimeType = $disk->mimeType($path) ?: 'application/octet-stream';
-    $size     = $disk->size($path);
+    $size = $disk->size($path);
+    $lastModified = $disk->lastModified($path);
+    $etag = md5($path.'.'.$lastModified.'.'.$size);
+
+    $request = request();
+
+    if ($request->header('If-None-Match') === $etag) {
+        return response('', 304, [
+            'ETag' => $etag,
+            'Cache-Control' => 'public, max-age=86400, immutable',
+        ]);
+    }
 
     return response()->stream(function () use ($disk, $path) {
         $stream = $disk->readStream($path);
@@ -36,10 +47,12 @@ Route::get('/r2/{path}', function (string $path) {
         }
         fclose($stream);
     }, 200, [
-        'Content-Type'   => $mimeType,
+        'Content-Type' => $mimeType,
         'Content-Length' => $size,
-        'Cache-Control'  => 'public, max-age=86400',
-        'Accept-Ranges'  => 'bytes',
+        'Cache-Control' => 'public, max-age=86400, immutable',
+        'Accept-Ranges' => 'bytes',
+        'ETag' => $etag,
+        'Last-Modified' => gmdate('D, d M Y H:i:s', $lastModified).' GMT',
     ]);
 })->where('path', '.*')->name('r2.proxy');
 

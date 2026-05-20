@@ -469,14 +469,9 @@ div.pnlm-tooltip > span {
 
 .tour-scene-strip__track {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding-bottom: 2px;
 }
-
-.tour-scene-strip__track::-webkit-scrollbar { display: none; }
 
 /* ── Scene badges ── */
 
@@ -493,7 +488,6 @@ div.pnlm-tooltip > span {
     white-space: nowrap;
     cursor: pointer;
     transition: background 0.2s, border-color 0.2s, color 0.2s;
-    flex-shrink: 0;
 }
 
 .tour-badge:hover {
@@ -692,23 +686,39 @@ div.pnlm-tooltip > span {
     letter-spacing: 0.06em;
 }
 
-/* ── Scene-nav hotspot ── */
+/* ── Hotspot base shared ── */
 
-.pnlm-hotspot-base.hotspot-scene-nav {
-    width: 40px;
-    height: 40px;
-    background: rgba(68, 64, 60, 0.85);
-    border: 2px solid rgba(231, 229, 228, 0.3);
+.pnlm-hotspot-base.hotspot-scene-nav,
+.pnlm-hotspot-base.hotspot-info,
+.pnlm-hotspot-base.hotspot-url,
+.pnlm-hotspot-base.hotspot-media {
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s;
     backdrop-filter: blur(4px);
+    transition: background 0.2s, box-shadow 0.2s;
+    background-image: none;
+}
+
+.pnlm-hotspot-base.hotspot-scene-nav:hover,
+.pnlm-hotspot-base.hotspot-info:hover,
+.pnlm-hotspot-base.hotspot-url:hover,
+.pnlm-hotspot-base.hotspot-media:hover {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
+}
+
+/* ── Scene-nav — primary maroon ── */
+
+.pnlm-hotspot-base.hotspot-scene-nav {
+    width: 40px;
+    height: 40px;
+    background: rgba(108, 1, 40, 0.85);
+    border: 2px solid rgba(255, 221, 230, 0.35);
 }
 
 .pnlm-hotspot-base.hotspot-scene-nav:hover {
-    background: rgba(120, 113, 108, 0.9);
+    background: rgba(140, 31, 61, 0.95);
 }
 
 .pnlm-hotspot-base.hotspot-scene-nav::after {
@@ -718,11 +728,94 @@ div.pnlm-tooltip > span {
     height: 0;
     border-left: 7px solid transparent;
     border-right: 7px solid transparent;
-    border-bottom: 11px solid rgba(231, 229, 228, 0.9);
+    border-bottom: 11px solid rgba(255, 221, 230, 0.9);
+    pointer-events: none;
+}
+
+/* ── Info — secondary gold ── */
+
+.pnlm-hotspot-base.hotspot-info {
+    width: 36px;
+    height: 36px;
+    background: rgba(118, 90, 36, 0.85);
+    border: 2px solid rgba(255, 240, 212, 0.35);
+}
+
+.pnlm-hotspot-base.hotspot-info:hover {
+    background: rgba(154, 122, 58, 0.95);
+}
+
+.pnlm-hotspot-base.hotspot-info::after {
+    content: 'i';
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 17px;
+    color: rgba(255, 240, 212, 0.95);
+    line-height: 1;
+    pointer-events: none;
+}
+
+/* ── URL/Link — secondary container ── */
+
+.pnlm-hotspot-base.hotspot-url {
+    width: 36px;
+    height: 36px;
+    background: rgba(154, 122, 58, 0.85);
+    border: 2px solid rgba(255, 240, 212, 0.35);
+}
+
+.pnlm-hotspot-base.hotspot-url:hover {
+    background: rgba(178, 143, 72, 0.95);
+}
+
+.pnlm-hotspot-base.hotspot-url::after {
+    content: '↗';
+    font-size: 16px;
+    color: rgba(255, 240, 212, 0.95);
+    line-height: 1;
+    pointer-events: none;
+}
+
+/* ── Media — primary container ── */
+
+.pnlm-hotspot-base.hotspot-media {
+    width: 36px;
+    height: 36px;
+    background: rgba(140, 31, 61, 0.85);
+    border: 2px solid rgba(255, 221, 230, 0.35);
+}
+
+.pnlm-hotspot-base.hotspot-media:hover {
+    background: rgba(165, 50, 80, 0.95);
+}
+
+.pnlm-hotspot-base.hotspot-media::after {
+    content: '▶';
+    font-size: 13px;
+    color: rgba(255, 221, 230, 0.95);
+    line-height: 1;
+    margin-left: 2px;
     pointer-events: none;
 }
 
 /* ── Mobile overrides ── */
+
+@media (max-width: 640px) {
+    .tour-viewer {
+        flex: none;
+        height: 58svh;
+    }
+
+    .tour-scene-strip {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        scrollbar-width: none;
+    }
+
+    .tour-scene-strip::-webkit-scrollbar { display: none; }
+}
 
 @media (max-width: 480px) {
     .tour-coord-btn .text-xs { display: none; }

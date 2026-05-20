@@ -21,4 +21,19 @@ class VenueService
     {
         return $this->venues->findBySlug($slug);
     }
+
+    public function totalCount(): int
+    {
+        return $this->venues->totalCount();
+    }
+
+    public function publishedCount(): int
+    {
+        return $this->venues->publishedCount();
+    }
+
+    public function totalViewCount(): int
+    {
+        return $this->venues->totalViewCount();
+    }
 }

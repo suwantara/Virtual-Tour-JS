@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Hotspots\Schemas;
 
 use App\Models\Scene;
+use App\Services\SceneService;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -87,15 +88,15 @@ class HotspotForm
                                 if (! $sceneId) {
                                     return [];
                                 }
-                                $scene = Scene::with('venue')->find($sceneId);
-                                if (! $scene) {
+
+                                $service = app(SceneService::class);
+                                $venueId = $service->getVenueIdByScene((int) $sceneId);
+
+                                if (! $venueId) {
                                     return [];
                                 }
 
-                                return Scene::where('venue_id', $scene->venue_id)
-                                    ->where('id', '!=', $sceneId)
-                                    ->orderBy('order')
-                                    ->pluck('name', 'id');
+                                return $service->getScenesForVenueSelect($venueId, (int) $sceneId);
                             })
                             ->searchable()
                             ->nullable(),

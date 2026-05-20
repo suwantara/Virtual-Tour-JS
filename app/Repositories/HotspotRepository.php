@@ -33,4 +33,9 @@ class HotspotRepository
     {
         $hotspot->delete();
     }
+
+    public function totalCount(): int
+    {
+        return Hotspot::count();
+    }
 }

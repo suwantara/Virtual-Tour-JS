@@ -42,4 +42,19 @@ class VenueRepository implements VenueRepositoryInterface
     {
         $venue->delete();
     }
+
+    public function totalCount(): int
+    {
+        return Venue::count();
+    }
+
+    public function publishedCount(): int
+    {
+        return Venue::where('is_published', true)->count();
+    }
+
+    public function totalViewCount(): int
+    {
+        return (int) Venue::sum('view_count');
+    }
 }

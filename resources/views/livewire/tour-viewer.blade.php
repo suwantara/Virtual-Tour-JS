@@ -183,6 +183,9 @@
             viewer: null,
             currentSceneId: null,
             currentSceneName: '',
+            _preloadQueue: [],
+            _preloadedUrls: new Set(),
+            _preloadTimer: null,
 
             modal: {
                 open: false, type: null, label: '',
@@ -239,11 +242,16 @@
                     this.currentSceneId = id;
                     const scene = scenes.find(s => `scene-${s.id}` === id);
                     this.currentSceneName = scene ? scene.name : '';
+                    this._schedulePreload(id);
                 });
 
                 this.currentSceneId = firstKey;
                 const firstScene = scenes.find(s => `scene-${s.id}` === firstKey);
                 this.currentSceneName = firstScene ? firstScene.name : '';
+
+                this.viewer.on('load', () => {
+                    this._schedulePreload(this.currentSceneId);
+                });
 
                 window.__tourOpenModal = (args) => {
                     this.modal = { open: true, ...args };
@@ -322,6 +330,7 @@
                         return {
                             ...pos,
                             type: 'info',
+                            cssClass: 'hotspot-url',
                             URL: hs.url,
                             attributes: { target: '_blank', rel: 'noopener noreferrer' },
                             createTooltipFunc: this.makeCardTooltip(),
@@ -332,6 +341,7 @@
                     return {
                         ...pos,
                         type: 'info',
+                        cssClass: hs.type === 'media' ? 'hotspot-media' : 'hotspot-info',
                         createTooltipFunc: this.makeCardTooltip(),
                         createTooltipArgs: {
                             ...tooltipArgs,
@@ -353,6 +363,45 @@
             switchScene(sceneId) {
                 if (this.viewer) this.viewer.loadScene(sceneId);
                 this.currentSceneId = sceneId;
+            },
+
+            _schedulePreload(activeSceneKey) {
+                clearTimeout(this._preloadTimer);
+
+                const activeScene = scenes.find(s => `scene-${s.id}` === activeSceneKey);
+                const linkedIds = new Set(
+                    (activeScene?.hotspots ?? [])
+                        .filter(h => h.type === 'scene_link' && h.target_scene_id)
+                        .map(h => `scene-${h.target_scene_id}`)
+                );
+
+                const linked = scenes.filter(s => linkedIds.has(`scene-${s.id}`) && s.image_path && !this._preloadedUrls.has(s.image_path));
+                const rest   = scenes.filter(s => !linkedIds.has(`scene-${s.id}`) && `scene-${s.id}` !== activeSceneKey && s.image_path && !this._preloadedUrls.has(s.image_path));
+
+                this._preloadQueue = [...linked.map(s => s.image_path), ...rest.map(s => s.image_path)];
+
+                // slight delay so the current scene finishes loading first
+                this._preloadTimer = setTimeout(() => this._drainPreloadQueue(), 800);
+            },
+
+            _drainPreloadQueue() {
+                const CONCURRENCY = 2;
+                const batch = this._preloadQueue.splice(0, CONCURRENCY);
+                if (batch.length === 0) return;
+
+                let done = 0;
+                batch.forEach(url => {
+                    const img = new Image();
+                    img.crossOrigin = 'anonymous';
+                    img.onload = img.onerror = () => {
+                        this._preloadedUrls.add(url);
+                        done++;
+                        if (done === batch.length && this._preloadQueue.length > 0) {
+                            setTimeout(() => this._drainPreloadQueue(), 200);
+                        }
+                    };
+                    img.src = url;
+                });
             },
         };
     }

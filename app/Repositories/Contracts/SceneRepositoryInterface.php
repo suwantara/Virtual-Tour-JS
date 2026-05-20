@@ -18,4 +18,12 @@ interface SceneRepositoryInterface
     public function delete(Scene $scene): void;
 
     public function updateOrder(array $orderedIds): void;
+
+    public function totalCount(): int;
+
+    public function publishedCount(): int;
+
+    public function getVenueIdByScene(int $sceneId): ?int;
+
+    public function getOptionsForVenue(int $venueId, int $excludeSceneId): Collection;
 }

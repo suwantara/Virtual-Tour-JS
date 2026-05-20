@@ -45,4 +45,27 @@ class SceneRepository implements SceneRepositoryInterface
             Scene::where('id', $id)->update(['order' => $order]);
         }
     }
+
+    public function totalCount(): int
+    {
+        return Scene::count();
+    }
+
+    public function publishedCount(): int
+    {
+        return Scene::where('is_published', true)->count();
+    }
+
+    public function getVenueIdByScene(int $sceneId): ?int
+    {
+        return Scene::where('id', $sceneId)->value('venue_id');
+    }
+
+    public function getOptionsForVenue(int $venueId, int $excludeSceneId): Collection
+    {
+        return Scene::where('venue_id', $venueId)
+            ->where('id', '!=', $excludeSceneId)
+            ->orderBy('order')
+            ->pluck('name', 'id');
+    }
 }

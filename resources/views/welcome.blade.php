@@ -181,7 +181,7 @@
         {{-- Badge --}}
         <div class="inline-flex items-center gap-2 bg-stone-800/60 border border-amber-700/30 text-amber-300 font-medium px-3 sm:px-4 py-1.5 rounded-full mb-8 uppercase" style="font-size: clamp(9px, 2vw, 12px); letter-spacing: 0.08em;">
             <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse flex-shrink-0"></span>
-            <span class="hidden sm:inline">Nandika · Nusantara Digital Archive · PBL 2025</span>
+            <span class="hidden sm:inline">Digital Heritage · Digital Archive · PBL 2025</span>
             <span class="sm:hidden">Nandika · PBL 2025</span>
         </div>
 

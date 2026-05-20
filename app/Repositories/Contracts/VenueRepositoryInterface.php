@@ -18,4 +18,10 @@ interface VenueRepositoryInterface
     public function update(Venue $venue, array $data): Venue;
 
     public function delete(Venue $venue): void;
+
+    public function totalCount(): int;
+
+    public function publishedCount(): int;
+
+    public function totalViewCount(): int;
 }
