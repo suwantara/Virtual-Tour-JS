@@ -655,6 +655,27 @@
                 </div>
             @endforeach
         </div>
+
+        {{-- Social Media --}}
+        <div class="flex justify-center gap-3 mt-10">
+            @php $socials = [
+                ['href' => '#', 'icon' => 'fa-brands fa-github',    'label' => 'GitHub'],
+                ['href' => '#', 'icon' => 'fa-brands fa-instagram', 'label' => 'Instagram'],
+                ['href' => '#', 'icon' => 'fa-brands fa-youtube',   'label' => 'YouTube'],
+                ['href' => '#', 'icon' => 'fa-brands fa-tiktok',    'label' => 'TikTok'],
+            ]; @endphp
+
+            @foreach($socials as $s)
+                <a href="{{ $s['href'] }}"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   aria-label="{{ $s['label'] }}"
+                   class="w-11 h-11 rounded-full bg-stone-800/60 border border-stone-700/30 flex items-center justify-center text-stone-400 hover:text-stone-100 hover:bg-stone-700/60 hover:border-stone-600/60 transition-all duration-200"
+                >
+                    <i class="{{ $s['icon'] }} text-base"></i>
+                </a>
+            @endforeach
+        </div>
     </div>
 </section>
 
