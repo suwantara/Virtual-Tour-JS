@@ -22,7 +22,7 @@ Aplikasi virtual tour berbasis web untuk menjelajahi venue/lokasi bersejarah sec
 | Backend | Laravel 13 + PHP 8.4 |
 | Frontend reaktif | Livewire 4 + Flux UI v2 |
 | Styling | Tailwind CSS v4 |
-| Viewer 360° | Pannellum 2.5.6 |
+| Viewer 360° | Pannellum 2.5.7 |
 | Admin panel | Filament v5 |
 | Auth | Laravel Fortify |
 | Object storage | Cloudflare R2 (S3-compatible) |
@@ -45,7 +45,7 @@ Aplikasi mengikuti pola **Modular Monolith** dengan tiga layer utama: Presentati
                              │ memanggil
 ┌────────────────────────────▼────────────────────────────────────┐
 │                      APPLICATION LAYER                           │
-│          VenueService · SceneService · StorageService            │
+│    VenueService · SceneService · HotspotService · StorageService │
 └──────────────┬──────────────────────────────┬───────────────────┘
                │ menggunakan                  │ menggunakan
 ┌──────────────▼──────────┐   ┌──────────────▼──────────────────┐
@@ -105,7 +105,8 @@ app/
 └── Services/
     ├── StorageService.php            # Satu-satunya akses ke R2
     ├── VenueService.php              # Logika bisnis Venue
-    └── SceneService.php             # Build data untuk Pannellum
+    ├── SceneService.php             # Build data untuk Pannellum
+    └── HotspotService.php           # Logika bisnis Hotspot
 
 resources/
 ├── css/app.css                       # Tailwind CSS v4
