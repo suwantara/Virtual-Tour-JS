@@ -61,6 +61,17 @@
             </div>
         </div>
 
+        {{-- Loading overlay --}}
+        <div
+            x-show="isLoading"
+            x-transition:leave="transition ease-in duration-300"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            class="tour-loading"
+        >
+            <div class="tour-loading__ring"></div>
+        </div>
+
         {{-- Pannellum container --}}
         <div id="panorama" class="w-full h-full">
             @if ($scenes->isEmpty())
@@ -187,6 +198,8 @@
             _preloadedUrls: new Set(),
             _preloadTimer: null,
 
+            isLoading: true,
+
             modal: {
                 open: false, type: null, label: '',
                 description: '', url: null, mediaUrl: null, mediaType: null,
@@ -239,6 +252,7 @@
                 });
 
                 this.viewer.on('scenechange', (id) => {
+                    this.isLoading = true;
                     this.currentSceneId = id;
                     const scene = scenes.find(s => `scene-${s.id}` === id);
                     this.currentSceneName = scene ? scene.name : '';
@@ -250,6 +264,7 @@
                 this.currentSceneName = firstScene ? firstScene.name : '';
 
                 this.viewer.on('load', () => {
+                    this.isLoading = false;
                     this._schedulePreload(this.currentSceneId);
                 });
 
