@@ -5,69 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $pageTitle ?? 'Virtual Tour — Pura Desa Adat Tambawu' }}</title>
 
-    @php
-        use App\Models\SiteSetting;
-        use App\Services\StorageService;
-
-        // Hero
-        $heroBadge     = SiteSetting::get('hero.badge_text') ?: 'Digital Heritage · Digital Archive · PBL 2025';
-        $heroKaligrafi = SiteSetting::get('hero.kaligrafi')  ?: 'Tri Kahyangan · Desa Adat Tambawu';
-        $heroTitleMain = SiteSetting::get('hero.title_main') ?: 'Pura Desa';
-        $heroTitleSub  = SiteSetting::get('hero.title_sub')  ?: 'Adat Tambawu';
-        $heroSubtitle  = SiteSetting::get('hero.subtitle')   ?: 'Jelajahi warisan budaya Desa Adat Tambawu melalui Virtual Tour 360° interaktif.';
-
-        // Tentang Pura
-        $tentangSejarahTitle = SiteSetting::get('tentang_pura.sejarah_title') ?: 'Sejarah & Latar Belakang';
-        $tentangParagraphs   = SiteSetting::getJson('tentang_pura.paragraphs');
-        $tentangStats        = SiteSetting::getJson('tentang_pura.stats');
-
-        // Virtual Tour CTA
-        $tourCtaTitle       = SiteSetting::get('tour_cta.title')        ?: 'Jelajahi Pura';
-        $tourCtaAccent      = SiteSetting::get('tour_cta.title_accent') ?: 'dalam 360°';
-        $tourCtaDescription = SiteSetting::get('tour_cta.description')  ?: '';
-        $tourCtaFeatures    = SiteSetting::getJson('tour_cta.features');
-
-        // Pelinggih
-        $pelinggihItems = SiteSetting::getJson('pelinggih.items');
-
-        // Profil Mangku
-        $mangkuName  = SiteSetting::get('mangku.name')  ?: 'Jro Made Rena Atmaja';
-        $mangkuMeta  = SiteSetting::get('mangku.meta')  ?: '';
-        $mangkuQuote = SiteSetting::get('mangku.quote') ?: '';
-        $mangkuBio   = SiteSetting::get('mangku.bio')   ?: '';
-
-        // Tentang Nandika
-        $nandikaDescription = SiteSetting::get('nandika.description') ?: '';
-        $nandikaTags        = SiteSetting::getJson('nandika.tags');
-
-        // Tim
-        $storage = app(StorageService::class);
-        $timMembers = collect(SiteSetting::getJson('tim.members'))
-            ->map(fn ($m) => array_merge($m, [
-                'photo_url' => !empty($m['photo_path']) ? $storage->getUrl($m['photo_path']) : null,
-            ]))
-            ->all();
-        $dosenName    = SiteSetting::get('tim.dosen_name');
-        $dosenNip     = SiteSetting::get('tim.dosen_nip');
-
-        // Kontak & Footer
-        $kontakItems    = SiteSetting::getJson('kontak.items');
-        $footerVenue    = SiteSetting::get('footer.venue_text') ?: 'Pura Desa Adat Tambawu · Denpasar, Bali';
-        $footerCopy     = SiteSetting::get('footer.copyright')  ?: 'Nandika PBL 2025 · Kelompok 2 · Hak Cipta Dilindungi';
-
-        // Socials
-        $socials = [
-            ['href' => SiteSetting::get('social.github')    ?: '#', 'icon' => 'fa-brands fa-github',    'label' => 'GitHub'],
-            ['href' => SiteSetting::get('social.instagram') ?: '#', 'icon' => 'fa-brands fa-instagram', 'label' => 'Instagram'],
-            ['href' => SiteSetting::get('social.youtube')   ?: '#', 'icon' => 'fa-brands fa-youtube',   'label' => 'YouTube'],
-            ['href' => SiteSetting::get('social.tiktok')    ?: '#', 'icon' => 'fa-brands fa-tiktok',    'label' => 'TikTok'],
-        ];
-
-        $siteDescription = $heroSubtitle;
-        $siteUrl = url('/');
-        $pageTitle = 'Virtual Tour — ' . $heroTitleMain . ' ' . $heroTitleSub;
-    @endphp
-
     <meta name="description" content="{{ $siteDescription }}">
 
     {{-- Open Graph --}}

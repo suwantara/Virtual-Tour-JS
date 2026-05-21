@@ -1,16 +1,12 @@
 <?php
 
+use App\Http\Controllers\WelcomeController;
 use App\Livewire\TourViewer;
-use App\Services\VenueService;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
 Route::middleware('throttle:60,1')->group(function () {
-    Route::get('/', function (VenueService $venueService) {
-        $venues = $venueService->getPublished();
-
-        return view('welcome', compact('venues'));
-    })->name('home');
+    Route::get('/', WelcomeController::class)->name('home');
 
     Route::get('/tour/{venue:slug}', TourViewer::class)->name('tour');
 });
