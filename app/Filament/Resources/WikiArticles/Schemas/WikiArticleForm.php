@@ -66,18 +66,10 @@ class WikiArticleForm
                             ->label('')
                             ->required()
                             ->toolbarButtons([
-                                'heading',
-                                'bold',
-                                'italic',
-                                'underline',
-                                'strike',
-                                'link',
-                                'bulletList',
-                                'orderedList',
-                                'blockquote',
-                                'codeBlock',
-                                'undo',
-                                'redo',
+                                ['bold', 'italic', 'underline', 'strike', 'link'],
+                                ['h2', 'h3'],
+                                ['bulletList', 'orderedList', 'blockquote', 'codeBlock'],
+                                ['undo', 'redo'],
                             ])
                             ->columnSpanFull(),
                     ]),
