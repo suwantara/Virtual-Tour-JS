@@ -1,12 +1,16 @@
 <?php
 
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\WikiController;
 use App\Livewire\TourViewer;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
 Route::middleware('throttle:60,1')->group(function () {
     Route::get('/', WelcomeController::class)->name('home');
+
+    Route::get('/wiki', [WikiController::class, 'index'])->name('wiki.index');
+    Route::get('/wiki/{slug}', [WikiController::class, 'show'])->name('wiki.show');
 
     Route::get('/tour/{venue:slug}', TourViewer::class)->name('tour');
 });

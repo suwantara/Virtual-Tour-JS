@@ -13,6 +13,7 @@ Aplikasi virtual tour berbasis web untuk menjelajahi venue/lokasi bersejarah sec
 - **Branding per venue** — Warna utama dan logo custom untuk setiap lokasi
 - **Admin panel** — CRUD lengkap via Filament: venue, scene, hotspot, dan user management
 - **Role-based access** — Tiga role: Admin (full access), Editor (konten), Viewer (public)
+- **Wiki Ensiklopedia** — Artikel digital tentang sejarah, pelinggih, ritual, tokoh, dan glosarium adat Bali
 - **Cloudflare R2** — Penyimpanan foto 360° dengan zero egress cost
 
 ## Tech Stack
@@ -61,7 +62,8 @@ Aplikasi mengikuti pola **Modular Monolith** dengan tiga layer utama: Presentati
 ```
 app/
 ├── Enums/
-│   └── UserRole.php                  # Admin · Editor · Viewer
+│   ├── UserRole.php                  # Admin · Editor · Viewer
+│   └── WikiCategory.php              # Sejarah · Pelinggih · Ritual · Tokoh · Glosarium · Info
 │
 ├── Filament/
 │   └── Resources/
@@ -80,10 +82,20 @@ app/
 │       │   ├── Pages/
 │       │   ├── Schemas/
 │       │   └── Tables/
-│       └── Hotspots/                 # Kelola hotspot interaktif
-│           ├── HotspotResource.php
+│       ├── Hotspots/                 # Kelola hotspot interaktif
+│       │   ├── HotspotResource.php
+│       │   ├── Pages/
+│       │   └── Schemas/
+│       └── WikiArticles/             # Kelola artikel wiki ensiklopedia
+│           ├── WikiArticleResource.php
 │           ├── Pages/
-│           └── Schemas/
+│           ├── Schemas/
+│           └── Tables/
+│
+├── Http/
+│   └── Controllers/
+│       ├── WelcomeController.php     # Halaman utama publik
+│       └── WikiController.php        # Wiki index & show
 │
 ├── Livewire/
 │   └── TourViewer.php                # Komponen viewer publik 360°
@@ -92,21 +104,25 @@ app/
 │   ├── User.php                      # fillable, casts, relationships
 │   ├── Venue.php
 │   ├── Scene.php
-│   └── Hotspot.php
+│   ├── Hotspot.php
+│   └── WikiArticle.php               # slug, title, category, excerpt, content, order
 │
 ├── Repositories/
 │   ├── Contracts/
 │   │   ├── VenueRepositoryInterface.php
-│   │   └── SceneRepositoryInterface.php
+│   │   ├── SceneRepositoryInterface.php
+│   │   └── WikiArticleRepositoryInterface.php
 │   ├── VenueRepository.php           # Semua query Venue
 │   ├── SceneRepository.php           # Semua query Scene
-│   └── HotspotRepository.php        # Semua query Hotspot
+│   ├── HotspotRepository.php         # Semua query Hotspot
+│   └── WikiArticleRepository.php     # Semua query WikiArticle
 │
 └── Services/
     ├── StorageService.php            # Satu-satunya akses ke R2
     ├── VenueService.php              # Logika bisnis Venue
-    ├── SceneService.php             # Build data untuk Pannellum
-    └── HotspotService.php           # Logika bisnis Hotspot
+    ├── SceneService.php              # Build data untuk Pannellum
+    ├── HotspotService.php            # Logika bisnis Hotspot
+    └── WikiService.php               # Grouping & lookup artikel wiki
 
 resources/
 ├── css/app.css                       # Tailwind CSS v4
@@ -114,12 +130,17 @@ resources/
 └── views/
     ├── livewire/
     │   └── tour-viewer.blade.php    # UI viewer + Pannellum init
-    └── welcome.blade.php            # Halaman daftar venue
+    ├── wiki/
+    │   ├── index.blade.php          # Daftar artikel wiki per kategori
+    │   └── show.blade.php           # Detail artikel wiki (light mode)
+    └── welcome.blade.php            # Halaman daftar venue + Wiki CTA
 
 database/
 ├── migrations/                       # Schema evolution
+│   └── ..._create_wiki_articles_table.php
 └── seeders/
-    └── DatabaseSeeder.php           # Seed admin user default
+    ├── DatabaseSeeder.php            # Seed admin user default
+    └── WikiArticleSeeder.php         # 11 artikel awal wiki
 
 docker/
 ├── nginx/railway.conf               # Nginx config (Railway)
@@ -291,6 +312,8 @@ Entrypoint otomatis menjalankan: `migrate → seed → cache → storage:link �
 |---|---|---|
 | `GET` | `/` | Daftar venue publik |
 | `GET` | `/tour/{slug}` | Viewer tour per venue |
+| `GET` | `/wiki` | Daftar artikel wiki ensiklopedia |
+| `GET` | `/wiki/{slug}` | Detail artikel wiki |
 | `GET` | `/admin` | Filament admin panel |
 | `GET` | `/admin/login` | Login admin |
 | `GET` | `/r2/{path}` | Proxy R2 (development only) |

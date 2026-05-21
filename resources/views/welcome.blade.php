@@ -418,6 +418,78 @@
     </div>
 </section>
 
+{{-- ════════════════════════════ WIKI CTA ════════════════════════════════ --}}
+<section class="bg-stone-950 py-16 md:py-24 border-t border-stone-800/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+
+            {{-- Teks --}}
+            <div>
+                <p class="text-stone-500 text-xs tracking-widest uppercase font-medium mb-4">Ensiklopedia Digital</p>
+                <h2 class="serif text-3xl sm:text-4xl md:text-5xl font-bold text-stone-50 mb-6 leading-tight">
+                    Wiki<br>
+                    <span class="text-amber-400 italic">Pura Desa Tambawu</span>
+                </h2>
+                <p class="text-stone-400 leading-relaxed mb-8">
+                    Dokumentasi lengkap tentang sejarah, pelinggih, ritual, tokoh, dan glosarium istilah
+                    adat Bali — semua tersedia dalam satu referensi yang mudah dijelajahi.
+                </p>
+
+                <div class="flex flex-wrap gap-2 mb-8">
+                    @foreach([
+                        ['label' => 'Sejarah',   'icon' => 'M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25'],
+                        ['label' => 'Pelinggih', 'icon' => 'M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18'],
+                        ['label' => 'Ritual',    'icon' => 'M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z'],
+                        ['label' => 'Tokoh',     'icon' => 'M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z'],
+                        ['label' => 'Glosarium', 'icon' => 'M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 01-3.827-5.802'],
+                    ] as $cat)
+                        <span class="flex items-center gap-1.5 bg-stone-800/50 border border-stone-700/30 text-stone-400 text-xs px-3 py-1.5 rounded-full">
+                            <svg class="w-3 h-3 text-amber-500/80" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="{{ $cat['icon'] }}"/>
+                            </svg>
+                            {{ $cat['label'] }}
+                        </span>
+                    @endforeach
+                </div>
+
+                <a href="{{ route('wiki.index') }}"
+                   class="inline-flex items-center gap-3 bg-amber-700 hover:bg-amber-600 text-white font-semibold px-8 py-3.5 rounded-full transition-all duration-200 group">
+                    Buka Wiki
+                    <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                    </svg>
+                </a>
+            </div>
+
+            {{-- Visual --}}
+            <div class="flex justify-center md:justify-end">
+                <div class="relative w-56 h-56 sm:w-72 sm:h-72 flex items-center justify-center overflow-hidden rounded-full">
+                    {{-- Outer ring --}}
+                    <div class="absolute inset-0 rounded-full border border-dashed border-stone-700/40 animate-spin" style="animation-duration: 30s;"></div>
+                    {{-- Inner ring --}}
+                    <div class="absolute inset-8 rounded-full border border-stone-800/60"></div>
+                    {{-- Center block --}}
+                    <div class="relative z-10 text-center space-y-3">
+                        <div class="w-14 h-14 rounded-2xl bg-amber-900/40 border border-amber-700/30 flex items-center justify-center mx-auto">
+                            <svg class="w-7 h-7 text-amber-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
+                            </svg>
+                        </div>
+                        <div class="serif text-amber-400 font-bold text-lg leading-none">Wiki</div>
+                        <div class="text-stone-600 text-xs tracking-widest">ENSIKLOPEDIA</div>
+                    </div>
+                    {{-- Orbit dots --}}
+                    @foreach([0, 72, 144, 216, 288] as $deg)
+                        <div class="absolute w-1.5 h-1.5 rounded-full bg-amber-700/50"
+                             style="top:calc(50% - 3px + {{ round(sin(deg2rad($deg))*108, 2) }}px);left:calc(50% - 3px + {{ round(cos(deg2rad($deg))*108, 2) }}px);"></div>
+                    @endforeach
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
 {{-- ════════════════════════════ PROFIL MANGKU ══════════════════════════ --}}
 <section class="bg-stone-100 py-16 md:py-24">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
