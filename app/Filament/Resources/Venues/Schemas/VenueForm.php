@@ -2,15 +2,14 @@
 
 namespace App\Filament\Resources\Venues\Schemas;
 
-use App\Models\Scene;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
 
@@ -44,6 +43,15 @@ class VenueForm
                             ->label('Deskripsi')
                             ->columnSpanFull()
                             ->rows(3),
+
+                        Select::make('category_id')
+                            ->label('Kategori')
+                            ->relationship('category', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->nullable()
+                            ->placeholder('Pilih kategori (opsional)')
+                            ->columnSpanFull(),
                     ]),
 
                 Section::make('Media & Status')

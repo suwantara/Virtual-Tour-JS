@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\CategoryRepository;
+use App\Repositories\Contracts\CategoryRepositoryInterface;
 use App\Repositories\Contracts\HotspotRepositoryInterface;
 use App\Repositories\Contracts\SceneRepositoryInterface;
 use App\Repositories\Contracts\VenueRepositoryInterface;
@@ -22,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->bind(VenueRepositoryInterface::class, VenueRepository::class);
         $this->app->bind(SceneRepositoryInterface::class, SceneRepository::class);
         $this->app->bind(HotspotRepositoryInterface::class, HotspotRepository::class);

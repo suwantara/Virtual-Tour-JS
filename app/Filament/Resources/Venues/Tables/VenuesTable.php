@@ -10,6 +10,7 @@ use Filament\Actions\EditAction;
 use Filament\Support\Colors\Color;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 
@@ -27,6 +28,13 @@ class VenuesTable
                 TextColumn::make('slug')
                     ->searchable()
                     ->color(Color::Gray),
+
+                TextColumn::make('category.name')
+                    ->label('Kategori')
+                    ->badge()
+                    ->color(Color::Violet)
+                    ->placeholder('—')
+                    ->sortable(),
 
                 TextColumn::make('scenes_count')
                     ->label('Scene')
@@ -53,6 +61,12 @@ class VenuesTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                SelectFilter::make('category_id')
+                    ->label('Kategori')
+                    ->relationship('category', 'name')
+                    ->searchable()
+                    ->preload(),
+
                 TernaryFilter::make('is_published')->label('Status Publikasi'),
             ])
             ->recordActions([
