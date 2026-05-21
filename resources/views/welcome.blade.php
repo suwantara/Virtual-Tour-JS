@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Virtual Tour 360° Pura Desa Adat Tambawu, Denpasar — Jelajahi warisan budaya Tri Kahyangan secara digital melalui platform Nandika.">
     <title>Virtual Tour — Pura Desa Adat Tambawu</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon.ico" sizes="any">
 
     @fonts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
