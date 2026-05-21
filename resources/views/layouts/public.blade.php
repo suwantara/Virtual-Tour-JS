@@ -31,8 +31,8 @@
 
     <link rel="canonical" href="{{ $canonicalUrl ?? url()->current() }}">
 
-    <link rel="icon" href="/favicon.ico" sizes="any">
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon.ico?v=2" sizes="any">
+    <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">
 
     @fonts
     @vite(['resources/css/app.css', 'resources/js/app.js'])

@@ -20,8 +20,8 @@
     <meta name="twitter:description" content="{{ $siteDescription }}">
 
     <link rel="canonical" href="{{ $siteUrl }}">
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">
+    <link rel="icon" href="/favicon.ico?v=2" sizes="any">
 
     @fonts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
