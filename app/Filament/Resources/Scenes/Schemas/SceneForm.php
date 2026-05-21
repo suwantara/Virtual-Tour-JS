@@ -86,6 +86,21 @@ class SceneForm
                             ->maxLength(2048),
                     ]),
 
+                Section::make('Narasi Audio')
+                    ->description('Audio yang diputar otomatis saat pengunjung memasuki scene ini.')
+                    ->collapsed()
+                    ->schema([
+                        FileUpload::make('audio_path')
+                            ->label('File Audio Narasi')
+                            ->disk('r2')
+                            ->directory('scenes/audio')
+                            ->acceptedFileTypes(['audio/mpeg', 'audio/ogg', 'audio/wav', 'audio/mp4'])
+                            ->maxSize(20480)
+                            ->helperText('Format MP3/OGG/WAV. Maks. 20MB. Diputar otomatis saat scene dibuka.')
+                            ->downloadable()
+                            ->deletable(),
+                    ]),
+
                 Section::make('Pengaturan Kamera')
                     ->description('Posisi awal kamera saat scene dibuka.')
                     ->columns(3)

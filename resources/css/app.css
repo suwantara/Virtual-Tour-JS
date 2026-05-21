@@ -456,6 +456,86 @@ div.pnlm-tooltip > span {
     color: rgba(231, 229, 228, 0.6);
 }
 
+/* ── Audio narration bar ── */
+
+.tour-audio-bar {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: rgba(28, 25, 23, 0.82);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 9999px;
+    color: #e7e5e4;
+    pointer-events: auto;
+}
+
+.tour-audio-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    background: var(--brand, #6366f1);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: opacity 0.15s;
+}
+
+.tour-audio-btn:hover { opacity: 0.85; }
+
+.tour-audio-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 8rem;
+}
+
+.tour-audio-label {
+    font-size: 0.7rem;
+    color: rgba(231, 229, 228, 0.7);
+    line-height: 1;
+}
+
+.tour-audio-progress {
+    height: 2px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.tour-audio-progress__bar {
+    height: 100%;
+    background: var(--brand, #6366f1);
+    border-radius: 9999px;
+    transition: width 0.25s linear;
+}
+
+.tour-audio-stop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #e7e5e4;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.15s;
+}
+
+.tour-audio-stop:hover { background: rgba(255, 255, 255, 0.2); }
+
 /* ── Scene navigation strip ── */
 
 .tour-scene-strip {

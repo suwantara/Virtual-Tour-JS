@@ -25,6 +25,9 @@ class SceneService
                 'image_path' => $scene->image_path
                     ? $this->storage->getUrl($scene->image_path)
                     : null,
+                'audio_path' => $scene->audio_path
+                    ? $this->storage->getUrl($scene->audio_path)
+                    : null,
                 'initial_yaw' => $scene->initial_yaw,
                 'initial_pitch' => $scene->initial_pitch,
                 'hotspots' => $scene->hotspots->map(fn ($hs) => [
