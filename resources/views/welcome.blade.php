@@ -601,9 +601,17 @@
                         </div>
                         <div class="min-w-0 flex-1">
                             <p class="text-amber-600 text-xs tracking-widest uppercase font-medium mb-1.5">Dosen Pembimbing</p>
-                            {{-- TODO: ganti teks berikut dengan nama dan NIP dosen --}}
-                            <h3 class="serif text-sm font-semibold text-stone-400 leading-snug italic mb-1">Nama Dosen</h3>
-                            <p class="text-stone-600 text-xs">NIP · —</p>
+                                    @php
+                                $dosenName = \App\Models\SiteSetting::get('tim.dosen_name');
+                                $dosenNip  = \App\Models\SiteSetting::get('tim.dosen_nip');
+                            @endphp
+                            @if($dosenName)
+                                <h3 class="serif text-sm font-semibold text-stone-200 leading-snug mb-1">{{ $dosenName }}</h3>
+                                <p class="text-stone-500 text-xs">{{ $dosenNip ? 'NIP · '.$dosenNip : 'NIP · —' }}</p>
+                            @else
+                                <h3 class="serif text-sm font-semibold text-stone-400 leading-snug italic mb-1">Belum diisi</h3>
+                                <p class="text-stone-600 text-xs">NIP · —</p>
+                            @endif
                         </div>
                     </div>
                 @else
@@ -661,10 +669,10 @@
         {{-- Social Media --}}
         <div class="flex justify-center gap-3 mt-10">
             @php $socials = [
-                ['href' => '#', 'icon' => 'fa-brands fa-github',    'label' => 'GitHub'],
-                ['href' => '#', 'icon' => 'fa-brands fa-instagram', 'label' => 'Instagram'],
-                ['href' => '#', 'icon' => 'fa-brands fa-youtube',   'label' => 'YouTube'],
-                ['href' => '#', 'icon' => 'fa-brands fa-tiktok',    'label' => 'TikTok'],
+                ['href' => \App\Models\SiteSetting::get('social.github')    ?: '#', 'icon' => 'fa-brands fa-github',    'label' => 'GitHub'],
+                ['href' => \App\Models\SiteSetting::get('social.instagram') ?: '#', 'icon' => 'fa-brands fa-instagram', 'label' => 'Instagram'],
+                ['href' => \App\Models\SiteSetting::get('social.youtube')   ?: '#', 'icon' => 'fa-brands fa-youtube',   'label' => 'YouTube'],
+                ['href' => \App\Models\SiteSetting::get('social.tiktok')    ?: '#', 'icon' => 'fa-brands fa-tiktok',    'label' => 'TikTok'],
             ]; @endphp
 
             @foreach($socials as $s)
