@@ -24,5 +24,6 @@ class DatabaseSeeder extends Seeder
         )->update(['role' => UserRole::Admin]);
 
         $this->call(SiteSettingSeeder::class);
+        $this->call(WikiArticleSeeder::class);
     }
 }
