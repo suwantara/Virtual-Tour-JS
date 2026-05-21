@@ -11,6 +11,7 @@ class VenueRepository implements VenueRepositoryInterface
     public function allPublished(): Collection
     {
         return Venue::where('is_published', true)
+            ->with('category')
             ->withCount('scenes')
             ->orderByDesc('created_at')
             ->get();

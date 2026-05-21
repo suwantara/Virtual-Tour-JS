@@ -22,6 +22,23 @@ class VenueService
         return $this->venues->findBySlug($slug);
     }
 
+    public function findBySlugForApi(string $slug): ?Venue
+    {
+        $venue = $this->venues->findBySlug($slug);
+
+        if (! $venue || ! $venue->is_published) {
+            return null;
+        }
+
+        $venue->loadMissing([
+            'category',
+            'scenes' => fn ($q) => $q->where('is_published', true)->orderBy('order'),
+            'scenes.hotspots',
+        ]);
+
+        return $venue;
+    }
+
     public function totalCount(): int
     {
         return $this->venues->totalCount();
