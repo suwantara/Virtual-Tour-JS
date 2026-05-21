@@ -3,8 +3,28 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Virtual Tour 360° Pura Desa Adat Tambawu, Denpasar — Jelajahi warisan budaya Tri Kahyangan secara digital melalui platform Nandika.">
     <title>Virtual Tour — Pura Desa Adat Tambawu</title>
+
+    @php
+        $siteDescription = 'Virtual Tour 360° Pura Desa Adat Tambawu, Denpasar — Jelajahi warisan budaya Tri Kahyangan secara digital melalui platform Nandika.';
+        $siteUrl = url('/');
+    @endphp
+
+    <meta name="description" content="{{ $siteDescription }}">
+
+    {{-- Open Graph --}}
+    <meta property="og:site_name" content="{{ config('app.name') }}">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Virtual Tour — Pura Desa Adat Tambawu">
+    <meta property="og:description" content="{{ $siteDescription }}">
+    <meta property="og:url" content="{{ $siteUrl }}">
+
+    {{-- Twitter Card --}}
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Virtual Tour — Pura Desa Adat Tambawu">
+    <meta name="twitter:description" content="{{ $siteDescription }}">
+
+    <link rel="canonical" href="{{ $siteUrl }}">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="icon" href="/favicon.ico" sizes="any">
 
