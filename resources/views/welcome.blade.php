@@ -7,6 +7,7 @@
 
     @php
         use App\Models\SiteSetting;
+        use App\Services\StorageService;
 
         // Hero
         $heroBadge     = SiteSetting::get('hero.badge_text') ?: 'Digital Heritage · Digital Archive · PBL 2025';
@@ -40,7 +41,12 @@
         $nandikaTags        = SiteSetting::getJson('nandika.tags');
 
         // Tim
-        $timMembers   = SiteSetting::getJson('tim.members');
+        $storage = app(StorageService::class);
+        $timMembers = collect(SiteSetting::getJson('tim.members'))
+            ->map(fn ($m) => array_merge($m, [
+                'photo_url' => !empty($m['photo_path']) ? $storage->getUrl($m['photo_path']) : null,
+            ]))
+            ->all();
         $dosenName    = SiteSetting::get('tim.dosen_name');
         $dosenNip     = SiteSetting::get('tim.dosen_nip');
 
@@ -560,9 +566,15 @@
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             @foreach($timMembers as $anggota)
                 <div class="pelinggih-card rounded-2xl p-5 card-lift flex items-start gap-4">
-                    <div class="w-12 h-12 rounded-xl {{ $anggota['bg'] ?? 'bg-stone-600' }} flex items-center justify-center flex-shrink-0">
-                        <span class="text-white font-bold text-sm">{{ $anggota['inisial'] ?? '?' }}</span>
-                    </div>
+                    @if(!empty($anggota['photo_url']))
+                        <img src="{{ $anggota['photo_url'] }}"
+                             alt="{{ $anggota['nama'] ?? '' }}"
+                             class="w-12 h-12 rounded-xl object-cover flex-shrink-0">
+                    @else
+                        <div class="w-12 h-12 rounded-xl {{ $anggota['bg'] ?? 'bg-stone-600' }} flex items-center justify-center flex-shrink-0">
+                            <span class="text-white font-bold text-sm">{{ $anggota['inisial'] ?? '?' }}</span>
+                        </div>
+                    @endif
                     <div class="min-w-0 flex-1">
                         <h3 class="serif text-sm font-semibold text-stone-100 leading-snug mb-1">{{ $anggota['nama'] ?? '' }}</h3>
                         <p class="text-stone-600 text-xs font-mono mb-2.5">{{ $anggota['nim'] ?? '' }}</p>

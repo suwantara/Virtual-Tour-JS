@@ -6,6 +6,7 @@ use App\Models\SiteSetting;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -260,12 +261,21 @@ class ManageSiteSettings extends Page
                         Repeater::make('tim_members')
                             ->label('Anggota Tim')
                             ->schema([
+                                FileUpload::make('photo_path')
+                                    ->label('Foto Profil')
+                                    ->disk('r2')
+                                    ->directory('members/avatars')
+                                    ->image()
+                                    ->maxSize(2048)
+                                    ->helperText('JPG/PNG, maks. 2MB. Jika diisi, menggantikan tampilan inisial.')
+                                    ->deletable()
+                                    ->columnSpanFull(),
                                 TextInput::make('nama')->label('Nama Lengkap')->required()->maxLength(255),
                                 TextInput::make('nim')->label('NIM')->maxLength(50),
                                 TextInput::make('peran')->label('Peran')->maxLength(100),
                                 TextInput::make('inisial')->label('Inisial Avatar')->maxLength(5),
                                 Select::make('bg')
-                                    ->label('Warna Avatar')
+                                    ->label('Warna Avatar (fallback)')
                                     ->options([
                                         'bg-rose-900' => 'Merah Tua',
                                         'bg-rose-800' => 'Merah',
