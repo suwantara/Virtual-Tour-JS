@@ -25,6 +25,7 @@ class ScenesTable
 
                 TextColumn::make('name')
                     ->label('Nama Scene')
+                    ->description(fn ($record) => $record->local_name)
                     ->searchable()
                     ->sortable(),
 

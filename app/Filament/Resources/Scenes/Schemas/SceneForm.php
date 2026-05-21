@@ -30,9 +30,41 @@ class SceneForm
                             ->required()
                             ->maxLength(255),
 
+                        TextInput::make('local_name')
+                            ->label('Nama Lokal')
+                            ->placeholder('contoh: Bale Agung, Gedong Agung')
+                            ->helperText('Nama pelinggih/bangunan dalam bahasa Bali.')
+                            ->maxLength(255),
+
                         Textarea::make('description')
                             ->label('Deskripsi')
-                            ->rows(2),
+                            ->rows(2)
+                            ->columnSpanFull(),
+                    ]),
+
+                Section::make('Informasi Heritage')
+                    ->description('Data kontekstual untuk keperluan arsip digital warisan budaya.')
+                    ->columns(2)
+                    ->collapsed()
+                    ->schema([
+                        TextInput::make('era')
+                            ->label('Era / Periode')
+                            ->placeholder('contoh: Abad ke-19, Dekade 1940-an')
+                            ->helperText('Perkiraan masa pembangunan atau renovasi.')
+                            ->maxLength(255),
+
+                        TextInput::make('material')
+                            ->label('Material Bangunan')
+                            ->placeholder('contoh: Batu padas, kayu cendana, ijuk')
+                            ->helperText('Bahan utama yang digunakan.')
+                            ->maxLength(255),
+
+                        Textarea::make('ritual_function')
+                            ->label('Fungsi Ritual')
+                            ->placeholder('contoh: Tempat berstananya Ida Bhatara saat upacara piodalan...')
+                            ->helperText('Peran spiritual dan fungsi upacara pelinggih ini.')
+                            ->rows(3)
+                            ->columnSpanFull(),
                     ]),
 
                 Section::make('Foto 360°')

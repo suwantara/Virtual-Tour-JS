@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[ObservedBy(SceneObserver::class)]
-#[Fillable(['venue_id', 'name', 'description', 'image_path', 'initial_yaw', 'initial_pitch', 'order', 'is_published'])]
+#[Fillable(['venue_id', 'name', 'local_name', 'description', 'era', 'ritual_function', 'material', 'image_path', 'initial_yaw', 'initial_pitch', 'order', 'is_published'])]
 class Scene extends Model
 {
     /** @use HasFactory<SceneFactory> */
