@@ -4,11 +4,13 @@ namespace App\Filament\Resources\Hotspots\Schemas;
 
 use App\Models\Scene;
 use App\Services\SceneService;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Illuminate\Support\HtmlString;
 
 class HotspotForm
 {
@@ -58,6 +60,28 @@ class HotspotForm
                     ->description('Koordinat sudut pandang dalam scene 360°. Pitch: -90° (bawah) hingga 90° (atas). Yaw: -180° hingga 180°.')
                     ->columns(2)
                     ->schema([
+                        Placeholder::make('viewer_link')
+                            ->label('')
+                            ->columnSpanFull()
+                            ->content(function ($get): HtmlString {
+                                $sceneId = $get('scene_id');
+                                if (! $sceneId) {
+                                    return new HtmlString('<span class="text-xs text-gray-400">Pilih scene terlebih dahulu untuk membuka viewer.</span>');
+                                }
+
+                                $scene = Scene::with('venue')->find($sceneId);
+                                if (! $scene?->venue) {
+                                    return new HtmlString('');
+                                }
+
+                                $url = route('tour', $scene->venue);
+
+                                return new HtmlString(
+                                    '<a href="'.e($url).'" target="_blank" rel="noopener noreferrer" class="text-xs text-primary-500 hover:underline">'.
+                                    '→ Buka viewer '.e($scene->venue->name).' — aktifkan tombol Koordinat di pojok kanan atas'.
+                                    '</a>'
+                                );
+                            }),
                         TextInput::make('pitch')
                             ->label('Pitch (°)')
                             ->numeric()

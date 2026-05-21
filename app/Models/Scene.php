@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use App\Observers\SceneObserver;
 use Database\Factories\SceneFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+#[ObservedBy(SceneObserver::class)]
 #[Fillable(['venue_id', 'name', 'description', 'image_path', 'initial_yaw', 'initial_pitch', 'order', 'is_published'])]
 class Scene extends Model
 {

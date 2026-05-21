@@ -61,9 +61,24 @@
             </div>
         </div>
 
+        {{-- Error overlay --}}
+        <div
+            x-show="hasError"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            class="tour-loading"
+            style="flex-direction: column; gap: 1rem;"
+        >
+            <svg class="w-10 h-10 text-stone-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 21l6.75-6.75 1.5 1.5M21 3l-9 9"/>
+            </svg>
+            <p class="text-sm text-stone-500">Foto panorama tidak dapat dimuat.</p>
+        </div>
+
         {{-- Loading overlay --}}
         <div
-            x-show="isLoading"
+            x-show="isLoading && !hasError"
             x-transition:leave="transition ease-in duration-300"
             x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0"
@@ -199,6 +214,7 @@
             _preloadTimer: null,
 
             isLoading: true,
+            hasError: false,
 
             modal: {
                 open: false, type: null, label: '',
@@ -251,8 +267,14 @@
                     scenes: pannellumScenes,
                 });
 
+                this.viewer.on('error', () => {
+                    this.isLoading = false;
+                    this.hasError = true;
+                });
+
                 this.viewer.on('scenechange', (id) => {
                     this.isLoading = true;
+                    this.hasError = false;
                     this.currentSceneId = id;
                     const scene = scenes.find(s => `scene-${s.id}` === id);
                     this.currentSceneName = scene ? scene.name : '';
