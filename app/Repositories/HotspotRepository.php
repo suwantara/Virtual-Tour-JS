@@ -3,9 +3,10 @@
 namespace App\Repositories;
 
 use App\Models\Hotspot;
+use App\Repositories\Contracts\HotspotRepositoryInterface;
 use Illuminate\Support\Collection;
 
-class HotspotRepository
+class HotspotRepository implements HotspotRepositoryInterface
 {
     public function getByScene(int $sceneId): Collection
     {

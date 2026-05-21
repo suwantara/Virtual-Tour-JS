@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class StorageService
@@ -20,7 +21,12 @@ class StorageService
 
         try {
             return Storage::disk('r2')->url($path);
-        } catch (\RuntimeException) {
+        } catch (\RuntimeException $e) {
+            Log::warning('R2 URL generation failed, falling back to local storage', [
+                'path' => $path,
+                'error' => $e->getMessage(),
+            ]);
+
             return asset('storage/'.$path);
         }
     }
@@ -32,8 +38,9 @@ class StorageService
 
     public function replace(string $oldPath, UploadedFile $newFile, string $folder): string
     {
+        $newPath = $this->upload($newFile, $folder);
         $this->delete($oldPath);
 
-        return $this->upload($newFile, $folder);
+        return $newPath;
     }
 }

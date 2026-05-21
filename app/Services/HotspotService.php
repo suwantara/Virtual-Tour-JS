@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-use App\Repositories\HotspotRepository;
+use App\Repositories\Contracts\HotspotRepositoryInterface;
 
 class HotspotService
 {
     public function __construct(
-        private HotspotRepository $hotspots,
+        private HotspotRepositoryInterface $hotspots,
     ) {}
 
     public function totalCount(): int
