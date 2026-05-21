@@ -22,5 +22,7 @@ class DatabaseSeeder extends Seeder
                 'email_verified_at' => now(),
             ]
         )->update(['role' => UserRole::Admin]);
+
+        $this->call(SiteSettingSeeder::class);
     }
 }
