@@ -21,4 +21,21 @@ class SiteSetting extends Model
         Cache::forget("site_setting:{$key}");
         static::updateOrCreate(['key' => $key], ['value' => $value]);
     }
+
+    /** @param array<mixed> $default */
+    public static function getJson(string $key, array $default = []): array
+    {
+        $value = static::get($key);
+        if (! $value) {
+            return $default;
+        }
+
+        return json_decode($value, true) ?? $default;
+    }
+
+    /** @param array<mixed> $value */
+    public static function setJson(string $key, array $value): void
+    {
+        static::set($key, json_encode($value, JSON_UNESCAPED_UNICODE));
+    }
 }
