@@ -39,7 +39,15 @@ class StorageService
     public function replace(string $oldPath, UploadedFile $newFile, string $folder): string
     {
         $newPath = $this->upload($newFile, $folder);
-        $this->delete($oldPath);
+
+        try {
+            $this->delete($oldPath);
+        } catch (\Throwable $e) {
+            Log::warning('R2 orphan file — delete failed after replace', [
+                'old_path' => $oldPath,
+                'error' => $e->getMessage(),
+            ]);
+        }
 
         return $newPath;
     }

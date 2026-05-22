@@ -9,6 +9,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
@@ -27,8 +28,8 @@ class WikiArticleForm
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(function (string $state, Set $set, ?string $old) {
-                                if ($old === null || Str::slug($old) === '') {
+                            ->afterStateUpdated(function (string $state, Set $set, Get $get, ?string $old) {
+                                if (Str::slug((string) $old) === $get('slug') || empty($get('slug'))) {
                                     $set('slug', Str::slug($state));
                                 }
                             }),

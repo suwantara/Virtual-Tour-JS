@@ -29,14 +29,13 @@ class WikiService
         return $this->articles->findBySlug($slug);
     }
 
-    /** @return array<int, WikiCategory> Ordered list of categories that have at least one published article */
-    public function getActiveCategories(): array
+    /**
+     * @param  Collection<string, Collection<int, WikiArticle>>  $grouped
+     * @return array<int, WikiCategory> Ordered list of categories that have at least one published article
+     */
+    public function getActiveCategories(Collection $grouped): array
     {
-        $populated = $this->articles->allPublished()
-            ->pluck('category')
-            ->unique()
-            ->map(fn ($c): string => $c->value)
-            ->flip();
+        $populated = $grouped->keys()->flip()->toArray();
 
         return array_values(
             array_filter(WikiCategory::cases(), fn (WikiCategory $c): bool => isset($populated[$c->value]))

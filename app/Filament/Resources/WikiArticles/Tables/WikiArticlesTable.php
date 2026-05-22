@@ -11,6 +11,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class WikiArticlesTable
 {
@@ -64,7 +65,6 @@ class WikiArticlesTable
                     DeleteBulkAction::make(),
                 ]),
             ])
-            ->defaultSort('category')
-            ->defaultSort('order');
+            ->modifyQueryUsing(fn (Builder $query) => $query->orderBy('category')->orderBy('order'));
     }
 }

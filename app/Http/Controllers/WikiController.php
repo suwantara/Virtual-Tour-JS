@@ -2,28 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\Contracts\VenueRepositoryInterface;
+use App\Services\VenueService;
 use App\Services\WikiService;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class WikiController extends Controller
 {
     public function __construct(
         private WikiService $wiki,
-        private VenueRepositoryInterface $venues,
+        private VenueService $venues,
     ) {}
 
     public function index(): View
     {
+        $grouped = $this->wiki->getGroupedArticles();
+
         return view('wiki.index', [
-            'grouped' => $this->wiki->getGroupedArticles(),
-            'categories' => $this->wiki->getActiveCategories(),
+            'grouped' => $grouped,
+            'categories' => $this->wiki->getActiveCategories($grouped),
             'tourUrl' => $this->resolveTourUrl(),
         ]);
     }
 
-    public function show(string $slug): View|Response
+    public function show(string $slug): View
     {
         $article = $this->wiki->findBySlug($slug);
 
@@ -31,16 +32,18 @@ class WikiController extends Controller
             abort(404);
         }
 
+        $grouped = $this->wiki->getGroupedArticles();
+
         return view('wiki.show', [
             'article' => $article,
-            'categories' => $this->wiki->getActiveCategories(),
-            'grouped' => $this->wiki->getGroupedArticles(),
+            'categories' => $this->wiki->getActiveCategories($grouped),
+            'grouped' => $grouped,
         ]);
     }
 
     private function resolveTourUrl(): string
     {
-        $venue = $this->venues->allPublished()->first();
+        $venue = $this->venues->getPublished()->first();
 
         return $venue ? route('tour', $venue->slug) : route('home');
     }
