@@ -46,18 +46,32 @@ class ManageSiteSettings extends Page
             'hero_subtitle' => SiteSetting::get('hero.subtitle'),
 
             // Tentang Pura
+            'tentang_section_label' => SiteSetting::get('tentang_pura.section_label'),
+            'tentang_section_title' => SiteSetting::get('tentang_pura.section_title'),
+            'tentang_section_ornament' => SiteSetting::get('tentang_pura.section_ornament'),
             'tentang_sejarah_title' => SiteSetting::get('tentang_pura.sejarah_title'),
             'tentang_paragraphs' => SiteSetting::getJson('tentang_pura.paragraphs'),
             'tentang_stats' => SiteSetting::getJson('tentang_pura.stats'),
 
             // Virtual Tour CTA
+            'tour_cta_section_label' => SiteSetting::get('tour_cta.section_label'),
             'tour_cta_title' => SiteSetting::get('tour_cta.title'),
             'tour_cta_title_accent' => SiteSetting::get('tour_cta.title_accent'),
             'tour_cta_description' => SiteSetting::get('tour_cta.description'),
             'tour_cta_features' => SiteSetting::getJson('tour_cta.features'),
 
             // Pelinggih
+            'pelinggih_section_label' => SiteSetting::get('pelinggih.section_label'),
+            'pelinggih_section_title' => SiteSetting::get('pelinggih.section_title'),
+            'pelinggih_section_description' => SiteSetting::get('pelinggih.section_description'),
             'pelinggih_items' => SiteSetting::getJson('pelinggih.items'),
+
+            // Wiki CTA
+            'wiki_cta_label' => SiteSetting::get('wiki_cta.label'),
+            'wiki_cta_title' => SiteSetting::get('wiki_cta.title'),
+            'wiki_cta_title_accent' => SiteSetting::get('wiki_cta.title_accent'),
+            'wiki_cta_description' => SiteSetting::get('wiki_cta.description'),
+            'wiki_cta_categories' => SiteSetting::getJson('wiki_cta.categories'),
 
             // Profil Mangku
             'mangku_avatar' => SiteSetting::get('mangku.avatar'),
@@ -67,16 +81,24 @@ class ManageSiteSettings extends Page
             'mangku_bio' => SiteSetting::get('mangku.bio'),
 
             // Tentang Nandika
+            'nandika_section_label' => SiteSetting::get('nandika.section_label'),
+            'nandika_section_title' => SiteSetting::get('nandika.section_title'),
+            'nandika_section_accent' => SiteSetting::get('nandika.section_accent'),
             'nandika_description' => SiteSetting::get('nandika.description'),
             'nandika_tags' => SiteSetting::getJson('nandika.tags'),
 
             // Tim
+            'tim_section_label' => SiteSetting::get('tim.section_label'),
+            'tim_section_title' => SiteSetting::get('tim.section_title'),
+            'tim_section_description' => SiteSetting::get('tim.section_description'),
             'tim_members' => SiteSetting::getJson('tim.members'),
             'tim_dosen_photo' => SiteSetting::get('tim.dosen_photo'),
             'tim_dosen_name' => SiteSetting::get('tim.dosen_name'),
             'tim_dosen_nip' => SiteSetting::get('tim.dosen_nip'),
 
             // Kontak & Footer
+            'kontak_section_label' => SiteSetting::get('kontak.section_label'),
+            'kontak_section_title' => SiteSetting::get('kontak.section_title'),
             'kontak_items' => SiteSetting::getJson('kontak.items'),
             'footer_venue_text' => SiteSetting::get('footer.venue_text'),
             'footer_copyright' => SiteSetting::get('footer.copyright'),
@@ -129,6 +151,22 @@ class ManageSiteSettings extends Page
                     ->description('Konten bagian sejarah dan statistik pura.')
                     ->collapsible()
                     ->schema([
+                        TextInput::make('tentang_section_label')
+                            ->label('Label Section')
+                            ->placeholder('Warisan Budaya')
+                            ->maxLength(255),
+
+                        TextInput::make('tentang_section_title')
+                            ->label('Judul Section')
+                            ->placeholder('Tentang Pura')
+                            ->maxLength(255),
+
+                        TextInput::make('tentang_section_ornament')
+                            ->label('Teks Ornamen')
+                            ->placeholder('Tri Kahyangan · Dewa Brahma')
+                            ->maxLength(255)
+                            ->columnSpanFull(),
+
                         TextInput::make('tentang_sejarah_title')
                             ->label('Judul Sejarah')
                             ->placeholder('Sejarah & Latar Belakang')
@@ -166,6 +204,12 @@ class ManageSiteSettings extends Page
                     ->description('Konten bagian ajakan eksplorasi virtual tour.')
                     ->collapsible()
                     ->schema([
+                        TextInput::make('tour_cta_section_label')
+                            ->label('Label Section')
+                            ->placeholder('Eksplorasi Digital')
+                            ->maxLength(255)
+                            ->columnSpanFull(),
+
                         TextInput::make('tour_cta_title')
                             ->label('Judul')
                             ->placeholder('Jelajahi Pura')
@@ -195,6 +239,21 @@ class ManageSiteSettings extends Page
                     ->description('Daftar pelinggih yang ditampilkan di halaman utama.')
                     ->collapsible()
                     ->schema([
+                        TextInput::make('pelinggih_section_label')
+                            ->label('Label Section')
+                            ->placeholder('Katalog Digital')
+                            ->maxLength(255),
+
+                        TextInput::make('pelinggih_section_title')
+                            ->label('Judul Section')
+                            ->placeholder('Pelinggih Pura')
+                            ->maxLength(255),
+
+                        Textarea::make('pelinggih_section_description')
+                            ->label('Deskripsi Section')
+                            ->rows(3)
+                            ->columnSpanFull(),
+
                         Repeater::make('pelinggih_items')
                             ->label('Daftar Pelinggih')
                             ->schema([
@@ -211,6 +270,41 @@ class ManageSiteSettings extends Page
                             ->collapsible()
                             ->columnSpanFull(),
                     ]),
+
+                Section::make('Wiki CTA')
+                    ->description('Konten bagian promosi Wiki di halaman utama.')
+                    ->collapsible()
+                    ->schema([
+                        TextInput::make('wiki_cta_label')
+                            ->label('Label Kategori')
+                            ->placeholder('Ensiklopedia Digital')
+                            ->maxLength(255),
+
+                        TextInput::make('wiki_cta_title')
+                            ->label('Judul')
+                            ->placeholder('Wiki')
+                            ->maxLength(255),
+
+                        TextInput::make('wiki_cta_title_accent')
+                            ->label('Judul Aksen (warna amber)')
+                            ->placeholder('Pura Desa Tambawu')
+                            ->maxLength(255),
+
+                        Textarea::make('wiki_cta_description')
+                            ->label('Deskripsi')
+                            ->rows(4)
+                            ->columnSpanFull(),
+
+                        Repeater::make('wiki_cta_categories')
+                            ->label('Kategori')
+                            ->schema([
+                                TextInput::make('label')->label('Nama Kategori')->required()->maxLength(100),
+                            ])
+                            ->addActionLabel('Tambah Kategori')
+                            ->columns(2)
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(2),
 
                 Section::make('Profil Mangku')
                     ->description('Informasi Jro Mangku Desa.')
@@ -251,6 +345,21 @@ class ManageSiteSettings extends Page
                     ->description('Deskripsi proyek Nandika dan tag-nya.')
                     ->collapsible()
                     ->schema([
+                        TextInput::make('nandika_section_label')
+                            ->label('Label Section')
+                            ->placeholder('Project Akademik')
+                            ->maxLength(255),
+
+                        TextInput::make('nandika_section_title')
+                            ->label('Judul Section')
+                            ->placeholder('Nandika —')
+                            ->maxLength(255),
+
+                        TextInput::make('nandika_section_accent')
+                            ->label('Judul Aksen (warna amber)')
+                            ->placeholder('Nusantara Digital Archive')
+                            ->maxLength(255),
+
                         Textarea::make('nandika_description')
                             ->label('Deskripsi Proyek')
                             ->rows(4)
@@ -270,6 +379,21 @@ class ManageSiteSettings extends Page
                     ->description('Daftar anggota tim dan dosen pembimbing.')
                     ->collapsible()
                     ->schema([
+                        TextInput::make('tim_section_label')
+                            ->label('Label Section')
+                            ->placeholder('Kelompok 2 · PBL 2025')
+                            ->maxLength(255),
+
+                        TextInput::make('tim_section_title')
+                            ->label('Judul Section')
+                            ->placeholder('Tim Nandika')
+                            ->maxLength(255),
+
+                        Textarea::make('tim_section_description')
+                            ->label('Deskripsi Section')
+                            ->rows(3)
+                            ->columnSpanFull(),
+
                         Repeater::make('tim_members')
                             ->label('Anggota Tim')
                             ->schema([
@@ -329,6 +453,16 @@ class ManageSiteSettings extends Page
                     ->description('Informasi kontak dan teks footer.')
                     ->collapsible()
                     ->schema([
+                        TextInput::make('kontak_section_label')
+                            ->label('Label Section')
+                            ->placeholder('Hubungi Kami')
+                            ->maxLength(255),
+
+                        TextInput::make('kontak_section_title')
+                            ->label('Judul Section')
+                            ->placeholder('Kontak')
+                            ->maxLength(255),
+
                         Repeater::make('kontak_items')
                             ->label('Item Kontak')
                             ->schema([
@@ -427,18 +561,32 @@ class ManageSiteSettings extends Page
         SiteSetting::set('hero.subtitle', $state['hero_subtitle'] ?? null);
 
         // Tentang Pura
+        SiteSetting::set('tentang_pura.section_label', $state['tentang_section_label'] ?? null);
+        SiteSetting::set('tentang_pura.section_title', $state['tentang_section_title'] ?? null);
+        SiteSetting::set('tentang_pura.section_ornament', $state['tentang_section_ornament'] ?? null);
         SiteSetting::set('tentang_pura.sejarah_title', $state['tentang_sejarah_title'] ?? null);
         SiteSetting::setJson('tentang_pura.paragraphs', array_values($state['tentang_paragraphs'] ?? []));
         SiteSetting::setJson('tentang_pura.stats', array_values($state['tentang_stats'] ?? []));
 
         // Virtual Tour CTA
+        SiteSetting::set('tour_cta.section_label', $state['tour_cta_section_label'] ?? null);
         SiteSetting::set('tour_cta.title', $state['tour_cta_title'] ?? null);
         SiteSetting::set('tour_cta.title_accent', $state['tour_cta_title_accent'] ?? null);
         SiteSetting::set('tour_cta.description', $state['tour_cta_description'] ?? null);
         SiteSetting::setJson('tour_cta.features', array_values($state['tour_cta_features'] ?? []));
 
         // Pelinggih
+        SiteSetting::set('pelinggih.section_label', $state['pelinggih_section_label'] ?? null);
+        SiteSetting::set('pelinggih.section_title', $state['pelinggih_section_title'] ?? null);
+        SiteSetting::set('pelinggih.section_description', $state['pelinggih_section_description'] ?? null);
         SiteSetting::setJson('pelinggih.items', array_values($state['pelinggih_items'] ?? []));
+
+        // Wiki CTA
+        SiteSetting::set('wiki_cta.label', $state['wiki_cta_label'] ?? null);
+        SiteSetting::set('wiki_cta.title', $state['wiki_cta_title'] ?? null);
+        SiteSetting::set('wiki_cta.title_accent', $state['wiki_cta_title_accent'] ?? null);
+        SiteSetting::set('wiki_cta.description', $state['wiki_cta_description'] ?? null);
+        SiteSetting::setJson('wiki_cta.categories', array_values($state['wiki_cta_categories'] ?? []));
 
         // Profil Mangku
         SiteSetting::set('mangku.avatar', $state['mangku_avatar'] ?? null);
@@ -448,16 +596,24 @@ class ManageSiteSettings extends Page
         SiteSetting::set('mangku.bio', $state['mangku_bio'] ?? null);
 
         // Tentang Nandika
+        SiteSetting::set('nandika.section_label', $state['nandika_section_label'] ?? null);
+        SiteSetting::set('nandika.section_title', $state['nandika_section_title'] ?? null);
+        SiteSetting::set('nandika.section_accent', $state['nandika_section_accent'] ?? null);
         SiteSetting::set('nandika.description', $state['nandika_description'] ?? null);
         SiteSetting::setJson('nandika.tags', array_values($state['nandika_tags'] ?? []));
 
         // Tim
+        SiteSetting::set('tim.section_label', $state['tim_section_label'] ?? null);
+        SiteSetting::set('tim.section_title', $state['tim_section_title'] ?? null);
+        SiteSetting::set('tim.section_description', $state['tim_section_description'] ?? null);
         SiteSetting::setJson('tim.members', array_values($state['tim_members'] ?? []));
         SiteSetting::set('tim.dosen_photo', $state['tim_dosen_photo'] ?? null);
         SiteSetting::set('tim.dosen_name', $state['tim_dosen_name'] ?? null);
         SiteSetting::set('tim.dosen_nip', $state['tim_dosen_nip'] ?? null);
 
         // Kontak & Footer
+        SiteSetting::set('kontak.section_label', $state['kontak_section_label'] ?? null);
+        SiteSetting::set('kontak.section_title', $state['kontak_section_title'] ?? null);
         SiteSetting::setJson('kontak.items', array_values($state['kontak_items'] ?? []));
         SiteSetting::set('footer.venue_text', $state['footer_venue_text'] ?? null);
         SiteSetting::set('footer.copyright', $state['footer_copyright'] ?? null);

@@ -264,10 +264,10 @@
 
         {{-- Section header --}}
         <div class="text-center mb-16">
-            <p class="text-stone-600 text-xs tracking-widest uppercase font-medium mb-3">Warisan Budaya</p>
-            <h2 class="serif text-3xl sm:text-4xl md:text-5xl font-bold text-stone-900 mb-4">Tentang Pura</h2>
+            <p class="text-stone-600 text-xs tracking-widest uppercase font-medium mb-3">{{ $tentangSectionLabel }}</p>
+            <h2 class="serif text-3xl sm:text-4xl md:text-5xl font-bold text-stone-900 mb-4">{{ $tentangSectionTitle }}</h2>
             <div class="ornament text-stone-600 max-w-xs mx-auto">
-                <span class="text-sm font-light">Tri Kahyangan · Dewa Brahma</span>
+                <span class="text-sm font-light">{{ $tentangSectionOrnament }}</span>
             </div>
         </div>
 
@@ -319,7 +319,7 @@
 
             {{-- Teks --}}
             <div>
-                <p class="text-amber-400 text-xs tracking-widest uppercase font-medium mb-4">Eksplorasi Digital</p>
+                <p class="text-amber-400 text-xs tracking-widest uppercase font-medium mb-4">{{ $tourCtaSectionLabel }}</p>
                 <h2 class="serif text-3xl sm:text-4xl md:text-5xl font-bold text-stone-50 mb-6 leading-tight">
                     {{ $tourCtaTitle }}<br>
                     <span class="text-amber-400 italic">{{ $tourCtaAccent }}</span>
@@ -384,11 +384,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
 
         <div class="text-center mb-16">
-            <p class="text-stone-500 text-xs tracking-widest uppercase font-medium mb-3">Katalog Digital</p>
-            <h2 class="serif text-3xl sm:text-4xl md:text-5xl font-bold text-stone-100 mb-4">Pelinggih Pura</h2>
+            <p class="text-stone-500 text-xs tracking-widest uppercase font-medium mb-3">{{ $pelinggihSectionLabel }}</p>
+            <h2 class="serif text-3xl sm:text-4xl md:text-5xl font-bold text-stone-100 mb-4">{{ $pelinggihSectionTitle }}</h2>
             <p class="text-stone-400 max-w-xl mx-auto text-sm leading-relaxed">
-                Setiap bangunan suci memiliki fungsi dan makna spiritual tersendiri. Berikut pelinggih-pelinggih
-                utama yang dapat dijelajahi dalam virtual tour.
+                {{ $pelinggihSectionDescription }}
             </p>
         </div>
 
@@ -425,24 +424,17 @@
 
             {{-- Teks --}}
             <div>
-                <p class="text-stone-500 text-xs tracking-widest uppercase font-medium mb-4">Ensiklopedia Digital</p>
+                <p class="text-stone-500 text-xs tracking-widest uppercase font-medium mb-4">{{ $wikiCtaLabel }}</p>
                 <h2 class="serif text-3xl sm:text-4xl md:text-5xl font-bold text-stone-50 mb-6 leading-tight">
-                    Wiki<br>
-                    <span class="text-amber-400 italic">Pura Desa Tambawu</span>
+                    {{ $wikiCtaTitle }}<br>
+                    <span class="text-amber-400 italic">{{ $wikiCtaAccent }}</span>
                 </h2>
                 <p class="text-stone-400 leading-relaxed mb-8">
-                    Dokumentasi lengkap tentang sejarah, pelinggih, ritual, tokoh, dan glosarium istilah
-                    adat Bali — semua tersedia dalam satu referensi yang mudah dijelajahi.
+                    {{ $wikiCtaDescription }}
                 </p>
 
                 <div class="flex flex-wrap gap-2 mb-8">
-                    @foreach([
-                        ['label' => 'Sejarah',   'icon' => 'M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25'],
-                        ['label' => 'Pelinggih', 'icon' => 'M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18'],
-                        ['label' => 'Ritual',    'icon' => 'M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z'],
-                        ['label' => 'Tokoh',     'icon' => 'M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z'],
-                        ['label' => 'Glosarium', 'icon' => 'M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 01-3.827-5.802'],
-                    ] as $cat)
+                    @foreach($wikiCtaCategories as $cat)
                         <span class="flex items-center gap-1.5 bg-stone-800/50 border border-stone-700/30 text-stone-400 text-xs px-3 py-1.5 rounded-full">
                             <svg class="w-3 h-3 text-amber-500/80" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="{{ $cat['icon'] }}"/>
@@ -538,10 +530,10 @@
 {{-- ════════════════════════════ TENTANG NANDIKA ════════════════════════ --}}
 <section class="bg-stone-950 py-16 md:py-24 border-t border-stone-800/60">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-        <p class="text-stone-500 text-xs tracking-widest uppercase font-medium mb-4">Project Akademik</p>
+        <p class="text-stone-500 text-xs tracking-widest uppercase font-medium mb-4">{{ $nandikaSectionLabel }}</p>
         <h2 class="serif text-2xl sm:text-3xl md:text-4xl font-bold text-stone-100 mb-4">
-            Nandika —
-            <span class="text-amber-400 italic">Nusantara Digital Archive</span>
+            {{ $nandikaSectionTitle }}
+            <span class="text-amber-400 italic">{{ $nandikaSectionAccent }}</span>
         </h2>
         <div class="flex items-center justify-center gap-3 mb-8">
             <div class="w-12 h-px bg-stone-700/40"></div>
@@ -568,11 +560,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
 
         <div class="text-center mb-12">
-            <p class="text-stone-500 text-xs tracking-widest uppercase font-medium mb-3">Kelompok 2 · PBL 2025</p>
-            <h2 class="serif text-3xl sm:text-4xl md:text-5xl font-bold text-stone-100 mb-4">Tim Nandika</h2>
+            <p class="text-stone-500 text-xs tracking-widest uppercase font-medium mb-3">{{ $timSectionLabel }}</p>
+            <h2 class="serif text-3xl sm:text-4xl md:text-5xl font-bold text-stone-100 mb-4">{{ $timSectionTitle }}</h2>
             <p class="text-stone-400 max-w-xl mx-auto text-sm leading-relaxed">
-                Mahasiswa Program Studi Rekam Medis &amp; Informasi Kesehatan yang mengerjakan proyek
-                digitalisasi warisan budaya Pura Desa Adat Tambawu.
+                {{ $timSectionDescription }}
             </p>
         </div>
 
@@ -633,8 +624,8 @@
 <section id="kontak" class="bg-stone-900 py-16 md:py-24">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
         <div class="text-center mb-12">
-            <p class="text-stone-400 text-xs tracking-widest uppercase font-medium mb-3">Hubungi Kami</p>
-            <h2 class="serif text-4xl font-bold text-stone-100">Kontak</h2>
+            <p class="text-stone-400 text-xs tracking-widest uppercase font-medium mb-3">{{ $kontakSectionLabel }}</p>
+            <h2 class="serif text-4xl font-bold text-stone-100">{{ $kontakSectionTitle }}</h2>
         </div>
 
         <div class="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
