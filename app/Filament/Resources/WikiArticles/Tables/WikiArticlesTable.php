@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\WikiArticles\Tables;
 
-use App\Enums\WikiCategory;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -25,7 +24,7 @@ class WikiArticlesTable
                     ->sortable()
                     ->limit(60),
 
-                TextColumn::make('category')
+                TextColumn::make('wikiCategory.name')
                     ->label('Kategori')
                     ->badge()
                     ->sortable(),
@@ -46,9 +45,9 @@ class WikiArticlesTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                SelectFilter::make('category')
+                SelectFilter::make('wiki_category_id')
                     ->label('Kategori')
-                    ->options(WikiCategory::class),
+                    ->relationship('wikiCategory', 'name'),
 
                 SelectFilter::make('is_published')
                     ->label('Status')
@@ -65,6 +64,6 @@ class WikiArticlesTable
                     DeleteBulkAction::make(),
                 ]),
             ])
-            ->modifyQueryUsing(fn (Builder $query) => $query->orderBy('category')->orderBy('order'));
+            ->modifyQueryUsing(fn (Builder $query) => $query->with('wikiCategory')->orderBy('wiki_category_id')->orderBy('order'));
     }
 }

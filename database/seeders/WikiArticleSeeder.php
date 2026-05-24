@@ -2,21 +2,23 @@
 
 namespace Database\Seeders;
 
-use App\Enums\WikiCategory;
 use App\Models\WikiArticle;
+use App\Models\WikiCategory;
 use Illuminate\Database\Seeder;
 
 class WikiArticleSeeder extends Seeder
 {
     public function run(): void
     {
+        $categoryIds = WikiCategory::pluck('id', 'slug');
+
         $articles = [
 
             // ── Sejarah ───────────────────────────────────────────────────
             [
                 'slug' => 'sejarah-pura-desa-adat-tambawu',
                 'title' => 'Sejarah Pura Desa Adat Tambawu',
-                'category' => WikiCategory::Sejarah,
+                'wiki_category_id' => $categoryIds['sejarah'],
                 'excerpt' => 'Pura Desa Adat Tambawu merupakan bagian dari sistem Tri Kahyangan sebagai pusat kehidupan spiritual masyarakat Desa Adat Tambawu, Kota Denpasar.',
                 'content' => <<<'HTML'
 <p>Pura Desa Adat Tambawu merupakan salah satu elemen penting dalam sistem <strong>Tri Kahyangan</strong> yang menjadi landasan kehidupan spiritual masyarakat Desa Adat Tambawu, Kota Denpasar. Sebagai tempat pemujaan <strong>Dewa Brahma</strong>, pura ini berperan sebagai pusat pelaksanaan ritual bersama dan perekat identitas budaya komunitas adat setempat.</p>
@@ -38,7 +40,7 @@ HTML,
             [
                 'slug' => 'pujawali-dan-hari-piodalan',
                 'title' => 'Pujawali dan Hari Piodalan',
-                'category' => WikiCategory::Ritual,
+                'wiki_category_id' => $categoryIds['ritual'],
                 'excerpt' => 'Piodalan utama Pura Desa Adat Tambawu dilaksanakan setiap Saniscara Kliwon Kuningan (Hari Raya Kuningan).',
                 'content' => <<<'HTML'
 <p><strong>Pujawali</strong> atau <strong>Piodalan</strong> adalah upacara peringatan hari lahir sebuah pura. Setiap pura memiliki hari piodalan berdasarkan perhitungan kalender Bali.</p>
@@ -62,7 +64,7 @@ HTML,
             [
                 'slug' => 'gedong-agung',
                 'title' => 'Gedong Agung',
-                'category' => WikiCategory::Pelinggih,
+                'wiki_category_id' => $categoryIds['pelinggih'],
                 'excerpt' => 'Pelinggih utama tempat linggih Ida Bhatara Pura Desa. Diumpamakan sebagai rumah besar dan suci, pusat dari seluruh pelinggih.',
                 'content' => <<<'HTML'
 <p><strong>Gedong Agung</strong> adalah pelinggih utama di Pura Desa Adat Tambawu, tempat linggih <strong>Ida Bhatara Pura Desa</strong> beserta berbagai pratimanya.</p>
@@ -77,7 +79,7 @@ HTML,
             [
                 'slug' => 'bale-agung',
                 'title' => 'Bale Agung',
-                'category' => WikiCategory::Pelinggih,
+                'wiki_category_id' => $categoryIds['pelinggih'],
                 'excerpt' => 'Tempat berstananya Ida Bhatara saat upacara berlangsung. Pusat dari seluruh proses ritual di pura.',
                 'content' => <<<'HTML'
 <p><strong>Bale Agung</strong> adalah balai utama tempat para <strong>Sesuhunan</strong> berstana saat upacara dilangsungkan. Setiap ritual besar di pura berpusat di sini.</p>
@@ -95,7 +97,7 @@ HTML,
             [
                 'slug' => 'ratu-anglurah-agung',
                 'title' => 'Ratu Anglurah Agung',
-                'category' => WikiCategory::Pelinggih,
+                'wiki_category_id' => $categoryIds['pelinggih'],
                 'excerpt' => 'Penjaga pura yang harus dilewati setiap orang yang masuk. Bagaikan ajudan pribadi yang menyambut dan melindungi.',
                 'content' => <<<'HTML'
 <p><strong>Ratu Anglurah Agung</strong> adalah pelinggih penjaga pura — <em>pengawal dan pelindung</em> yang berjaga di gerbang kesakralan.</p>
@@ -108,7 +110,7 @@ HTML,
             [
                 'slug' => 'pelinggih-dewi-sedana',
                 'title' => 'Pelinggih Dewi Sedana',
-                'category' => WikiCategory::Pelinggih,
+                'wiki_category_id' => $categoryIds['pelinggih'],
                 'excerpt' => 'Tempat pemujaan Dewi Kesuburan yang memberikan berkah kehidupan bagi masyarakat adat.',
                 'content' => <<<'HTML'
 <p><strong>Dewi Sedana</strong> adalah manifestasi Tuhan sebagai Dewi Kesuburan dan Kemakmuran. Krama desa memohon berkah kesuburan ladang, kesehatan keluarga, dan kelancaran rezeki di pelinggih ini.</p>
@@ -120,7 +122,7 @@ HTML,
             [
                 'slug' => 'bale-paruman',
                 'title' => 'Bale Paruman',
-                'category' => WikiCategory::Pelinggih,
+                'wiki_category_id' => $categoryIds['pelinggih'],
                 'excerpt' => 'Tempat para pendamping (pengabih) yang dikenal dengan premas berkumpul saat proses upacara.',
                 'content' => <<<'HTML'
 <p><strong>Bale Paruman</strong> adalah balai pertemuan sakral, difungsikan sebagai tempat berkumpulnya para <strong>pengabih</strong> (pendamping Sesuhunan) yang dikenal sebagai <em>premas</em>. Saat upacara, para premas berkumpul di sini sebelum mendampingi jalannya ritual.</p>
@@ -132,7 +134,7 @@ HTML,
             [
                 'slug' => 'begawan-penyarikan',
                 'title' => 'Begawan Penyarikan',
-                'category' => WikiCategory::Pelinggih,
+                'wiki_category_id' => $categoryIds['pelinggih'],
                 'excerpt' => 'Tempat berstananya Ida dalam mengatur dan mencatat kehidupan bermasyarakat.',
                 'content' => <<<'HTML'
 <p><strong>Begawan Penyarikan</strong> adalah pelinggih bagi aspek ilahi yang bertugas mengatur dan mencatat kehidupan bermasyarakat. Krama desa memohon restu di sini agar setiap kegiatan berjalan lancar.</p>
@@ -146,7 +148,7 @@ HTML,
             [
                 'slug' => 'jro-made-rena-atmaja',
                 'title' => 'Jro Made Rena Atmaja — Mangku Desa',
-                'category' => WikiCategory::Tokoh,
+                'wiki_category_id' => $categoryIds['tokoh'],
                 'excerpt' => 'Lahir 1951, Jro Made Rena Atmaja menjabat sebagai Mangku Desa Pura Desa Adat Tambawu sejak tahun 1993.',
                 'content' => <<<'HTML'
 <p><strong>Jro Made Rena Atmaja</strong> lahir tahun 1951 dan mengabdi sebagai <strong>Jro Mangku Desa</strong> sejak 1993 — lebih dari tiga dekade pelayanan tanpa henti, bahkan sejak masih aktif berdinas di pemerintahan.</p>
@@ -167,7 +169,7 @@ HTML,
             [
                 'slug' => 'glosarium-istilah-pura-bali',
                 'title' => 'Glosarium Istilah Pura & Adat Bali',
-                'category' => WikiCategory::Glosarium,
+                'wiki_category_id' => $categoryIds['glosarium'],
                 'excerpt' => 'Kumpulan istilah penting dalam tradisi Hindu Bali yang berkaitan dengan pura, upacara, dan kehidupan adat.',
                 'content' => <<<'HTML'
 <dl>
@@ -196,7 +198,7 @@ HTML,
             [
                 'slug' => 'informasi-kunjungan',
                 'title' => 'Informasi Kunjungan',
-                'category' => WikiCategory::Info,
+                'wiki_category_id' => $categoryIds['info'],
                 'excerpt' => 'Panduan bagi pengunjung yang ingin datang langsung ke Pura Desa Adat Tambawu.',
                 'content' => <<<'HTML'
 <h2>Lokasi</h2>
@@ -214,7 +216,6 @@ HTML,
                 'order' => 1,
                 'is_published' => true,
             ],
-
         ];
 
         foreach ($articles as $data) {

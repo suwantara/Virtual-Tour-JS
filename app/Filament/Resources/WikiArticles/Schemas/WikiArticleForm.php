@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\WikiArticles\Schemas;
 
-use App\Enums\WikiCategory;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -40,9 +39,11 @@ class WikiArticleForm
                             ->unique(ignoreRecord: true)
                             ->helperText('URL-friendly identifier, otomatis dari judul.'),
 
-                        Select::make('category')
+                        Select::make('wiki_category_id')
                             ->label('Kategori')
-                            ->options(WikiCategory::class)
+                            ->relationship('wikiCategory', 'name')
+                            ->searchable()
+                            ->preload()
                             ->required()
                             ->native(false),
 

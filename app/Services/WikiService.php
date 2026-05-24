@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Enums\WikiCategory;
 use App\Models\WikiArticle;
+use App\Models\WikiCategory;
 use App\Repositories\Contracts\WikiArticleRepositoryInterface;
 use Illuminate\Support\Collection;
 
@@ -14,14 +14,14 @@ class WikiService
     ) {}
 
     /**
-     * Articles grouped by category for the index page.
+     * Articles grouped by wiki_category_id for the index/show pages.
      *
-     * @return Collection<string, Collection<int, WikiArticle>>
+     * @return Collection<int, Collection<int, WikiArticle>>
      */
     public function getGroupedArticles(): Collection
     {
         return $this->articles->allPublished()
-            ->groupBy(fn (WikiArticle $article): string => $article->category->value);
+            ->groupBy(fn (WikiArticle $article): int => $article->wiki_category_id);
     }
 
     public function findBySlug(string $slug): ?WikiArticle
@@ -30,15 +30,18 @@ class WikiService
     }
 
     /**
-     * @param  Collection<string, Collection<int, WikiArticle>>  $grouped
-     * @return array<int, WikiCategory> Ordered list of categories that have at least one published article
+     * Ordered list of WikiCategory models that have at least one published article.
+     * Extracts from already-eager-loaded relationships — no extra query.
+     *
+     * @param  Collection<int, Collection<int, WikiArticle>>  $grouped
+     * @return Collection<int, WikiCategory>
      */
-    public function getActiveCategories(Collection $grouped): array
+    public function getActiveCategories(Collection $grouped): Collection
     {
-        $populated = $grouped->keys()->flip()->toArray();
-
-        return array_values(
-            array_filter(WikiCategory::cases(), fn (WikiCategory $c): bool => isset($populated[$c->value]))
-        );
+        return $grouped
+            ->map(fn (Collection $articles): ?WikiCategory => $articles->first()?->wikiCategory)
+            ->filter()
+            ->sortBy('order')
+            ->values();
     }
 }

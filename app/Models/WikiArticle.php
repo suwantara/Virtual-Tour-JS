@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\Enums\WikiCategory;
 use Database\Factories\WikiArticleFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['slug', 'title', 'category', 'excerpt', 'content', 'order', 'is_published'])]
+#[Fillable(['slug', 'title', 'wiki_category_id', 'excerpt', 'content', 'order', 'is_published'])]
 class WikiArticle extends Model
 {
     /** @use HasFactory<WikiArticleFactory> */
@@ -17,9 +17,15 @@ class WikiArticle extends Model
     protected function casts(): array
     {
         return [
-            'category' => WikiCategory::class,
+            'wiki_category_id' => 'integer',
             'is_published' => 'boolean',
             'order' => 'integer',
         ];
+    }
+
+    /** @return BelongsTo<WikiCategory, $this> */
+    public function wikiCategory(): BelongsTo
+    {
+        return $this->belongsTo(WikiCategory::class);
     }
 }

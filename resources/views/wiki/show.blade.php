@@ -2,7 +2,57 @@
     :title="$article->title . ' — Wiki Pura Desa Tambawu'"
     :metaDescription="$article->excerpt"
 >
-<div class="bg-white min-h-screen text-stone-900">
+<style>
+.wiki-root { transition: background-color 0.2s, color 0.2s; }
+.wiki-root.dark { background-color: #0c0a09; color: #f5f5f4; }
+.wiki-root.dark header { background-color: rgba(12,10,9,0.9) !important; border-color: #44403c; box-shadow: none !important; }
+.wiki-root.dark aside { border-color: #292524; }
+.wiki-root.dark .sidebar-cat-label { color: #57534e; }
+.wiki-root.dark .sidebar-link { color: #a8a29e; }
+.wiki-root.dark .sidebar-link:hover { background-color: #292524; color: #f5f5f4; }
+.wiki-root.dark .sidebar-link-active { background-color: rgba(190,18,60,0.15); color: #fda4af; border-color: rgba(190,18,60,0.4); }
+.wiki-root.dark .breadcrumb-link { color: #78716c; }
+.wiki-root.dark .breadcrumb-link:hover { color: #a8a29e; }
+.wiki-root.dark .breadcrumb-sep { color: #57534e; }
+.wiki-root.dark .breadcrumb-cat { color: #a8a29e; }
+.wiki-root.dark .breadcrumb-title { color: #d6d3d1; }
+.wiki-root.dark .cat-badge { background-color: rgba(190,18,60,0.15); color: #fda4af; border-color: rgba(190,18,60,0.4); }
+.wiki-root.dark h1.article-title { color: #f5f5f4; }
+.wiki-root.dark .article-excerpt { color: #a8a29e; border-color: rgba(190,18,60,0.5); }
+.wiki-root.dark .wiki-content { color: #d6d3d1; }
+.wiki-root.dark .wiki-content h2 { color: #e7e5e4; border-color: #44403c; }
+.wiki-root.dark .wiki-content p { color: #d6d3d1; }
+.wiki-root.dark .wiki-content a { color: #fda4af; }
+.wiki-root.dark .wiki-content strong { color: #f5f5f4; }
+.wiki-root.dark .wiki-content ul, .wiki-root.dark .wiki-content li { color: #d6d3d1; }
+.wiki-root.dark .wiki-content blockquote { background-color: rgba(190,18,60,0.08); border-color: rgba(190,18,60,0.4); color: #a8a29e; }
+.wiki-root.dark .wiki-content dt { color: #e7e5e4; }
+.wiki-root.dark .wiki-content dd { color: #a8a29e; }
+.wiki-root.dark .prev-next-border { border-color: #44403c; }
+.wiki-root.dark .prev-next-link { color: #a8a29e; }
+.wiki-root.dark .prev-next-link:hover { color: #f5f5f4; }
+.wiki-root.dark footer { border-color: #292524; }
+.wiki-root.dark nav a.back-link { color: #a8a29e; }
+.wiki-root.dark nav a.back-link:hover { color: #f5f5f4; }
+.wiki-root.dark nav a.home-link { color: #78716c; }
+.wiki-root.dark nav a.home-link:hover { color: #a8a29e; }
+.wiki-root.dark .nav-title { color: #78716c; }
+.wiki-root.dark .dark-toggle { color: #a8a29e; }
+.wiki-root.dark .dark-toggle:hover { background-color: #292524; color: #f5f5f4; }
+.dark-toggle:hover { background-color: #f5f4f2; }
+</style>
+
+<div
+    x-data="{
+        dark: localStorage.getItem('wiki-theme') === 'dark',
+        toggleDark() {
+            this.dark = !this.dark;
+            localStorage.setItem('wiki-theme', this.dark ? 'dark' : 'light');
+        }
+    }"
+    :class="{ 'dark': dark }"
+    class="wiki-root bg-white min-h-screen text-stone-900"
+>
 
 {{-- ══════════════════ NAVBAR ══════════════════ --}}
 <header
@@ -12,18 +62,36 @@
     class="sticky top-0 z-50 transition-all duration-300 border-b border-stone-200"
 >
     <nav class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
-        <a href="{{ route('wiki.index') }}" class="flex items-center gap-2 text-stone-500 hover:text-stone-800 transition-colors text-sm">
+        <a href="{{ route('wiki.index') }}" class="back-link flex items-center gap-2 text-stone-500 hover:text-stone-800 transition-colors text-sm">
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
             </svg>
             Wiki
         </a>
 
-        <span class="text-stone-400 text-xs hidden sm:block truncate max-w-xs">{{ $article->title }}</span>
+        <span class="nav-title text-stone-400 text-xs hidden sm:block truncate max-w-xs">{{ $article->title }}</span>
 
-        <a href="{{ route('home') }}" class="text-stone-400 hover:text-stone-700 transition-colors text-xs">
-            Beranda
-        </a>
+        <div class="flex items-center gap-2">
+            {{-- Dark mode toggle --}}
+            <button
+                @click="toggleDark()"
+                :title="dark ? 'Beralih ke mode terang' : 'Beralih ke mode gelap'"
+                class="dark-toggle w-8 h-8 flex items-center justify-center rounded-full transition-colors text-stone-500"
+            >
+                {{-- Sun: shown when dark --}}
+                <svg x-show="dark" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"/>
+                </svg>
+                {{-- Moon: shown when light --}}
+                <svg x-show="!dark" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"/>
+                </svg>
+            </button>
+
+            <a href="{{ route('home') }}" class="home-link text-stone-400 hover:text-stone-700 transition-colors text-xs">
+                Beranda
+            </a>
+        </div>
     </nav>
 </header>
 
@@ -34,15 +102,15 @@
     <aside class="hidden lg:block">
         <div class="sticky top-20 space-y-6">
             @foreach ($categories as $cat)
-                @php $catArticles = $grouped->get($cat->value, collect()) @endphp
+                @php $catArticles = $grouped->get($cat->id, collect()) @endphp
                 @if ($catArticles->isNotEmpty())
                 <div>
-                    <p class="text-[10px] uppercase tracking-widest text-stone-400 mb-2 px-2">{{ $cat->label() }}</p>
+                    <p class="sidebar-cat-label text-[10px] uppercase tracking-widest text-stone-400 mb-2 px-2">{{ $cat->name }}</p>
                     <ul class="space-y-0.5">
                         @foreach ($catArticles as $item)
                         <li>
                             <a href="{{ route('wiki.show', $item->slug) }}"
-                               class="block px-2 py-1.5 rounded-lg text-xs transition-colors {{ $item->slug === $article->slug ? 'bg-rose-50 text-rose-700 font-medium border border-rose-200' : 'text-stone-500 hover:text-stone-900 hover:bg-stone-100' }}">
+                               class="{{ $item->slug === $article->slug ? 'sidebar-link-active block px-2 py-1.5 rounded-lg text-xs transition-colors bg-rose-50 text-rose-700 font-medium border border-rose-200' : 'sidebar-link block px-2 py-1.5 rounded-lg text-xs transition-colors text-stone-500 hover:text-stone-900 hover:bg-stone-100' }}">
                                 {{ $item->title }}
                             </a>
                         </li>
@@ -59,32 +127,36 @@
 
         {{-- Breadcrumb --}}
         <nav class="flex items-center gap-2 text-xs text-stone-400 mb-6">
-            <a href="{{ route('wiki.index') }}" class="hover:text-stone-600 transition-colors">Wiki</a>
-            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <a href="{{ route('wiki.index') }}" class="breadcrumb-link hover:text-stone-600 transition-colors">Wiki</a>
+            <svg class="breadcrumb-sep w-3 h-3" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
             </svg>
-            <span class="text-stone-500">{{ $article->category->label() }}</span>
-            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <span class="breadcrumb-cat text-stone-500">{{ $article->wikiCategory?->name }}</span>
+            <svg class="breadcrumb-sep w-3 h-3" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
             </svg>
-            <span class="text-stone-700 truncate">{{ $article->title }}</span>
+            <span class="breadcrumb-title text-stone-700 truncate">{{ $article->title }}</span>
         </nav>
 
         {{-- Category badge --}}
+        @if ($article->wikiCategory)
         <div class="flex items-center gap-2 mb-4">
-            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-rose-100 text-rose-700 border border-rose-200">
-                <x-dynamic-component :component="$article->category->icon()" class="w-3 h-3"/>
-                {{ $article->category->label() }}
+            <span class="cat-badge inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-rose-100 text-rose-700 border border-rose-200">
+                @if ($article->wikiCategory->icon)
+                    <x-dynamic-component :component="$article->wikiCategory->icon" class="w-3 h-3"/>
+                @endif
+                {{ $article->wikiCategory->name }}
             </span>
         </div>
+        @endif
 
         {{-- Title --}}
-        <h1 class="text-2xl sm:text-3xl font-bold text-stone-900 mb-4 leading-snug">
+        <h1 class="article-title text-2xl sm:text-3xl font-bold text-stone-900 mb-4 leading-snug">
             {{ $article->title }}
         </h1>
 
         @if ($article->excerpt)
-            <p class="text-stone-600 text-base leading-relaxed border-l-2 border-rose-300 pl-4 mb-8 italic">
+            <p class="article-excerpt text-stone-600 text-base leading-relaxed border-l-2 border-rose-300 pl-4 mb-8 italic">
                 {{ $article->excerpt }}
             </p>
         @endif
@@ -105,15 +177,15 @@
 
         {{-- Navigasi bawah ── prev/next --}}
         @php
-            $flat = $grouped->flatten();
+            $flat = $categories->flatMap(fn ($cat) => $grouped->get($cat->id, collect())->all());
             $idx  = $flat->search(fn ($a) => $a->slug === $article->slug);
             $prev = $idx > 0 ? $flat->get($idx - 1) : null;
             $next = $flat->get($idx + 1);
         @endphp
-        <div class="mt-12 pt-6 border-t border-stone-200 flex justify-between gap-4 text-sm">
+        <div class="prev-next-border mt-12 pt-6 border-t border-stone-200 flex justify-between gap-4 text-sm">
             @if ($prev)
                 <a href="{{ route('wiki.show', $prev->slug) }}"
-                   class="flex items-center gap-2 text-stone-500 hover:text-stone-800 transition-colors max-w-[45%]">
+                   class="prev-next-link flex items-center gap-2 text-stone-500 hover:text-stone-800 transition-colors max-w-[45%]">
                     <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
                     </svg>
@@ -125,7 +197,7 @@
 
             @if ($next)
                 <a href="{{ route('wiki.show', $next->slug) }}"
-                   class="flex items-center gap-2 text-stone-500 hover:text-stone-800 transition-colors max-w-[45%] text-right">
+                   class="prev-next-link flex items-center gap-2 text-stone-500 hover:text-stone-800 transition-colors max-w-[45%] text-right">
                     <span class="truncate">{{ $next->title }}</span>
                     <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>

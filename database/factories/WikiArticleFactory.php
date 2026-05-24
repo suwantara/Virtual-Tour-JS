@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Enums\WikiCategory;
 use App\Models\WikiArticle;
+use App\Models\WikiCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -19,7 +19,7 @@ class WikiArticleFactory extends Factory
         return [
             'slug' => Str::slug($title).'-'.$this->faker->unique()->randomNumber(4),
             'title' => $title,
-            'category' => $this->faker->randomElement(WikiCategory::cases()),
+            'wiki_category_id' => WikiCategory::factory(),
             'excerpt' => $this->faker->optional()->paragraph(),
             'content' => '<p>'.$this->faker->paragraphs(3, true).'</p>',
             'order' => $this->faker->numberBetween(0, 100),

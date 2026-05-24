@@ -2,8 +2,8 @@
 
 namespace App\Repositories\Contracts;
 
-use App\Enums\WikiCategory;
 use App\Models\WikiArticle;
+use App\Models\WikiCategory;
 use Illuminate\Support\Collection;
 
 interface WikiArticleRepositoryInterface
