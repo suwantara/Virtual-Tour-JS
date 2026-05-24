@@ -60,6 +60,7 @@ class ManageSiteSettings extends Page
             'pelinggih_items' => SiteSetting::getJson('pelinggih.items'),
 
             // Profil Mangku
+            'mangku_avatar' => SiteSetting::get('mangku.avatar'),
             'mangku_name' => SiteSetting::get('mangku.name'),
             'mangku_meta' => SiteSetting::get('mangku.meta'),
             'mangku_quote' => SiteSetting::get('mangku.quote'),
@@ -71,6 +72,7 @@ class ManageSiteSettings extends Page
 
             // Tim
             'tim_members' => SiteSetting::getJson('tim.members'),
+            'tim_dosen_photo' => SiteSetting::get('tim.dosen_photo'),
             'tim_dosen_name' => SiteSetting::get('tim.dosen_name'),
             'tim_dosen_nip' => SiteSetting::get('tim.dosen_nip'),
 
@@ -214,6 +216,16 @@ class ManageSiteSettings extends Page
                     ->description('Informasi Jro Mangku Desa.')
                     ->collapsible()
                     ->schema([
+                        FileUpload::make('mangku_avatar')
+                            ->label('Foto Avatar')
+                            ->disk('r2')
+                            ->directory('mangku/avatar')
+                            ->image()
+                            ->maxSize(2048)
+                            ->helperText('JPG/PNG, maks. 2MB. Menggantikan placeholder lingkaran.')
+                            ->deletable()
+                            ->columnSpanFull(),
+
                         TextInput::make('mangku_name')
                             ->label('Nama Lengkap')
                             ->maxLength(255),
@@ -289,6 +301,16 @@ class ManageSiteSettings extends Page
                             ->columns(2)
                             ->addActionLabel('Tambah Anggota')
                             ->collapsible()
+                            ->columnSpanFull(),
+
+                        FileUpload::make('tim_dosen_photo')
+                            ->label('Foto Dosen Pembimbing')
+                            ->disk('r2')
+                            ->directory('dosen/avatar')
+                            ->image()
+                            ->maxSize(2048)
+                            ->helperText('JPG/PNG, maks. 2MB. Menggantikan ikon akademik.')
+                            ->deletable()
                             ->columnSpanFull(),
 
                         TextInput::make('tim_dosen_name')
@@ -419,6 +441,7 @@ class ManageSiteSettings extends Page
         SiteSetting::setJson('pelinggih.items', array_values($state['pelinggih_items'] ?? []));
 
         // Profil Mangku
+        SiteSetting::set('mangku.avatar', $state['mangku_avatar'] ?? null);
         SiteSetting::set('mangku.name', $state['mangku_name'] ?? null);
         SiteSetting::set('mangku.meta', $state['mangku_meta'] ?? null);
         SiteSetting::set('mangku.quote', $state['mangku_quote'] ?? null);
@@ -430,6 +453,7 @@ class ManageSiteSettings extends Page
 
         // Tim
         SiteSetting::setJson('tim.members', array_values($state['tim_members'] ?? []));
+        SiteSetting::set('tim.dosen_photo', $state['tim_dosen_photo'] ?? null);
         SiteSetting::set('tim.dosen_name', $state['tim_dosen_name'] ?? null);
         SiteSetting::set('tim.dosen_nip', $state['tim_dosen_nip'] ?? null);
 

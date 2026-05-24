@@ -498,10 +498,14 @@
             {{-- Avatar --}}
             <div class="flex justify-center">
                 <div class="relative">
-                    <div class="w-44 h-44 sm:w-56 sm:h-56 rounded-full bg-stone-700 border-4 border-stone-400/50 flex items-center justify-center">
-                        <svg class="w-20 h-20 text-stone-500" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
-                        </svg>
+                    <div class="w-44 h-44 sm:w-56 sm:h-56 rounded-full bg-stone-700 border-4 border-stone-400/50 overflow-hidden flex items-center justify-center">
+                        @if($mangkuAvatarUrl)
+                            <img src="{{ $mangkuAvatarUrl }}" alt="{{ $mangkuName }}" class="w-full h-full object-cover">
+                        @else
+                            <svg class="w-20 h-20 text-stone-500" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+                            </svg>
+                        @endif
                     </div>
                     <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-stone-900 text-stone-200 text-xs font-medium px-4 py-1 rounded-full whitespace-nowrap">
                         Jro Mangku Desa
@@ -598,12 +602,17 @@
             {{-- Kartu Dosen Pembimbing --}}
             <div class="rounded-2xl p-5 card-lift flex items-start gap-4"
                  style="background: rgba(120,53,15,0.06); border: 1px solid rgba(180,83,9,0.2);">
-                <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                     style="background: rgba(120,53,15,0.3); border: 1px solid rgba(180,83,9,0.25);">
-                    <svg class="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/>
-                    </svg>
-                </div>
+                @if($dosenPhotoUrl)
+                    <img src="{{ $dosenPhotoUrl }}" alt="{{ $dosenName ?? 'Dosen Pembimbing' }}"
+                         class="w-12 h-12 rounded-xl object-cover flex-shrink-0">
+                @else
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                         style="background: rgba(120,53,15,0.3); border: 1px solid rgba(180,83,9,0.25);">
+                        <svg class="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/>
+                        </svg>
+                    </div>
+                @endif
                 <div class="min-w-0 flex-1">
                     <p class="text-amber-600 text-xs tracking-widest uppercase font-medium mb-1.5">Dosen Pembimbing</p>
                     @if($dosenName)
@@ -673,7 +682,7 @@
         @auth
             <a href="{{ route('dashboard') }}" class="hover:text-stone-300 transition-colors">Admin ↗</a>
         @else
-            <a href="{{ route('login') }}" class="hover:text-stone-300 transition-colors">Admin ↗</a>
+            <a href="{{ route('dashboard') }}" class="hover:text-stone-300 transition-colors">Admin ↗</a>
         @endauth
     </div>
 </footer>

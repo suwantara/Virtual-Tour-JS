@@ -36,11 +36,13 @@ class SiteSettingService
             'mangkuMeta' => $this->settings->get('mangku.meta', ''),
             'mangkuQuote' => $this->settings->get('mangku.quote', ''),
             'mangkuBio' => $this->settings->get('mangku.bio', ''),
+            'mangkuAvatarUrl' => $this->resolveStorageUrl($this->settings->get('mangku.avatar')),
             'nandikaDescription' => $this->settings->get('nandika.description', ''),
             'nandikaTags' => $this->settings->getJson('nandika.tags'),
             'timMembers' => $this->resolveTimMembers(),
             'dosenName' => $this->settings->get('tim.dosen_name'),
             'dosenNip' => $this->settings->get('tim.dosen_nip'),
+            'dosenPhotoUrl' => $this->resolveStorageUrl($this->settings->get('tim.dosen_photo')),
             'kontakItems' => $this->settings->getJson('kontak.items'),
             'footerVenue' => $this->settings->get('footer.venue_text', 'Pura Desa Adat Tambawu · Denpasar, Bali'),
             'footerCopy' => $this->settings->get('footer.copyright', 'Nandika PBL 2025 · Kelompok 2 · Hak Cipta Dilindungi'),
@@ -49,6 +51,11 @@ class SiteSettingService
             'siteUrl' => url('/'),
             'pageTitle' => 'Virtual Tour — '.$heroTitleMain.' '.$heroTitleSub,
         ];
+    }
+
+    private function resolveStorageUrl(?string $path): ?string
+    {
+        return $path ? $this->storage->getUrl($path) : null;
     }
 
     /** @return array<int, array<string, mixed>> */
