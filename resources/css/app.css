@@ -905,6 +905,95 @@ div.pnlm-tooltip > span {
     pointer-events: none;
 }
 
+/* ══════════════════════════════════════════════════════════
+   Wiki Pages
+   ══════════════════════════════════════════════════════════ */
+
+.wiki-root { transition: background-color 0.2s, color 0.2s; }
+.wiki-root.dark { background-color: #0c0a09; color: #d6d3d1; }
+
+/* Tailwind text overrides */
+.wiki-root.dark .text-stone-900 { color: #f5f5f4; }
+.wiki-root.dark .text-stone-800 { color: #e7e5e4; }
+.wiki-root.dark .text-stone-700 { color: #d6d3d1; }
+.wiki-root.dark .text-stone-600 { color: #a8a29e; }
+.wiki-root.dark .text-stone-500 { color: #78716c; }
+.wiki-root.dark .text-stone-400 { color: #57534e; }
+
+/* Tailwind bg overrides */
+.wiki-root.dark .bg-white    { background-color: #0c0a09; }
+.wiki-root.dark .bg-stone-50 { background-color: #1c1917; }
+
+/* Tailwind border overrides */
+.wiki-root.dark .border-stone-200 { border-color: #292524; }
+
+/* Header */
+.wiki-root.dark header { background-color: rgba(12,10,9,0.95) !important; border-color: #292524 !important; box-shadow: none !important; }
+.wiki-root.dark .nav-title   { color: #d6d3d1; }
+.wiki-root.dark .back-link   { color: #a8a29e; }
+.wiki-root.dark .back-link:hover { color: #f5f5f4; }
+.wiki-root.dark .home-link   { color: #57534e; }
+.wiki-root.dark .home-link:hover { color: #a8a29e; }
+.wiki-root.dark .dark-toggle { color: #a8a29e; }
+.wiki-root.dark .dark-toggle:hover { background-color: #292524; color: #f5f5f4; }
+.dark-toggle:hover { background-color: #f5f4f2; }
+
+/* Hero (index page) */
+.wiki-root.dark .hero-section { background-color: #1c1917; border-color: #292524; }
+
+/* Category tabs */
+.wiki-root.dark .cat-tab { background-color: #292524; color: #d6d3d1; }
+.wiki-root.dark .cat-tab:hover { background-color: #44403c; color: #f5f5f4; }
+.wiki-root.dark .cat-icon-wrap { background-color: rgba(190,18,60,0.15); border-color: rgba(190,18,60,0.3); }
+.wiki-root.dark .cat-title { color: #f5f5f4; }
+
+/* Article cards */
+.wiki-root.dark .article-card { background-color: #1c1917; border-color: #292524; }
+.wiki-root.dark .article-card:hover { background-color: #292524; border-color: #44403c; }
+.wiki-root.dark .article-card h3 { color: #e7e5e4; }
+.wiki-root.dark .article-card:hover h3 { color: #f5f5f4; }
+.wiki-root.dark .article-card p { color: #78716c; }
+
+/* Sidebar (show page) */
+.wiki-root.dark .sidebar-cat-label { color: #57534e; }
+.wiki-root.dark .sidebar-link { color: #a8a29e; }
+.wiki-root.dark .sidebar-link:hover { background-color: #1c1917; color: #e7e5e4; }
+.wiki-root.dark .sidebar-link-active { background-color: rgba(190,18,60,0.15); color: #fda4af; border-color: rgba(190,18,60,0.4); }
+
+/* Breadcrumb (show page) */
+.wiki-root.dark .breadcrumb-link  { color: #57534e; }
+.wiki-root.dark .breadcrumb-link:hover { color: #a8a29e; }
+.wiki-root.dark .breadcrumb-sep   { color: #44403c; }
+.wiki-root.dark .breadcrumb-cat   { color: #78716c; }
+.wiki-root.dark .breadcrumb-title { color: #d6d3d1; }
+
+/* Article content (show page) */
+.wiki-root.dark .cat-badge { background-color: rgba(190,18,60,0.15); color: #fda4af; border-color: rgba(190,18,60,0.4); }
+.wiki-root.dark .article-title   { color: #f5f5f4; }
+.wiki-root.dark .article-excerpt { color: #a8a29e; border-color: rgba(190,18,60,0.4); }
+
+/* Wiki prose (show page) */
+.wiki-root.dark .wiki-content,
+.wiki-root.dark .wiki-content p  { color: #d6d3d1; }
+.wiki-root.dark .wiki-content h2,
+.wiki-root.dark .wiki-content h3 { color: #e7e5e4; border-color: #292524; }
+.wiki-root.dark .wiki-content a  { color: #fda4af; }
+.wiki-root.dark .wiki-content strong { color: #f5f5f4; }
+.wiki-root.dark .wiki-content ul,
+.wiki-root.dark .wiki-content ol,
+.wiki-root.dark .wiki-content li { color: #d6d3d1; }
+.wiki-root.dark .wiki-content blockquote { background-color: rgba(190,18,60,0.08); border-color: rgba(190,18,60,0.4); color: #a8a29e; }
+.wiki-root.dark .wiki-content dt { color: #e7e5e4; }
+.wiki-root.dark .wiki-content dd { color: #a8a29e; }
+
+/* Prev/Next navigation (show page) */
+.wiki-root.dark .prev-next-border { border-color: #292524; }
+.wiki-root.dark .prev-next-link   { color: #a8a29e; }
+.wiki-root.dark .prev-next-link:hover { color: #f5f5f4; }
+
+/* Footer */
+.wiki-root.dark footer { border-color: #292524; }
+
 /* ── Mobile overrides ── */
 
 @media (max-width: 640px) {

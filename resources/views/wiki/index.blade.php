@@ -2,30 +2,6 @@
     title="Wiki — Pura Desa Adat Tambawu"
     metaDescription="Ensiklopedia lengkap tentang Pura Desa Adat Tambawu: sejarah, pelinggih, ritual, tokoh, dan glosarium istilah adat Bali."
 >
-<style>
-.wiki-root { transition: background-color 0.2s, color 0.2s; }
-.wiki-root.dark { background-color: #0c0a09; color: #f5f5f4; }
-.wiki-root.dark header { background-color: rgba(12,10,9,0.9) !important; border-color: #44403c; box-shadow: none !important; }
-.wiki-root.dark section.hero-section { background-color: #1c1917; border-color: #44403c; }
-.wiki-root.dark .cat-tab { background-color: #292524; color: #d6d3d1; }
-.wiki-root.dark .cat-tab:hover { background-color: #44403c; color: #f5f5f4; }
-.wiki-root.dark .cat-icon-wrap { background-color: rgba(190,18,60,0.15); border-color: rgba(190,18,60,0.3); }
-.wiki-root.dark h2.cat-title { color: #f5f5f4; }
-.wiki-root.dark .article-card { background-color: #1c1917; border-color: #44403c; }
-.wiki-root.dark .article-card:hover { background-color: #292524; border-color: #57534e; }
-.wiki-root.dark .article-card h3 { color: #e7e5e4; }
-.wiki-root.dark .article-card:hover h3 { color: #f5f5f4; }
-.wiki-root.dark .article-card p { color: #a8a29e; }
-.wiki-root.dark footer { border-color: #292524; }
-.wiki-root.dark .text-stone-400 { color: #78716c; }
-.wiki-root.dark .text-stone-500 { color: #a8a29e; }
-.wiki-root.dark .text-stone-800 { color: #e7e5e4; }
-.wiki-root.dark nav a.back-link { color: #a8a29e; }
-.wiki-root.dark nav a.back-link:hover { color: #f5f5f4; }
-.wiki-root.dark .dark-toggle { color: #a8a29e; }
-.wiki-root.dark .dark-toggle:hover { background-color: #292524; color: #f5f5f4; }
-.dark-toggle:hover { background-color: #f5f4f2; }
-</style>
 
 <div
     x-data="{
@@ -54,7 +30,7 @@
             Beranda
         </a>
 
-        <span class="text-stone-800 font-semibold tracking-wide text-sm">Wiki Pura Desa Tambawu</span>
+        <span class="nav-title text-stone-800 font-semibold tracking-wide text-sm">Wiki Pura Desa Tambawu</span>
 
         <div class="flex items-center gap-2">
             {{-- Dark mode toggle --}}

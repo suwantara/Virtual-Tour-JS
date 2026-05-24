@@ -2,45 +2,6 @@
     :title="$article->title . ' — Wiki Pura Desa Tambawu'"
     :metaDescription="$article->excerpt"
 >
-<style>
-.wiki-root { transition: background-color 0.2s, color 0.2s; }
-.wiki-root.dark { background-color: #0c0a09; color: #f5f5f4; }
-.wiki-root.dark header { background-color: rgba(12,10,9,0.9) !important; border-color: #44403c; box-shadow: none !important; }
-.wiki-root.dark aside { border-color: #292524; }
-.wiki-root.dark .sidebar-cat-label { color: #57534e; }
-.wiki-root.dark .sidebar-link { color: #a8a29e; }
-.wiki-root.dark .sidebar-link:hover { background-color: #292524; color: #f5f5f4; }
-.wiki-root.dark .sidebar-link-active { background-color: rgba(190,18,60,0.15); color: #fda4af; border-color: rgba(190,18,60,0.4); }
-.wiki-root.dark .breadcrumb-link { color: #78716c; }
-.wiki-root.dark .breadcrumb-link:hover { color: #a8a29e; }
-.wiki-root.dark .breadcrumb-sep { color: #57534e; }
-.wiki-root.dark .breadcrumb-cat { color: #a8a29e; }
-.wiki-root.dark .breadcrumb-title { color: #d6d3d1; }
-.wiki-root.dark .cat-badge { background-color: rgba(190,18,60,0.15); color: #fda4af; border-color: rgba(190,18,60,0.4); }
-.wiki-root.dark h1.article-title { color: #f5f5f4; }
-.wiki-root.dark .article-excerpt { color: #a8a29e; border-color: rgba(190,18,60,0.5); }
-.wiki-root.dark .wiki-content { color: #d6d3d1; }
-.wiki-root.dark .wiki-content h2 { color: #e7e5e4; border-color: #44403c; }
-.wiki-root.dark .wiki-content p { color: #d6d3d1; }
-.wiki-root.dark .wiki-content a { color: #fda4af; }
-.wiki-root.dark .wiki-content strong { color: #f5f5f4; }
-.wiki-root.dark .wiki-content ul, .wiki-root.dark .wiki-content li { color: #d6d3d1; }
-.wiki-root.dark .wiki-content blockquote { background-color: rgba(190,18,60,0.08); border-color: rgba(190,18,60,0.4); color: #a8a29e; }
-.wiki-root.dark .wiki-content dt { color: #e7e5e4; }
-.wiki-root.dark .wiki-content dd { color: #a8a29e; }
-.wiki-root.dark .prev-next-border { border-color: #44403c; }
-.wiki-root.dark .prev-next-link { color: #a8a29e; }
-.wiki-root.dark .prev-next-link:hover { color: #f5f5f4; }
-.wiki-root.dark footer { border-color: #292524; }
-.wiki-root.dark nav a.back-link { color: #a8a29e; }
-.wiki-root.dark nav a.back-link:hover { color: #f5f5f4; }
-.wiki-root.dark nav a.home-link { color: #78716c; }
-.wiki-root.dark nav a.home-link:hover { color: #a8a29e; }
-.wiki-root.dark .nav-title { color: #78716c; }
-.wiki-root.dark .dark-toggle { color: #a8a29e; }
-.wiki-root.dark .dark-toggle:hover { background-color: #292524; color: #f5f5f4; }
-.dark-toggle:hover { background-color: #f5f4f2; }
-</style>
 
 <div
     x-data="{
