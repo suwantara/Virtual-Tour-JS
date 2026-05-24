@@ -36,7 +36,11 @@ class SiteSettingService
             'tourCtaTitle' => $this->settings->get('tour_cta.title', 'Jelajahi Pura'),
             'tourCtaAccent' => $this->settings->get('tour_cta.title_accent', 'dalam 360°'),
             'tourCtaDescription' => $this->settings->get('tour_cta.description', ''),
-            'tourCtaFeatures' => $this->settings->getJson('tour_cta.features'),
+            'tourCtaFeatures' => collect($this->settings->getJson('tour_cta.features'))
+                ->map(fn (mixed $feat): string => is_array($feat) ? ($feat['label'] ?? '') : (string) $feat)
+                ->filter()
+                ->values()
+                ->all(),
             'pelinggihSectionLabel' => $this->settings->get('pelinggih.section_label', 'Katalog Digital'),
             'pelinggihSectionTitle' => $this->settings->get('pelinggih.section_title', 'Pelinggih Pura'),
             'pelinggihSectionDescription' => $this->settings->get('pelinggih.section_description', 'Setiap bangunan suci memiliki fungsi dan makna spiritual tersendiri. Berikut pelinggih-pelinggih utama yang dapat dijelajahi dalam virtual tour.'),

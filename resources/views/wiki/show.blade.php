@@ -19,8 +19,8 @@
 <header
     x-data="{ scrolled: false }"
     x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 40 })"
-    :class="scrolled ? 'bg-white/95 backdrop-blur-md shadow-md shadow-stone-200/80' : 'bg-white/80 backdrop-blur-sm'"
-    class="sticky top-0 z-50 transition-all duration-300 border-b border-stone-200"
+    :class="scrolled ? 'bg-white/95 backdrop-blur-md shadow-md shadow-stone-200/80' : 'bg-stone-50/90 backdrop-blur-sm'"
+    class="sticky top-0 z-50 transition-all duration-300"
 >
     <nav class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
         <a href="{{ route('wiki.index') }}" class="back-link flex items-center gap-2 text-stone-500 hover:text-stone-800 transition-colors text-sm">
@@ -62,13 +62,12 @@
     {{-- ── Sidebar navigasi ── --}}
     <aside class="hidden lg:block">
         <div class="sticky top-20 space-y-6">
-            @foreach ($categories as $cat)
-                @php $catArticles = $grouped->get($cat->id, collect()) @endphp
-                @if ($catArticles->isNotEmpty())
+            @foreach ($sections as $section)
+                @if ($section['articles']->isNotEmpty())
                 <div>
-                    <p class="sidebar-cat-label text-[10px] uppercase tracking-widest text-stone-400 mb-2 px-2">{{ $cat->name }}</p>
+                    <p class="sidebar-cat-label text-[10px] uppercase tracking-widest text-stone-400 mb-2 px-2">{{ $section['category']->name }}</p>
                     <ul class="space-y-0.5">
-                        @foreach ($catArticles as $item)
+                        @foreach ($section['articles'] as $item)
                         <li>
                             <a href="{{ route('wiki.show', $item->slug) }}"
                                class="{{ $item->slug === $article->slug ? 'sidebar-link-active block px-2 py-1.5 rounded-lg text-xs transition-colors bg-rose-50 text-rose-700 font-medium border border-rose-200' : 'sidebar-link block px-2 py-1.5 rounded-lg text-xs transition-colors text-stone-500 hover:text-stone-900 hover:bg-stone-100' }}">
@@ -137,13 +136,7 @@
         </div>
 
         {{-- Navigasi bawah ── prev/next --}}
-        @php
-            $flat = $categories->flatMap(fn ($cat) => $grouped->get($cat->id, collect())->all());
-            $idx  = $flat->search(fn ($a) => $a->slug === $article->slug);
-            $prev = $idx > 0 ? $flat->get($idx - 1) : null;
-            $next = $flat->get($idx + 1);
-        @endphp
-        <div class="prev-next-border mt-12 pt-6 border-t border-stone-200 flex justify-between gap-4 text-sm">
+        <div class="prev-next-border mt-12 pt-6 flex justify-between gap-4 text-sm">
             @if ($prev)
                 <a href="{{ route('wiki.show', $prev->slug) }}"
                    class="prev-next-link flex items-center gap-2 text-stone-500 hover:text-stone-800 transition-colors max-w-[45%]">
@@ -171,7 +164,7 @@
 </div>
 
 {{-- ══════════════════ FOOTER ══════════════════ --}}
-<footer class="border-t border-stone-200 mt-8">
+<footer class="bg-stone-50 mt-8">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-400">
         <span>Nandika PBL 2025 · Kelompok 2</span>
         <div class="flex items-center gap-4">

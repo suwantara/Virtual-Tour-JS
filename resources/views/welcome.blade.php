@@ -330,12 +330,11 @@
 
                 <div class="flex flex-wrap gap-3 mb-8">
                     @foreach($tourCtaFeatures as $feat)
-                    @php $featLabel = $feat['label'] ?? $feat; @endphp
                         <span class="flex items-center gap-1.5 bg-stone-950/40 border border-stone-700/30 text-stone-300 text-xs px-3 py-1.5 rounded-full">
                             <svg class="w-3 h-3 text-amber-500" fill="currentColor" viewBox="0 0 16 16">
                                 <path d="M8 0l1.5 6.5L16 8l-6.5 1.5L8 16l-1.5-6.5L0 8l6.5-1.5z"/>
                             </svg>
-                            {{ $featLabel }}
+                            {{ $feat }}
                         </span>
                     @endforeach
                 </div>
@@ -366,12 +365,9 @@
                             <div class="text-stone-500 text-xs tracking-widest mt-1">DERAJAT</div>
                         </div>
                     </div>
-                    @foreach([0, 60, 120, 180, 240, 300] as $deg)
+                    @foreach($virtualTourDots as $dot)
                         <div class="absolute w-2 h-2 rounded-full bg-stone-600/60"
-                             style="
-                                top: calc(50% - 4px + {{ round(sin(deg2rad($deg)) * 120, 2) }}px);
-                                left: calc(50% - 4px + {{ round(cos(deg2rad($deg)) * 120, 2) }}px);
-                             "></div>
+                             style="top:calc(50% - 4px + {{ $dot['top'] }}px);left:calc(50% - 4px + {{ $dot['left'] }}px);"></div>
                     @endforeach
                 </div>
             </div>
@@ -471,9 +467,9 @@
                         <div class="text-stone-600 text-xs tracking-widest">ENSIKLOPEDIA</div>
                     </div>
                     {{-- Orbit dots --}}
-                    @foreach([0, 72, 144, 216, 288] as $deg)
+                    @foreach($wikiOrbitDots as $dot)
                         <div class="absolute w-1.5 h-1.5 rounded-full bg-amber-700/50"
-                             style="top:calc(50% - 3px + {{ round(sin(deg2rad($deg))*108, 2) }}px);left:calc(50% - 3px + {{ round(cos(deg2rad($deg))*108, 2) }}px);"></div>
+                             style="top:calc(50% - 3px + {{ $dot['top'] }}px);left:calc(50% - 3px + {{ $dot['left'] }}px);"></div>
                     @endforeach
                 </div>
             </div>

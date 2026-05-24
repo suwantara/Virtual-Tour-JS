@@ -15,11 +15,8 @@ class WikiController extends Controller
 
     public function index(): View
     {
-        $grouped = $this->wiki->getGroupedArticles();
-
         return view('wiki.index', [
-            'grouped' => $grouped,
-            'categories' => $this->wiki->getActiveCategories($grouped),
+            'sections' => $this->wiki->getSections(),
             'tourUrl' => $this->resolveTourUrl(),
         ]);
     }
@@ -32,12 +29,14 @@ class WikiController extends Controller
             abort(404);
         }
 
-        $grouped = $this->wiki->getGroupedArticles();
+        $sections = $this->wiki->getSections();
+        $adjacent = $this->wiki->getAdjacentArticles($article, $sections);
 
         return view('wiki.show', [
             'article' => $article,
-            'categories' => $this->wiki->getActiveCategories($grouped),
-            'grouped' => $grouped,
+            'sections' => $sections,
+            'prev' => $adjacent['prev'],
+            'next' => $adjacent['next'],
         ]);
     }
 
