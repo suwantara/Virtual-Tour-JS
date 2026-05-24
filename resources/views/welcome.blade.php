@@ -48,8 +48,8 @@
                 </svg>
             </div>
             <div class="leading-tight">
-                <div class="text-xs text-stone-500 font-light tracking-widest uppercase">Pura Desa</div>
-                <div class="text-sm font-semibold text-stone-200 serif tracking-wide">Tambawu</div>
+                <div class="text-xs text-stone-500 font-light tracking-widest uppercase">{{ $navbarSiteNameTop }}</div>
+                <div class="text-sm font-semibold text-stone-200 serif tracking-wide">{{ $navbarSiteNameBottom }}</div>
             </div>
         </a>
 
@@ -500,14 +500,14 @@
                         @endif
                     </div>
                     <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-stone-900 text-stone-200 text-xs font-medium px-4 py-1 rounded-full whitespace-nowrap">
-                        Jro Mangku Desa
+                        {{ $mangkuAvatarBadge }}
                     </div>
                 </div>
             </div>
 
             {{-- Bio --}}
             <div>
-                <p class="text-stone-600 text-xs tracking-widest uppercase font-medium mb-3">Pengempon Pura</p>
+                <p class="text-stone-600 text-xs tracking-widest uppercase font-medium mb-3">{{ $mangkuSectionLabel }}</p>
                 <h2 class="serif text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 mb-1">{{ $mangkuName }}</h2>
                 <p class="text-stone-600 text-sm mb-6">{{ $mangkuMeta }}</p>
 
@@ -605,7 +605,7 @@
                     </div>
                 @endif
                 <div class="min-w-0 flex-1">
-                    <p class="text-amber-600 text-xs tracking-widest uppercase font-medium mb-1.5">Dosen Pembimbing</p>
+                    <p class="text-amber-600 text-xs tracking-widest uppercase font-medium mb-1.5">{{ $timDosenLabel }}</p>
                     @if($dosenName)
                         <h3 class="serif text-sm font-semibold text-stone-200 leading-snug mb-1">{{ $dosenName }}</h3>
                         <p class="text-stone-500 text-xs">{{ $dosenNip ? 'NIP · '.$dosenNip : 'NIP · —' }}</p>

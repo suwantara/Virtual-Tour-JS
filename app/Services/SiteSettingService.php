@@ -19,6 +19,8 @@ class SiteSettingService
         $heroSubtitle = $this->settings->get('hero.subtitle', 'Jelajahi warisan budaya Desa Adat Tambawu melalui Virtual Tour 360° interaktif.');
 
         return [
+            'navbarSiteNameTop' => $this->settings->get('navbar.site_name_top', 'Pura Desa'),
+            'navbarSiteNameBottom' => $this->settings->get('navbar.site_name_bottom', 'Tambawu'),
             'heroBadge' => $this->settings->get('hero.badge_text', 'Digital Heritage · Digital Archive · PBL 2025'),
             'heroKaligrafi' => $this->settings->get('hero.kaligrafi', 'Tri Kahyangan · Desa Adat Tambawu'),
             'heroTitleMain' => $heroTitleMain,
@@ -44,6 +46,8 @@ class SiteSettingService
             'wikiCtaAccent' => $this->settings->get('wiki_cta.title_accent', 'Pura Desa Tambawu'),
             'wikiCtaDescription' => $this->settings->get('wiki_cta.description', 'Dokumentasi lengkap tentang sejarah, pelinggih, ritual, tokoh, dan glosarium istilah adat Bali — semua tersedia dalam satu referensi yang mudah dijelajahi.'),
             'wikiCtaCategories' => $this->buildWikiCategories(),
+            'mangkuSectionLabel' => $this->settings->get('mangku.section_label', 'Pengempon Pura'),
+            'mangkuAvatarBadge' => $this->settings->get('mangku.avatar_badge', 'Jro Mangku Desa'),
             'mangkuName' => $this->settings->get('mangku.name', 'Jro Made Rena Atmaja'),
             'mangkuMeta' => $this->settings->get('mangku.meta', ''),
             'mangkuQuote' => $this->settings->get('mangku.quote', ''),
@@ -54,6 +58,7 @@ class SiteSettingService
             'nandikaSectionAccent' => $this->settings->get('nandika.section_accent', 'Nusantara Digital Archive'),
             'nandikaDescription' => $this->settings->get('nandika.description', ''),
             'nandikaTags' => $this->settings->getJson('nandika.tags'),
+            'timDosenLabel' => $this->settings->get('tim.dosen_label', 'Dosen Pembimbing'),
             'timSectionLabel' => $this->settings->get('tim.section_label', 'Kelompok 2 · PBL 2025'),
             'timSectionTitle' => $this->settings->get('tim.section_title', 'Tim Nandika'),
             'timSectionDescription' => $this->settings->get('tim.section_description', 'Mahasiswa Program Studi Rekam Medis & Informasi Kesehatan yang mengerjakan proyek digitalisasi warisan budaya Pura Desa Adat Tambawu.'),

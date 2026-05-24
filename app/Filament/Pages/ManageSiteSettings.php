@@ -38,6 +38,10 @@ class ManageSiteSettings extends Page
     public function mount(): void
     {
         $this->form->fill([
+            // Navbar
+            'navbar_site_name_top' => SiteSetting::get('navbar.site_name_top'),
+            'navbar_site_name_bottom' => SiteSetting::get('navbar.site_name_bottom'),
+
             // Hero
             'hero_badge_text' => SiteSetting::get('hero.badge_text'),
             'hero_kaligrafi' => SiteSetting::get('hero.kaligrafi'),
@@ -74,6 +78,8 @@ class ManageSiteSettings extends Page
             'wiki_cta_categories' => SiteSetting::getJson('wiki_cta.categories'),
 
             // Profil Mangku
+            'mangku_section_label' => SiteSetting::get('mangku.section_label'),
+            'mangku_avatar_badge' => SiteSetting::get('mangku.avatar_badge'),
             'mangku_avatar' => SiteSetting::get('mangku.avatar'),
             'mangku_name' => SiteSetting::get('mangku.name'),
             'mangku_meta' => SiteSetting::get('mangku.meta'),
@@ -88,6 +94,7 @@ class ManageSiteSettings extends Page
             'nandika_tags' => SiteSetting::getJson('nandika.tags'),
 
             // Tim
+            'tim_dosen_label' => SiteSetting::get('tim.dosen_label'),
             'tim_section_label' => SiteSetting::get('tim.section_label'),
             'tim_section_title' => SiteSetting::get('tim.section_title'),
             'tim_section_description' => SiteSetting::get('tim.section_description'),
@@ -115,6 +122,22 @@ class ManageSiteSettings extends Page
     {
         return $schema
             ->components([
+
+                Section::make('Navbar')
+                    ->description('Teks logo di navbar (muncul di desktop dan mobile).')
+                    ->collapsible()
+                    ->schema([
+                        TextInput::make('navbar_site_name_top')
+                            ->label('Nama Situs Baris Atas')
+                            ->placeholder('Pura Desa')
+                            ->maxLength(100),
+
+                        TextInput::make('navbar_site_name_bottom')
+                            ->label('Nama Situs Baris Bawah')
+                            ->placeholder('Tambawu')
+                            ->maxLength(100),
+                    ])
+                    ->columns(2),
 
                 Section::make('Hero')
                     ->description('Konten bagian pertama halaman utama.')
@@ -310,6 +333,16 @@ class ManageSiteSettings extends Page
                     ->description('Informasi Jro Mangku Desa.')
                     ->collapsible()
                     ->schema([
+                        TextInput::make('mangku_section_label')
+                            ->label('Label Section')
+                            ->placeholder('Pengempon Pura')
+                            ->maxLength(255),
+
+                        TextInput::make('mangku_avatar_badge')
+                            ->label('Teks Badge Avatar')
+                            ->placeholder('Jro Mangku Desa')
+                            ->maxLength(100),
+
                         FileUpload::make('mangku_avatar')
                             ->label('Foto Avatar')
                             ->disk('r2')
@@ -437,6 +470,11 @@ class ManageSiteSettings extends Page
                             ->deletable()
                             ->columnSpanFull(),
 
+                        TextInput::make('tim_dosen_label')
+                            ->label('Label Kartu Dosen')
+                            ->placeholder('Dosen Pembimbing')
+                            ->maxLength(100),
+
                         TextInput::make('tim_dosen_name')
                             ->label('Nama Dosen Pembimbing')
                             ->placeholder('Nama lengkap beserta gelar')
@@ -553,6 +591,10 @@ class ManageSiteSettings extends Page
     {
         $state = $this->form->getState();
 
+        // Navbar
+        SiteSetting::set('navbar.site_name_top', $state['navbar_site_name_top'] ?? null);
+        SiteSetting::set('navbar.site_name_bottom', $state['navbar_site_name_bottom'] ?? null);
+
         // Hero
         SiteSetting::set('hero.badge_text', $state['hero_badge_text'] ?? null);
         SiteSetting::set('hero.kaligrafi', $state['hero_kaligrafi'] ?? null);
@@ -589,6 +631,8 @@ class ManageSiteSettings extends Page
         SiteSetting::setJson('wiki_cta.categories', array_values($state['wiki_cta_categories'] ?? []));
 
         // Profil Mangku
+        SiteSetting::set('mangku.section_label', $state['mangku_section_label'] ?? null);
+        SiteSetting::set('mangku.avatar_badge', $state['mangku_avatar_badge'] ?? null);
         SiteSetting::set('mangku.avatar', $state['mangku_avatar'] ?? null);
         SiteSetting::set('mangku.name', $state['mangku_name'] ?? null);
         SiteSetting::set('mangku.meta', $state['mangku_meta'] ?? null);
@@ -603,6 +647,7 @@ class ManageSiteSettings extends Page
         SiteSetting::setJson('nandika.tags', array_values($state['nandika_tags'] ?? []));
 
         // Tim
+        SiteSetting::set('tim.dosen_label', $state['tim_dosen_label'] ?? null);
         SiteSetting::set('tim.section_label', $state['tim_section_label'] ?? null);
         SiteSetting::set('tim.section_title', $state['tim_section_title'] ?? null);
         SiteSetting::set('tim.section_description', $state['tim_section_description'] ?? null);
