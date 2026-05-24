@@ -72,6 +72,9 @@ return [
             'visibility' => 'public',
             'throw' => false,
             'report' => false,
+            'options' => [
+                'CacheControl' => 'public, max-age=31536000, immutable',
+            ],
         ],
 
     ],
