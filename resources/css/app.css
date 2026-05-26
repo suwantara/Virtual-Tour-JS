@@ -905,6 +905,47 @@ div.pnlm-tooltip > span {
     pointer-events: none;
 }
 
+/* ── Hotspot — mobile responsive ── */
+
+@media (max-width: 640px) {
+    .pnlm-hotspot-base.hotspot-scene-nav {
+        width: 28px;
+        height: 28px;
+    }
+
+    .pnlm-hotspot-base.hotspot-scene-nav::after {
+        border-left-width: 5px;
+        border-right-width: 5px;
+        border-bottom-width: 8px;
+    }
+
+    .pnlm-hotspot-base.hotspot-info,
+    .pnlm-hotspot-base.hotspot-url,
+    .pnlm-hotspot-base.hotspot-media {
+        width: 26px;
+        height: 26px;
+    }
+
+    .pnlm-hotspot-base.hotspot-info::after {
+        font-size: 13px;
+    }
+
+    .pnlm-hotspot-base.hotspot-url::after {
+        font-size: 12px;
+    }
+
+    .pnlm-hotspot-base.hotspot-media::after {
+        font-size: 10px;
+    }
+
+    .pnlm-hotspot-base.hotspot-scene-nav:hover,
+    .pnlm-hotspot-base.hotspot-info:hover,
+    .pnlm-hotspot-base.hotspot-url:hover,
+    .pnlm-hotspot-base.hotspot-media:hover {
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.25);
+    }
+}
+
 /* ══════════════════════════════════════════════════════════
    Wiki Pages
    ══════════════════════════════════════════════════════════ */
