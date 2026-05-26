@@ -4,7 +4,7 @@ FROM php:8.4-fpm-alpine AS base
 LABEL maintainer="Virtual Tour"
 
 # System dependencies
-RUN apk update && apk add --no-cache \
+RUN apk update && apk upgrade --no-cache && apk add --no-cache \
     bash \
     curl \
     freetype-dev \
